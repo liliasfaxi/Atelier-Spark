@@ -1,0 +1,84 @@
+site_name: Atelier Apache Spark
+site_description: Cours et Travaux Pratiques pour se familiariser avec Apache Spark
+site_author: Lilia Sfaxi
+site_url: http://liliasfaxi.github.io/Atelier-Spark/
+
+# Repository
+repo_name: liliasfaxi/Atelier-Spark
+repo_url: https://github.com/liliasfaxi/Atelier-Spark
+
+# Copyright
+copyright: 'Copyright &copy; 2019 - 2020 Lilia Sfaxi'
+
+# Theme directory
+theme_dir: material
+
+site_favicon: 'img/favicon.ico'
+
+
+# Options
+extra:
+  feature:
+    tabs: false
+  palette:
+    text: 'Ubuntu'
+    code: 'Ubuntu Mono'
+    primary: 'blue grey'
+    accent: 'yellow'
+  logo: 'img/logo.png'
+
+  social:
+    - type: globe
+      link: http://liliasfaxi.wix.com/liliasfaxi
+    - type: github-alt
+      link: https://github.com/liliasfaxi
+    - type: twitter
+      link: https://twitter.com/lillitou
+    - type: linkedin
+      link: https://www.linkedin.com/in/liliasfaxi/
+
+# Extensions
+markdown_extensions:
+  - markdown.extensions.admonition
+  - markdown.extensions.codehilite(guess_lang=false)
+  - markdown.extensions.def_list
+  - markdown.extensions.footnotes
+  - markdown.extensions.meta
+  - markdown.extensions.toc(permalink=true)
+  - pymdownx.arithmatex
+  - pymdownx.betterem(smart_enable=all)
+  - pymdownx.caret
+  - pymdownx.critic
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:pymdownx.emoji.to_svg
+  - pymdownx.inlinehilite
+  - pymdownx.magiclink
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences
+  - pymdownx.tasklist(custom_checkbox=true)
+  - pymdownx.tilde
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - codehilite
+  - fenced_code
+  - fontawesome_markdown
+  - nl2br
+  - tables
+
+# Page tree
+pages:
+   - 'index.md'
+   - Partie 1 - Introduction au Big Data: 'p1-big-data.md'
+
+extra_javascript: []
+extra_css: 
+  - 'extra.css'
+use_directory_urls: true
+
+# Google Analytics
+google_analytics:
+  - !!python/object/apply:os.getenv ["GOOGLE_ANALYTICS_KEY"]
+  - auto
