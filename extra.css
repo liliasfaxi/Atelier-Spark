@@ -1,5 +1,5 @@
 .md-typeset h1 {
-  color: #546E7B  
+  color: #546E7B
 }
 
 .md-typeset h2 {
@@ -8,4 +8,9 @@
 
 .md-header-nav__title{
   color: #FFC30B
+}
+
+div {
+  text-align: justify;
+  text-justify: inter-word;
 }
