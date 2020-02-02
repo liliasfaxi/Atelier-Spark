@@ -30,6 +30,11 @@ error
 !!! bug "Erreur"
     blablabla
 
+exercice - activité
+!!!question "Activité"
+
+      Modifier
+
 tables
 |Instruction|Fonctionnalité|
 |---------|-------------------------------------------------------------|
