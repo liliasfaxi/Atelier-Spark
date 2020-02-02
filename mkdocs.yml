@@ -1,3 +1,9 @@
+# For Math extension
+python:
+   version: 3 # for unicode
+   setup_py_install: true
+
+
 site_name: Atelier Apache Spark
 site_description: Cours et Travaux Pratiques pour se familiariser avec Apache Spark
 site_author: Lilia Sfaxi
@@ -13,7 +19,19 @@ copyright: 'Copyright &copy; 2019 - 2020 Lilia Sfaxi'
 # Theme directory
 theme_dir: material
 
-site_favicon: 'img/favicon.ico'
+theme:
+  name: 'material'
+  feature:
+    tabs: false
+  palette:
+    text: 'Ubuntu'
+    code: 'Ubuntu Mono'
+    primary: 'blue grey'
+    accent: 'yellow'
+  logo: 'img/logo.png'
+  favicon: 'img/favicon.ico'
+
+
 
 
 # Options
@@ -23,7 +41,7 @@ extra:
   palette:
     text: 'Ubuntu'
     code: 'Ubuntu Mono'
-    primary: 'blue grey'
+    primary: #546E7B
     accent: 'yellow'
   logo: 'img/logo.png'
 
@@ -40,23 +58,21 @@ extra:
 # Extensions
 markdown_extensions:
   - markdown.extensions.admonition
-  - markdown.extensions.codehilite(guess_lang=false)
+  - markdown.extensions.codehilite
   - markdown.extensions.def_list
   - markdown.extensions.footnotes
   - markdown.extensions.meta
-  - markdown.extensions.toc(permalink=true)
+  - markdown.extensions.toc
   - pymdownx.arithmatex
-  - pymdownx.betterem(smart_enable=all)
+  - pymdownx.betterem
   - pymdownx.caret
   - pymdownx.critic
-  - pymdownx.emoji:
-      emoji_generator: !!python/name:pymdownx.emoji.to_svg
   - pymdownx.inlinehilite
   - pymdownx.magiclink
   - pymdownx.mark
   - pymdownx.smartsymbols
   - pymdownx.superfences
-  - pymdownx.tasklist(custom_checkbox=true)
+  - pymdownx.tasklist
   - pymdownx.tilde
   - abbr
   - admonition
@@ -67,14 +83,18 @@ markdown_extensions:
   - fontawesome_markdown
   - nl2br
   - tables
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:pymdownx.emoji.to_svg
+  - mdx_math:
+        enable_dollar_delimiter: True #for use of inline $..$
 
 # Page tree
 pages:
    - 'index.md'
    - Partie 1 - Introduction au Big Data: 'p1-big-data.md'
 
-extra_javascript: []
-extra_css: 
+extra_javascript: ['https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML']
+extra_css:
   - 'extra.css'
 use_directory_urls: true
 

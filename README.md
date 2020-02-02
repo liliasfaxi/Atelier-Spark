@@ -5,7 +5,7 @@ Pour pouvoir lancer ce TP en local, il va falloir suivre les instructions suivan
   * Installer le thème _material_ en lançant:
 
 ```Bash
-  pip install mkdocs-material
+  pip3 install mkdocs-material
 ```
 
   * Lancer mkdocs:
