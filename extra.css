@@ -21,6 +21,6 @@ div {
 }
 
 .highlight {
-  color: var(--main-color);
   font-weight: bold;
+  color: var(--sec-color)
 }
