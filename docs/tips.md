@@ -1,3 +1,5 @@
+See mkdocs [Cheat Sheet](https://yakworks.github.io/mkdocs-material-components/cheat-sheet/)
+
 italique
 _input_
 

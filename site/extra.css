@@ -1,16 +1,26 @@
+:root {
+  --main-color: #546E7B;
+  --sec-color: #FFC30D;
+}
+
 .md-typeset h1 {
-  color: #546E7B
+  color: var(--main-color)
 }
 
 .md-typeset h2 {
-  color: #FFC30B
+  color: var(--sec-color)
 }
 
 .md-header-nav__title{
-  color: #FFC30B
+  color: var(--sec-color)
 }
 
 div {
   text-align: justify;
   text-justify: inter-word;
+}
+
+.highlight {
+  color: var(--main-color);
+  font-weight: bold;
 }
