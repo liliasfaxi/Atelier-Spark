@@ -263,8 +263,32 @@
 
 
   <li class="md-nav__item">
-    <a href="../p1-big-data/" title="Partie 1 - Introduction au Big Data" class="md-nav__link">
-      Partie 1 - Introduction au Big Data
+    <a href="../p1-big-data/" title="P1 - Introduction au Big Data" class="md-nav__link">
+      P1 - Introduction au Big Data
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../p2-spark/" title="P2 - Introduction à Apache Spark" class="md-nav__link">
+      P2 - Introduction à Apache Spark
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../p3-install/" title="P3 - Installation de Spark" class="md-nav__link">
+      P3 - Installation de Spark
     </a>
   </li>
 
@@ -298,8 +322,9 @@ ou<br />
 <p>lien<br />
 <a href="http://hadoop.apache.org/">Apache Hadoop</a></p>
 <p>code<br />
-<div class="codehilite"><pre>  <span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="o">:</span><span class="c1">//github.com/liliasfaxi/hadoop-cluster-docker</span>
-</pre></div></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>  <span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="o">:</span><span class="c1">//github.com/liliasfaxi/hadoop-cluster-docker</span>
+</pre></div>
+</td></tr></table></p>
 <p>inline code<br />
 <code class="codehilite"><span class="n">hadoop</span> <span class="n">fs</span> <span class="o">-</span><span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">user</span><span class="o">/</span><span class="n">root</span></code></p>
 <div class="admonition warning">
@@ -326,6 +351,27 @@ ou<br />
 | <code class="codehilite"><span class="n">hadoop</span> <span class="n">fs</span> <span class="err">–</span><span class="n">rm</span> <span class="n">newfile</span><span class="p">.</span><span class="n">txt</span></code> | Supprimer le fichier  |<br />
 | <code class="codehilite"><span class="n">hadoop</span> <span class="n">fs</span> <span class="err">–</span><span class="n">mkdir</span> <span class="n">myinput</span></code> | Créer un répertoire |<br />
 | <code class="codehilite"><span class="n">hadoop</span> <span class="n">fs</span> <span class="err">–</span><span class="n">cat</span> <span class="n">file</span><span class="p">.</span><span class="n">txt</span> <span class="err">\</span><span class="o">|</span> <span class="n">less</span></code> | Lire le fichier page par page|</p>
+<p>Footnotes</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="codehilite"><pre><span class="n">Footnotes</span><span class="p">[</span><span class="o">^</span><span class="mi">1</span><span class="p">]</span> <span class="n">are</span> <span class="n">added</span> <span class="n">in</span><span class="o">-</span><span class="n">text</span> <span class="n">like</span> <span class="n">so</span> <span class="p">...</span>
+
+<span class="cp">#end of the document</span>
+
+<span class="p">[</span><span class="o">^</span><span class="mi">1</span><span class="p">]</span><span class="o">:</span>
+<span class="n">Footnotes</span> <span class="n">are</span> <span class="n">the</span> <span class="n">mind</span> <span class="n">killer</span><span class="p">.</span>
+<span class="n">Footnotes</span> <span class="n">are</span> <span class="n">the</span> <span class="n">little</span><span class="o">-</span><span class="n">death</span> <span class="n">that</span> <span class="n">brings</span> <span class="n">total</span> <span class="n">obliteration</span><span class="p">.</span>
+<span class="n">I</span> <span class="n">will</span> <span class="n">face</span> <span class="n">my</span> <span class="n">footnotes</span><span class="p">.</span>
+</pre></div>
+</td></tr></table>
+
+<p>get the IP address of a docker container<br />
+  docker inspect <container_name> | grep IPAddress</p>
                 
                   
                 
