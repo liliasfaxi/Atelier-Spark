@@ -49,3 +49,19 @@ tables
 | ```hadoop fs –rm newfile.txt``` | Supprimer le fichier  |
 | ```hadoop fs –mkdir myinput``` | Créer un répertoire |
 | ```hadoop fs –cat file.txt \| less``` | Lire le fichier page par page|
+
+
+Footnotes
+
+    Footnotes[^1] are added in-text like so ...
+
+    #end of the document
+
+    [^1]:
+    Footnotes are the mind killer.
+    Footnotes are the little-death that brings total obliteration.
+    I will face my footnotes.
+
+
+get the IP address of a docker container
+  docker inspect <container_name> | grep IPAddress

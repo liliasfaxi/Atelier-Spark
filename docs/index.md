@@ -5,7 +5,19 @@
 </center>
 
 
-## Overview
+## Objectif
 
 L'objectif de ce cours est d'initier les apprenants aux concepts de base de Apache Spark, et de faire le tours des composants qui le constituent et des cas d'utilisation.
 Ce cours est renforcé par des travaux pratiques.
+
+## Table des Matières
+
+Le cours est divisé comme suit:
+
+  1. Introduction aux Big Data
+  2. Présentation de Apache Spark, installation et manipulation avec les commandes Shell
+  3. Spark Batch
+  4. Spark SQL
+  5. Spark Streaming
+  6. Spark ML-Lib
+  7. Spark GraphX
