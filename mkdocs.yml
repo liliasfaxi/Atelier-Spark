@@ -95,6 +95,7 @@ pages:
    - P1 - Introduction au Big Data: 'p1-big-data.md'
    - P2 - Introduction à Apache Spark: 'p2-spark.md'
    - P3 - Installation de Spark: 'p3-install.md'
+   - P4 - RDD et Batch Processing avec Spark: 'p4-batch.md'
 
 extra_javascript: ['https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML']
 extra_css:

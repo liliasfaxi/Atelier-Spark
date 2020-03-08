@@ -15,9 +15,10 @@ Ce cours est renforcé par des travaux pratiques.
 Le cours est divisé comme suit:
 
   1. Introduction aux Big Data
-  2. Présentation de Apache Spark, installation et manipulation avec les commandes Shell
-  3. Spark Batch
-  4. Spark SQL
-  5. Spark Streaming
-  6. Spark ML-Lib
-  7. Spark GraphX
+  2. Présentation de Apache Spark
+  3. Installation de Spark
+  4. Spark Batch
+  5. Spark SQL
+  6. Spark Streaming
+  7. Spark ML-Lib
+  8. Spark GraphX
