@@ -49,13 +49,35 @@ Les RDDs supportent deux types d'opérations:
 
   Par exemple, un _map_ est une transformation qui passe chaque élément du dataset via une fonction, et retourne un nouvel RDD représentant les résultats. Un _reduce_ est une action qui agrège tous les éléments du RDD en utilisant une certaine fonction et retourne le résultat final au programme.
 
-  Toutes les transformations dans Spark sont _lazy_ (fainéantes), car elles ne calculent pas le résultat immédiatement. Elles se souviennent des transformations appliquées à un dataset de base (par ex. un fichier). Les transformations ne sont calculées que quand une action nécessite qu'un résultat soit retourné au programme principal. Cela permet à Spark de s'exécuter plus efficacement.
 
 <center><img src="../img/p4/operations.png" width="500pt">[^devopedia]</center>
 
+## Caractéristiques des RDDs
+### Immutabilité et Lignée
+Les RDDs dans Spark sont des collection _immuables_, c'est à dire qu'elle ne sont jamais modifiées: toute transformation va créer un nouvel RDD au lieu de modifier le RDD initial. Quand un nouvel RDD a été créé à partir d'un RDD existant, ce nouvel RDD contient un pointeur vers le RDD parent. De même, toutes les dépendances entre les RDDs sont loggées dans un graphe, plutôt que directement sur les données. Ce graphe s'appelle _Graphe de Lignée_ ou _Lineage Graph_.
+
+Par exemple, si on considère les opérations suivantes:
+
+  1. Créer un nouvel RDD à partir d'un fichier texte -> RDD1
+  2. Appliquer des opérations de Map sur RDD1 -> RDD2
+  3. Appliquer une opération de filtrage sur RDD2 -> RDD3
+  4. Appliquer une opération de comptage sur RDD3 -> RDD4
+
+Le graphe de lignée associé à ces opérations ressemble à ce qui suit:
+
+<center><img src="../img/p4/dag.png" width="300pt"></center>
+
+Ce graphe peut être utile au cas où certaines partitions sont perdues. Spark peut rejouer la transformation sur cette partition en utilisant le graphe de lignée existant pour réaliser le même calcul, plutôt que de répliquer les données à partir de des différents noeuds du cluster.
+
+Il est également utile en cas de réutilisation d'un graphe existant. Si par exemple on désire appliquer une opération tri sur RDD2, il est inutile de recharger le fichier une deuxième fois à partir du disque. Il suffit de modifier le graphe pour qu'il devienne comme suit:
+
+<center><img src="../img/p4/dag2.png" width="300pt"></center>
+
+### Lazy Evaluation
+Toutes les transformations dans Spark sont _lazy_ (fainéantes), car elles ne calculent pas le résultat immédiatement. Elles se souviennent des transformations appliquées à un dataset de base (par ex. un fichier). Les transformations ne sont calculées que quand une action nécessite qu'un résultat soit retourné au programme principal. Cela permet à Spark de s'exécuter plus efficacement.
 
 
-### Exemple
+## Exemple
 
 L'exemple que nous allons présenter ici par étapes permet de relever les mots les plus fréquents dans un fichier. Pour cela, le code suivant est utilisé:
 
