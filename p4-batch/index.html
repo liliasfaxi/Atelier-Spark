@@ -361,18 +361,39 @@
     Opérations sur les RDDs
   </a>
   
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#caracteristiques-des-rdds" class="md-nav__link">
+    Caractéristiques des RDDs
+  </a>
+  
     <nav class="md-nav">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#exemple" class="md-nav__link">
-    Exemple
+  <a href="#immutabilite-et-lignee" class="md-nav__link">
+    Immutabilité et Lignée
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lazy-evaluation" class="md-nav__link">
+    Lazy Evaluation
   </a>
   
 </li>
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exemple" class="md-nav__link">
+    Exemple
+  </a>
   
 </li>
       
@@ -487,18 +508,39 @@
     Opérations sur les RDDs
   </a>
   
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#caracteristiques-des-rdds" class="md-nav__link">
+    Caractéristiques des RDDs
+  </a>
+  
     <nav class="md-nav">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#exemple" class="md-nav__link">
-    Exemple
+  <a href="#immutabilite-et-lignee" class="md-nav__link">
+    Immutabilité et Lignée
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lazy-evaluation" class="md-nav__link">
+    Lazy Evaluation
   </a>
   
 </li>
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exemple" class="md-nav__link">
+    Exemple
+  </a>
   
 </li>
       
@@ -612,9 +654,25 @@
 <li>les <em>actions</em>, qui retournent une valeur au programme <em>driver</em> après avoir exécuté un calcul sur le RDD.</li>
 </ul>
 <p>Par exemple, un <em>map</em> est une transformation qui passe chaque élément du dataset via une fonction, et retourne un nouvel RDD représentant les résultats. Un <em>reduce</em> est une action qui agrège tous les éléments du RDD en utilisant une certaine fonction et retourne le résultat final au programme.</p>
-<p>Toutes les transformations dans Spark sont <em>lazy</em> (fainéantes), car elles ne calculent pas le résultat immédiatement. Elles se souviennent des transformations appliquées à un dataset de base (par ex. un fichier). Les transformations ne sont calculées que quand une action nécessite qu'un résultat soit retourné au programme principal. Cela permet à Spark de s'exécuter plus efficacement.</p>
 <p><center><img src="../img/p4/operations.png" width="500pt"><sup id="fnref:devopedia"><a class="footnote-ref" href="#fn:devopedia">3</a></sup></center></p>
-<h3 id="exemple">Exemple</h3>
+<h2 id="caracteristiques-des-rdds">Caractéristiques des RDDs</h2>
+<h3 id="immutabilite-et-lignee">Immutabilité et Lignée</h3>
+<p>Les RDDs dans Spark sont des collection <em>immuables</em>, c'est à dire qu'elle ne sont jamais modifiées: toute transformation va créer un nouvel RDD au lieu de modifier le RDD initial. Quand un nouvel RDD a été créé à partir d'un RDD existant, ce nouvel RDD contient un pointeur vers le RDD parent. De même, toutes les dépendances entre les RDDs sont loggées dans un graphe, plutôt que directement sur les données. Ce graphe s'appelle <em>Graphe de Lignée</em> ou <em>Lineage Graph</em>.</p>
+<p>Par exemple, si on considère les opérations suivantes:</p>
+<ol>
+<li>Créer un nouvel RDD à partir d'un fichier texte -&gt; RDD1</li>
+<li>Appliquer des opérations de Map sur RDD1 -&gt; RDD2</li>
+<li>Appliquer une opération de filtrage sur RDD2 -&gt; RDD3</li>
+<li>Appliquer une opération de comptage sur RDD3 -&gt; RDD4</li>
+</ol>
+<p>Le graphe de lignée associé à ces opérations ressemble à ce qui suit:</p>
+<p><center><img src="../img/p4/dag.png" width="300pt"></center></p>
+<p>Ce graphe peut être utile au cas où certaines partitions sont perdues. Spark peut rejouer la transformation sur cette partition en utilisant le graphe de lignée existant pour réaliser le même calcul, plutôt que de répliquer les données à partir de des différents noeuds du cluster.</p>
+<p>Il est également utile en cas de réutilisation d'un graphe existant. Si par exemple on désire appliquer une opération tri sur RDD2, il est inutile de recharger le fichier une deuxième fois à partir du disque. Il suffit de modifier le graphe pour qu'il devienne comme suit:</p>
+<p><center><img src="../img/p4/dag2.png" width="300pt"></center></p>
+<h3 id="lazy-evaluation">Lazy Evaluation</h3>
+<p>Toutes les transformations dans Spark sont <em>lazy</em> (fainéantes), car elles ne calculent pas le résultat immédiatement. Elles se souviennent des transformations appliquées à un dataset de base (par ex. un fichier). Les transformations ne sont calculées que quand une action nécessite qu'un résultat soit retourné au programme principal. Cela permet à Spark de s'exécuter plus efficacement.</p>
+<h2 id="exemple">Exemple</h2>
 <p>L'exemple que nous allons présenter ici par étapes permet de relever les mots les plus fréquents dans un fichier. Pour cela, le code suivant est utilisé:</p>
 <p><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
 2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>  <span class="c1">//Etape 1 - Créer un RDD à partir d&#39;un fichier texte</span>
