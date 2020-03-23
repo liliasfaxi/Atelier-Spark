@@ -96,6 +96,7 @@ pages:
    - P2 - Introduction à Apache Spark: 'p2-spark.md'
    - P3 - Installation de Spark: 'p3-install.md'
    - P4 - RDD et Batch Processing avec Spark: 'p4-batch.md'
+   - P5 - Spark SQL: 'p5-sql.md'
 
 extra_javascript: ['https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML']
 extra_css:

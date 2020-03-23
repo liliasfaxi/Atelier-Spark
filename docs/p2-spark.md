@@ -44,7 +44,7 @@ Pour s'exécuter sur un cluster, _SparkContext_ peut se connecter à plusieurs t
   - Sur [Hadoop YARN](https://spark.apache.org/docs/latest/running-on-yarn.html), le gestionnaire de ressources de Hadoop 2.
   - Sur [Kubernetes](https://spark.apache.org/docs/latest/running-on-kubernetes.html), un système open-source pour l'automatisation du déploiement et la gestion des applications conteneurisées.
 
-Ces gestionnaires permettent d'allouer les ressources nécessaires pour l'exécution de plusieurs applications Spark. Une fois connecté, Spark lance des _exécuteurs_ sur les noeuds du clluster, qui sont des processus qui lancent des traitements et stockent des données pour les applications. Il envoie ensuite le code de l'application (dans un fichier JAR ou Python) aux _exécuteurs_. _Spark Context_ envoie finalement les tâches à exécuter aux _exécuteurs_.
+Ces gestionnaires permettent d'allouer les ressources nécessaires pour l'exécution de plusieurs applications Spark. Une fois connecté, Spark lance des _exécuteurs_ sur les noeuds du cluster, qui sont des processus qui lancent des traitements et stockent des données pour les applications. Il envoie ensuite le code de l'application (dans un fichier JAR ou Python) aux _exécuteurs_. _Spark Context_ envoie finalement les tâches à exécuter aux _exécuteurs_.
 
 <center><img src="../img/p2/archi.png" width="500pt"></center>
 
