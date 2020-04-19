@@ -115,7 +115,7 @@ Déplacer le dossier obtenu vers le répertoire /opt comme suit:
 ### Étape 5 - Mise en place de l'environnement Spark
 Nous devons mettre en place certains paramètres d'environnement pour assurer une bonne exécution de Spark:
 
-  1. Ouvrir le fichier de configuration bashrc (installer [vim](vim.org) si nécessaire avec ``` apt install vim ```)
+  1. Ouvrir le fichier de configuration bashrc (installer [vim](https://www.vim.org/) si nécessaire avec ``` apt install vim ```)
 
   ```bash
     vim ~/.bashrc
