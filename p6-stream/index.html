@@ -424,6 +424,18 @@
   </li>
 
     
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../p8-graphx/" title="P8 - Spark GraphX" class="md-nav__link">
+      P8 - Spark GraphX
+    </a>
+  </li>
+
+    
   </ul>
 </nav>
                   </div>
@@ -515,7 +527,7 @@
 <p><center><img src="../img/p6/streaming.png" width="600pt"></center></p>
 <h2 id="presentation-de-spark-streaming">Présentation de Spark Streaming</h2>
 <p>Un flux de données (ou <em>data stream</em>) est une séquence non bornée de données qui arrive de manière continue. Le streaming divise le flux continu des données en unités discrètes pour les traiter. Le traitement de flux est un traitement à faible latence, et une analyse des données en streaming.</p>
-<p><strong>Spark Streaming</strong> a été ajouté à Apache Spark en 2013, comme extension de l'API de base de Spark, qui fournit un traitement de flux scalable, à haut débit et tolérant aux fautes. L'ingestion de données peut être réalisée par plusieurs outils tels que <a href="https://kafka.apache.org/">Apache Kafka</a>. <a href="https://flume.apache.org/">Apache Flume</a> ou <a href="https://aws.amazon.com/kinesis/">Amazon Kinesis</a>, et le traitement peut être fait grâce à des algorithmes complexes, exprimés par des fonctions de haut niveau tel que <em>map</em>, <em>reduce</em>, <em>join</em>, etc. Finalement, les données traitées peuvent être envoyées vers des systèmes de fichiers, bases de données ou tableaux de bord en temps réels. Il est même possible de réaliser des algorithmes de machine learning et de traitement de graphes sur les flux de données.</p>
+<p><strong>Spark Streaming</strong> a été ajouté à Apache Spark en 2013, comme extension de l'API de base de Spark, qui fournit un traitement de flux scalable, à haut débit et tolérant aux fautes. L'ingestion de données peut être réalisée par plusieurs outils tels que <a href="https://kafka.apache.org/">Apache Kafka</a>, <a href="https://flume.apache.org/">Apache Flume</a> ou <a href="https://aws.amazon.com/kinesis/">Amazon Kinesis</a>, et le traitement peut être fait grâce à des algorithmes complexes, exprimés par des fonctions de haut niveau tel que <em>map</em>, <em>reduce</em>, <em>join</em>, etc. Finalement, les données traitées peuvent être envoyées vers des systèmes de fichiers, bases de données ou tableaux de bord en temps réels. Il est même possible de réaliser des algorithmes de machine learning et de traitement de graphes sur les flux de données.</p>
 <p><center><img src="../img/p6/spark-streaming.png" width="400"></center></p>
 <p>En interne, il fonctionne comme suit: Spark Streaming reçoit des données en streaming et les divise en micro-batches, qui sont ensuite calculés par le moteur de spark pour générer le flux final de résultats.</p>
 <p><center><img src="../img/p6/micro-batch.png" width="500"></center></p>
@@ -531,7 +543,7 @@
 <ul>
 <li><strong>Transformations</strong>: qui peuvent être:<ul>
 <li>Sans état (<em>Stateless</em>): ce sont des transformations où le traitement sur un lot n'a pas de dépendance avec les lots précédents. Les transformations sans état sont de simples transformations RDD. Elles s'appliquent sur chaque batch (et sur chaque RDD) du DStream. Ceci inclut des transformations classiques telles que <em>map</em>, <em>filter</em>, <em>reduceByKey</em>, etc.</li>
-<li>Avec état (<em>Stateful</em>): ces transformations utilisent des données ou des résultats intermédiaires provenant des batches précédents. Les transformations avec état sont des opérations sur les DStreams qui suivent l'évolution des données à travers le temps. les deux types de transformations avec état sont les <em>windowed operations</em>, qui opèrent sur une fenêtre glissante de périodes de temps, et la <em>updateStateByKey</em>, utilisée pour suivre l'état à travers les évènements de chaque clef.</li>
+<li>Avec état (<em>Stateful</em>): ces transformations utilisent des données ou des résultats intermédiaires provenant des batches précédents. Les transformations avec état sont des opérations sur les DStreams qui suivent l'évolution des données à travers le temps. Les deux types de transformations avec état sont les <em>windowed operations</em>, qui opèrent sur une fenêtre glissante de périodes de temps, et la <em>updateStateByKey</em>, utilisée pour suivre l'état à travers les évènements de chaque clef.</li>
 </ul>
 </li>
 <li><strong>Output Operations</strong>: elles sont réalisées pour renvoyer un résultat après les transformations. C'est l'équivalent des <em>actions</em> pour les RDDs. On peut citer: <em>print</em>, <em>save</em>, etc.</li>

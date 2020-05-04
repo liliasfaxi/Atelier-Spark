@@ -478,6 +478,18 @@
   </li>
 
     
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../p8-graphx/" title="P8 - Spark GraphX" class="md-nav__link">
+      P8 - Spark GraphX
+    </a>
+  </li>
+
+    
   </ul>
 </nav>
                   </div>
@@ -622,7 +634,7 @@
                 <h1 id="partie-5-spark-sql">Partie 5 - Spark SQL</h1>
 <p><center><img src="../img/p5/Spark-SQL.jpg" width="500pt"></center></p>
 <h2 id="presentation-de-spark-sql">Présentation de Spark SQL</h2>
-<p>Spark SQL<sup id="fnref:spark-official"><a class="footnote-ref" href="#fn:spark-official">1</a></sup> est un module de Spark pour le traitement des données structurées. Contrairement aux RDD, les interfaces fournies par Spark SQL informent Spark de la structure des données et traitements réalisés. En interne, Spark SQl utilise ces informations pour réaliser des optimisations.</p>
+<p>Spark SQL<sup id="fnref:spark-official"><a class="footnote-ref" href="#fn:spark-official">1</a></sup> est un module de Spark pour le traitement des données structurées. Contrairement aux RDD, les interfaces fournies par Spark SQL informent Spark de la structure des données et traitements réalisés. En interne, Spark SQL utilise ces informations pour réaliser des optimisations.</p>
 <p>Il est possible d'interagir avec Spark SQL de deux façons: en utilisant SQL et l'API Dataset. Pour ces deux interfaces, le même moteur d'exécution est utilisé par Spark SQL, ce qui permet aux développeurs de passer facilement d'une API à une autre.</p>
 <h3 id="sql">SQL</h3>
 <p>SQL est utilisé comme langage de requêtage dans Spark SQL. Ce dernier peut également lire des données à partir d'une installation Hive existante. En exécutant des requêtes SQL à partir d'autres langages de programmation, le résultat est retourné sous forme de Dataset ou DataFrame.</p>
@@ -638,19 +650,19 @@ Les DataFrames peuvent être construites à partir de fichiers structurés, tabl
 <p><center><img src="../img/p5/features.jpg" width="500pt"><sup id="fnref:data-flair"><a class="footnote-ref" href="#fn:data-flair">3</a></sup></center></p>
 <ul>
 <li><strong>Intégré</strong>: Permet de mixer les programmes Spark avec les requêtes SQL, ce qui autorise un requêtage de données structurées grâce à SQL ou à l'API Dataframe en Java, Scala, Python et R.</li>
-<li><strong>Accès unifié aux données</strong>: Les Dataframes et SQL dans Spark communiquent de faon unifiée avec plusieurs sources de données telles que Hive, Avro, Parquet, JSON et JDBC.</li>
+<li><strong>Accès unifié aux données</strong>: Les Dataframes et SQL dans Spark communiquent de façon unifiée avec plusieurs sources de données telles que Hive, Avro, Parquet, JSON et JDBC.</li>
 <li><strong>Compatible avec Hive</strong>: Exécute des requêtes Hive sans modification sur les données courantes. Spark SQL réécrit le frontend de Hive, permettant une compatibilité complète avec les données, requêtes et UDFs de Hive.</li>
-<li><strong>Connectivité standart</strong>: La connexion peut se faire via JDBC ou ODBC.</li>
+<li><strong>Connectivité standard</strong>: La connexion peut se faire via JDBC ou ODBC.</li>
 <li><strong>Performance et scalabilité</strong>: Spark SQL incorpore un optimiseur, un générateur de code et un stockage orienté colonnes. De plus, il profite de la puissance du moteur Spark, qui fournit une excellente tolérance au fautes.</li>
 </ul>
 <h2 id="optimisation-de-spark-sql-avec-catalyst">Optimisation de Spark SQL avec Catalyst</h2>
 <p>Le framework d'optimisation de Spark SQL permet aux développeurs d'exprimer des requêtes de transformation en très peu de lignes de code.</p>
 <p><center><img src="../img/p5/optimization.jpg" width="700pt"><sup id="fnref2:data-flair"><a class="footnote-ref" href="#fn:data-flair">3</a></sup></center></p>
-<p>Spark SQL incorpore un optimiseur appelé Catalyst, basé sur des constructions fonctionneles en Scala. Il supporte une optimisation à base de règles (<em>rule-based</em>) et à base de coût (<em>cost_based</em>). L'optimisation à base de règles utilise un ensemble de règles pour déterminer comment exécuter une requête donnée, alors que l'optimisation à base de coût trouve le meilleur moyen pour exécuter une requête SQL. Cette dernière catégorie génère plusieurs règles, calcule les coûts induits par chacune, et choisit la plus optimisée.</p>
+<p>Spark SQL incorpore un optimiseur appelé Catalyst, basé sur des constructions fonctionnelles en Scala. Il supporte une optimisation à base de règles (<em>rule-based</em>) et à base de coût (<em>cost_based</em>). L'optimisation à base de règles utilise un ensemble de règles pour déterminer comment exécuter une requête donnée, alors que l'optimisation à base de coût trouve le meilleur moyen pour exécuter une requête SQL. Cette dernière catégorie génère plusieurs règles, calcule les coûts induits par chacune, et choisit la plus optimisée.</p>
 <p>En interne, Catalyst contient une bibliothèque pour représenter des arbres et appliquer des règles pour les manipuler. Par dessus, d'autres bibliothèques ont été construites pour assurer le traitement de requêtes relationnelles, ainsi que plusieurs règles qui gèrent différentes phases de l'exécution des requêtes: analyse, optimisation logique, planification physique et génération de code, pour compiler des parties de la requête en Bytecode Java.  Pour cette dernière opération, une autre caractéristique de Scala, les <em>quasiquotes</em>, est utilisée, pour faciliter la génération de code à l'exécution à partir d'expressions composables.<sup id="fnref:databricks"><a class="footnote-ref" href="#fn:databricks">4</a></sup></p>
 <h2 id="manipulation-de-spark-sql-avec-le-shell">Manipulation de Spark SQL avec le Shell</h2>
 <h3 id="rdd-vs-dataframe-vs-dataset">RDD vs DataFrame vs Dataset</h3>
-<p>Nous allons dans cette partie vous montrer les différences entre ces trois structures de données, en utilisant du code, inspiré du tutoriel de Zenika <sup id="fnref2:zenika"><a class="footnote-ref" href="#fn:zenika">2</a></sup>.</p>
+<p>Nous allons dans cette partie vous montrer les différences entre ces trois structures de données, en utilisant du code, inspiré d'un tutoriel de Zenika <sup id="fnref2:zenika"><a class="footnote-ref" href="#fn:zenika">2</a></sup>.</p>
 <p>Supposons qu'on ait le fichier <em>purchases.txt</em>, qui contient la totalité des achats réalisés dans une grande distribution, dont la structure est la suivante:<br />
 <code class="codehilite"><span class="n">date</span><span class="p">,</span>  <span class="n">heure</span><span class="p">,</span>  <span class="n">ville</span><span class="p">,</span>  <span class="n">categorie_pdt</span><span class="p">,</span>  <span class="n">prix</span><span class="p">,</span>  <span class="n">moyen_paiement</span></code><br />
 Nous voulons réaliser une opération de Map Reduce simple, où nous allons calculer pour chaque ville, la somme totale des ventes réalisées.</p>
@@ -677,7 +689,7 @@ Nous voulons réaliser une opération de Map Reduce simple, où nous allons calc
   <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>  <span class="n">ls</span> <span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">input</span>
 </pre></div>
 </td></tr></table><br />
-le fichier devrait apparaître:<br />
+Le fichier devrait apparaître:<br />
 <center><img src="../img/p5/fichier-purchases.png" width="500pt"></center></li>
 </ol>
 <h4 id="utilisation-des-rdd">Utilisation des RDD</h4>
@@ -891,7 +903,7 @@ Charger le fichier .bashrc en utilisant <code class="codehilite"><span class="n"
 <span class="cm">  */</span>
 </pre></div>
 </td></tr></table></li>
-<li>Filter les données par age<br />
+<li>Filter les données par âge<br />
   <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
  3
@@ -913,7 +925,7 @@ Charger le fichier .bashrc en utilisant <code class="codehilite"><span class="n"
 <span class="cm">  */</span>
 </pre></div>
 </td></tr></table></li>
-<li>Grouper les données par age et compter le nombre de personnes pour chaque age<br />
+<li>Grouper les données par âge et compter le nombre de personnes pour chaque âge<br />
   <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
  3
