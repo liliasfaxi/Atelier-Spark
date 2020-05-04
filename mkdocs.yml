@@ -99,6 +99,7 @@ pages:
    - P5 - Spark SQL: 'p5-sql.md'
    - P6 - Spark Streaming: 'p6-stream.md'
    - P7 - Spark MLLib: 'p7-ml.md'
+   - P8 - Spark GraphX: 'p8-graphx.md'
 
 extra_javascript: ['https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML']
 extra_css:

@@ -124,7 +124,7 @@ Pour exécuter ce code sur notre cluster, nous allons suivre les étapes suivant
       ```bash
         pip3 install numpy spark
       ```
-  * Créer un fichier ```pipeline.py``` dans lequel vous allez copier le code présenté ci-dessous
+  * Créer un fichier ```pipeline.py``` dans lequel vous allez copier le code présenté ci-dessus
   * Pour lancer votre application, exécuter:
   ```bash
     spark-submit pipeline.py

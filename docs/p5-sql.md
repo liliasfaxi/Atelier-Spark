@@ -2,7 +2,7 @@
 <center><img src="../img/p5/Spark-SQL.jpg" width="500pt"></center>
 
 ## Présentation de Spark SQL
-Spark SQL[^spark-official] est un module de Spark pour le traitement des données structurées. Contrairement aux RDD, les interfaces fournies par Spark SQL informent Spark de la structure des données et traitements réalisés. En interne, Spark SQl utilise ces informations pour réaliser des optimisations.
+Spark SQL[^spark-official] est un module de Spark pour le traitement des données structurées. Contrairement aux RDD, les interfaces fournies par Spark SQL informent Spark de la structure des données et traitements réalisés. En interne, Spark SQL utilise ces informations pour réaliser des optimisations.
 
 Il est possible d'interagir avec Spark SQL de deux façons: en utilisant SQL et l'API Dataset. Pour ces deux interfaces, le même moteur d'exécution est utilisé par Spark SQL, ce qui permet aux développeurs de passer facilement d'une API à une autre.
 
@@ -28,9 +28,9 @@ Le tableau suivant permet de comparer les trois structures (RDD, Dataset et Data
 <center><img src="../img/p5/features.jpg" width="500pt">[^data-flair]</center>
 
   * **Intégré**: Permet de mixer les programmes Spark avec les requêtes SQL, ce qui autorise un requêtage de données structurées grâce à SQL ou à l'API Dataframe en Java, Scala, Python et R.
-  * **Accès unifié aux données**: Les Dataframes et SQL dans Spark communiquent de faon unifiée avec plusieurs sources de données telles que Hive, Avro, Parquet, JSON et JDBC.
+  * **Accès unifié aux données**: Les Dataframes et SQL dans Spark communiquent de façon unifiée avec plusieurs sources de données telles que Hive, Avro, Parquet, JSON et JDBC.
   * **Compatible avec Hive**: Exécute des requêtes Hive sans modification sur les données courantes. Spark SQL réécrit le frontend de Hive, permettant une compatibilité complète avec les données, requêtes et UDFs de Hive.
-  * **Connectivité standart**: La connexion peut se faire via JDBC ou ODBC.
+  * **Connectivité standard**: La connexion peut se faire via JDBC ou ODBC.
   * **Performance et scalabilité**: Spark SQL incorpore un optimiseur, un générateur de code et un stockage orienté colonnes. De plus, il profite de la puissance du moteur Spark, qui fournit une excellente tolérance au fautes.
 
 ## Optimisation de Spark SQL avec Catalyst
@@ -39,14 +39,14 @@ Le framework d'optimisation de Spark SQL permet aux développeurs d'exprimer des
 
 <center><img src="../img/p5/optimization.jpg" width="700pt">[^data-flair]</center>
 
-Spark SQL incorpore un optimiseur appelé Catalyst, basé sur des constructions fonctionneles en Scala. Il supporte une optimisation à base de règles (_rule-based_) et à base de coût (_cost_based_). L'optimisation à base de règles utilise un ensemble de règles pour déterminer comment exécuter une requête donnée, alors que l'optimisation à base de coût trouve le meilleur moyen pour exécuter une requête SQL. Cette dernière catégorie génère plusieurs règles, calcule les coûts induits par chacune, et choisit la plus optimisée.
+Spark SQL incorpore un optimiseur appelé Catalyst, basé sur des constructions fonctionnelles en Scala. Il supporte une optimisation à base de règles (_rule-based_) et à base de coût (_cost_based_). L'optimisation à base de règles utilise un ensemble de règles pour déterminer comment exécuter une requête donnée, alors que l'optimisation à base de coût trouve le meilleur moyen pour exécuter une requête SQL. Cette dernière catégorie génère plusieurs règles, calcule les coûts induits par chacune, et choisit la plus optimisée.
 
 En interne, Catalyst contient une bibliothèque pour représenter des arbres et appliquer des règles pour les manipuler. Par dessus, d'autres bibliothèques ont été construites pour assurer le traitement de requêtes relationnelles, ainsi que plusieurs règles qui gèrent différentes phases de l'exécution des requêtes: analyse, optimisation logique, planification physique et génération de code, pour compiler des parties de la requête en Bytecode Java.  Pour cette dernière opération, une autre caractéristique de Scala, les _quasiquotes_, est utilisée, pour faciliter la génération de code à l'exécution à partir d'expressions composables.[^databricks]
 
 ## Manipulation de Spark SQL avec le Shell
 
 ### RDD vs DataFrame vs Dataset
-Nous allons dans cette partie vous montrer les différences entre ces trois structures de données, en utilisant du code, inspiré du tutoriel de Zenika [^zenika].
+Nous allons dans cette partie vous montrer les différences entre ces trois structures de données, en utilisant du code, inspiré d'un tutoriel de Zenika [^zenika].
 
 Supposons qu'on ait le fichier _purchases.txt_, qui contient la totalité des achats réalisés dans une grande distribution, dont la structure est la suivante:
   ``` date,  heure,  ville,  categorie_pdt,  prix,  moyen_paiement```
@@ -75,7 +75,7 @@ En premier lieu, nous allons commencer par charger le fichier _purchases.txt_ da
   ```Bash
     ls /root/input
   ```
-le fichier devrait apparaître:
+Le fichier devrait apparaître:
 <center><img src="../img/p5/fichier-purchases.png" width="500pt"></center>
 
 #### Utilisation des RDD
@@ -258,7 +258,7 @@ Nous allons montrer dans ce qui suit un exemple SparkSQL simple[^tutorialspoint]
       +------+
     */
   ```
-  8. Filter les données par age
+  8. Filter les données par âge
   ```scala
     dfs.filter(dfs("age") > 23).show()
     /* Résultat:
@@ -271,7 +271,7 @@ Nous allons montrer dans ce qui suit un exemple SparkSQL simple[^tutorialspoint]
       +---+----+-----+
     */
   ```
-  9. Grouper les données par age et compter le nombre de personnes pour chaque age
+  9. Grouper les données par âge et compter le nombre de personnes pour chaque âge
   ```scala
     dfs.groupBy("age").count().show()
     /* Résultat:
