@@ -1,4 +1,4 @@
-# TP-BigData
+# TP Apache Spark
 Pour pouvoir lancer ce TP en local, il va falloir suivre les instructions suivantes:
 
   * Installer mkdocs en suivant les instructions sur: http://www.mkdocs.org/
