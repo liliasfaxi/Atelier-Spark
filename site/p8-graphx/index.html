@@ -1,352 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
-        <meta name="author" content="Lilia Sfaxi">
-        <link rel="canonical" href="http://liliasfaxi.github.io/Atelier-Spark/p8-graphx/">
-        <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>P8 - Spark GraphX - Atelier Apache Spark</title>
-        <link href="../css/bootstrap.min.css" rel="stylesheet">
-        <link href="../css/font-awesome.min.css" rel="stylesheet">
-        <link href="../css/base.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+<!doctype html><html lang=en class=no-js> <head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Cours et Travaux Pratiques pour se familiariser avec Apache Spark"><meta name=author content="Lilia Sfaxi"><link href=http://liliasfaxi.github.io/Atelier-Spark/p8-graphx/ rel=canonical><link rel=icon href=../assets/images/favicon.png><meta name=generator content="mkdocs-1.2.3, mkdocs-material-8.1.10"><title>P8 - Spark GraphX - Atelier Apache Spark</title><link rel=stylesheet href=../assets/stylesheets/main.d6be258b.min.css><link rel=stylesheet href=../assets/stylesheets/palette.e6a45f82.min.css><meta name=theme-color content=#546d78><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback"><style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style><link rel=stylesheet href=../css/timeago.css><link rel=stylesheet href=../stylesheets/extra.css><link rel=stylesheet href=../stylesheets/links.css><script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script></head> <body dir=ltr data-md-color-scheme data-md-color-primary=blue-grey data-md-color-accent=amber> <input class=md-toggle data-md-toggle=drawer type=checkbox id=__drawer autocomplete=off> <input class=md-toggle data-md-toggle=search type=checkbox id=__search autocomplete=off> <label class=md-overlay for=__drawer></label> <div data-md-component=skip> <a href=#partie-8-spark-graphx class=md-skip> Skip to content </a> </div> <div data-md-component=announce> </div> <header class=md-header data-md-component=header> <nav class="md-header__inner md-grid" aria-label=Header> <a href=.. title="Atelier Apache Spark" class="md-header__button md-logo" aria-label="Atelier Apache Spark" data-md-component=logo> <img src=../img/logo.png alt=logo> </a> <label class="md-header__button md-icon" for=__drawer> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg> </label> <div class=md-header__title data-md-component=header-title> <div class=md-header__ellipsis> <div class=md-header__topic> <span class=md-ellipsis> Atelier Apache Spark </span> </div> <div class=md-header__topic data-md-component=header-topic> <span class=md-ellipsis> P8 - Spark GraphX </span> </div> </div> </div> <label class="md-header__button md-icon" for=__search> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg> </label> <div class=md-search data-md-component=search role=dialog> <label class=md-search__overlay for=__search></label> <div class=md-search__inner role=search> <form class=md-search__form name=search> <input type=text class=md-search__input name=query aria-label=Search placeholder=Search autocapitalize=off autocorrect=off autocomplete=off spellcheck=false data-md-component=search-query required> <label class="md-search__icon md-icon" for=__search> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg> </label> <nav class=md-search__options aria-label=Search> <button type=reset class="md-search__icon md-icon" aria-label=Clear tabindex=-1> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg> </button> </nav> </form> <div class=md-search__output> <div class=md-search__scrollwrap data-md-scrollfix> <div class=md-search-result data-md-component=search-result> <div class=md-search-result__meta> Initializing search </div> <ol class=md-search-result__list></ol> </div> </div> </div> </div> </div> <div class=md-header__source> <a href=https://github.com/liliasfaxi/Atelier-Spark/ title="Go to repository" class=md-source data-md-component=source> <div class="md-source__icon md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg> </div> <div class=md-source__repository> liliasfaxi/Atelier-Spark </div> </a> </div> </nav> </header> <div class=md-container data-md-component=container> <main class=md-main data-md-component=main> <div class="md-main__inner md-grid"> <div class="md-sidebar md-sidebar--primary" data-md-component=sidebar data-md-type=navigation> <div class=md-sidebar__scrollwrap> <div class=md-sidebar__inner> <nav class="md-nav md-nav--primary" aria-label=Navigation data-md-level=0> <label class=md-nav__title for=__drawer> <a href=.. title="Atelier Apache Spark" class="md-nav__button md-logo" aria-label="Atelier Apache Spark" data-md-component=logo> <img src=../img/logo.png alt=logo> </a> Atelier Apache Spark </label> <div class=md-nav__source> <a href=https://github.com/liliasfaxi/Atelier-Spark/ title="Go to repository" class=md-source data-md-component=source> <div class="md-source__icon md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg> </div> <div class=md-source__repository> liliasfaxi/Atelier-Spark </div> </a> </div> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=.. class=md-nav__link> Atelier Apache Spark </a> </li> <li class=md-nav__item> <a href=../p1-big-data/ class=md-nav__link> P1 - Introduction au Big Data </a> </li> <li class=md-nav__item> <a href=../p2-spark/ class=md-nav__link> P2 - Introduction à Apache Spark </a> </li> <li class=md-nav__item> <a href=../p3-install/ class=md-nav__link> P3 - Installation de Spark </a> </li> <li class=md-nav__item> <a href=../p4-batch/ class=md-nav__link> P4 - RDD et Batch Processing avec Spark </a> </li> <li class=md-nav__item> <a href=../p5-sql/ class=md-nav__link> P5 - Spark SQL </a> </li> <li class=md-nav__item> <a href=../p6-stream/ class=md-nav__link> P6 - Spark Streaming </a> </li> <li class=md-nav__item> <a href=../p7-ml/ class=md-nav__link> P7 - Spark MLLib </a> </li> <li class="md-nav__item md-nav__item--active"> <input class="md-nav__toggle md-toggle" data-md-toggle=toc type=checkbox id=__toc> <label class="md-nav__link md-nav__link--active" for=__toc> P8 - Spark GraphX <span class="md-nav__icon md-icon"></span> </label> <a href=./ class="md-nav__link md-nav__link--active"> P8 - Spark GraphX </a> <nav class="md-nav md-nav--secondary" aria-label="Table of contents"> <label class=md-nav__title for=__toc> <span class="md-nav__icon md-icon"></span> Table of contents </label> <ul class=md-nav__list data-md-component=toc data-md-scrollfix> <li class=md-nav__item> <a href=#partie-8-spark-graphx class=md-nav__link> Partie 8 - Spark GraphX </a> <nav class=md-nav aria-label="Partie 8 - Spark GraphX"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#presentation-de-spark-graphx class=md-nav__link> Présentation de Spark GraphX </a> <nav class=md-nav aria-label="Présentation de Spark GraphX"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#graphes-de-proprietes class=md-nav__link> Graphes de Propriétés </a> </li> <li class=md-nav__item> <a href=#operateurs-graphx class=md-nav__link> Opérateurs GraphX </a> <nav class=md-nav aria-label="Opérateurs GraphX"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#operateurs-structurels class=md-nav__link> Opérateurs structurels </a> </li> <li class=md-nav__item> <a href=#operateurs-de-jointure class=md-nav__link> Opérateurs de jointure </a> </li> <li class=md-nav__item> <a href=#operateurs-dagregation-et-de-voisinage class=md-nav__link> Opérateurs d'agrégation et de voisinage </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#caracteristiques-de-spark-graphx class=md-nav__link> Caractéristiques de Spark GraphX </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#exemple-dapplication-graphx class=md-nav__link> Exemple d'Application GraphX </a> </li> <li class=md-nav__item> <a href=#references class=md-nav__link> Références </a> </li> </ul> </nav> </li> </ul> </nav> </li> </ul> </nav> </div> </div> </div> <div class="md-sidebar md-sidebar--secondary" data-md-component=sidebar data-md-type=toc> <div class=md-sidebar__scrollwrap> <div class=md-sidebar__inner> <nav class="md-nav md-nav--secondary" aria-label="Table of contents"> <label class=md-nav__title for=__toc> <span class="md-nav__icon md-icon"></span> Table of contents </label> <ul class=md-nav__list data-md-component=toc data-md-scrollfix> <li class=md-nav__item> <a href=#partie-8-spark-graphx class=md-nav__link> Partie 8 - Spark GraphX </a> <nav class=md-nav aria-label="Partie 8 - Spark GraphX"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#presentation-de-spark-graphx class=md-nav__link> Présentation de Spark GraphX </a> <nav class=md-nav aria-label="Présentation de Spark GraphX"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#graphes-de-proprietes class=md-nav__link> Graphes de Propriétés </a> </li> <li class=md-nav__item> <a href=#operateurs-graphx class=md-nav__link> Opérateurs GraphX </a> <nav class=md-nav aria-label="Opérateurs GraphX"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#operateurs-structurels class=md-nav__link> Opérateurs structurels </a> </li> <li class=md-nav__item> <a href=#operateurs-de-jointure class=md-nav__link> Opérateurs de jointure </a> </li> <li class=md-nav__item> <a href=#operateurs-dagregation-et-de-voisinage class=md-nav__link> Opérateurs d'agrégation et de voisinage </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#caracteristiques-de-spark-graphx class=md-nav__link> Caractéristiques de Spark GraphX </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#exemple-dapplication-graphx class=md-nav__link> Exemple d'Application GraphX </a> </li> <li class=md-nav__item> <a href=#references class=md-nav__link> Références </a> </li> </ul> </nav> </li> </ul> </nav> </div> </div> </div> <div class=md-content data-md-component=content> <article class="md-content__inner md-typeset"> <a href=https://github.com/liliasfaxi/Atelier-Spark/edit/master/docs/p8-graphx.md title="Edit this page" class="md-content__button md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg> </a> <h1>P8 - Spark GraphX</h1> <h2 id=partie-8-spark-graphx>Partie 8 - Spark GraphX<a class=headerlink href=#partie-8-spark-graphx title="Permanent link">&para;</a></h2> <p><center><img src=../img/p8/graphx.png width=600pt></center></p> <h3 id=presentation-de-spark-graphx>Présentation de Spark GraphX<a class=headerlink href=#presentation-de-spark-graphx title="Permanent link">&para;</a></h3> <p>Spark GraphX[^spark-official] est un composant Spark permettant le traitement à base de graphes. A un niveau élevé, GraphX étend la structure Spark RDD en introduisant une abstraction sous forme d'un graphe dirigé formé de sommets (<em>vertex</em>) et d'arêtes (<em>edge</em>), auxquels sont attachées des propriétés. Pour gérer ces structures, GraphX propose un ensemble d'opérateurs ainsi qu'une version optimisée de l'API <a href=https://spark.apache.org/docs/latest/graphx-programming-guide.html#pregel>Pregel</a>. De plus, plusieurs algorithmes et constructeurs (<em>builders</em>) sont définis pour simplifier le traitement et analyse de ces graphes.</p> <h4 id=graphes-de-proprietes>Graphes de Propriétés<a class=headerlink href=#graphes-de-proprietes title="Permanent link">&para;</a></h4> <p>Un graphe de propriétés est un multigraphe dirigé contenant des objets définis par l'utilisateur attachés à chaque sommet et arête. Un multigraphe est un graphe dirigé qui peut contenir plusieurs arêtes reliant les mêmes sommets source et destination, permettant ainsi de modéliser des situations où les sommets peuvent avoir plusieurs types de relations. Chaque sommet est représenté par un identifiant unique de 64 bits (<em>VertexId</em>). Les arêtes doivent avoir chacune un sommet source et un sommet destination.</p> <p>Un graphe de propriété est paramétrisé par deux types: un sommet (<em>Vertex</em> appelé <em>VD</em>) et une arête (<em>Edge</em> appelé <em>ED</em>). Ces types optimisés remplacent les types classiques, même primitifs, de façon a réduire la taille en mémoire réservée.</p> <p>Pour définir des types personnalisés pour les sommets, il est préférable d'utiliser l'héritage. Par exemple, pour définir des sommets de type <em>Utilisateur</em> et d'autres de type <em>Produit</em>, on peut créer les classes suivantes:</p> <div class=highlight><pre><span></span><code>  <span class=k>class</span> <span class=nc>VertexProperty</span><span class=p>()</span>
+  <span class=k>case</span> <span class=k>class</span> <span class=nc>UserProperty</span><span class=p>(</span><span class=kd>val</span> <span class=n>name</span><span class=p>:</span> <span class=nc>String</span><span class=p>)</span> <span class=k>extends</span> <span class=nc>VertexProperty</span>
+  <span class=k>case</span> <span class=k>class</span> <span class=nc>ProductProperty</span><span class=p>(</span><span class=kd>val</span> <span class=n>name</span><span class=p>:</span> <span class=nc>String</span><span class=p>,</span> <span class=kd>val</span> <span class=n>price</span><span class=p>:</span> <span class=nc>Double</span><span class=p>)</span> <span class=k>extends</span> <span class=nc>VertexProperty</span>
+  <span class=c1>// Le graphe peut alors avoir le type suivant:</span>
+  <span class=kd>var</span> <span class=n>graph</span><span class=p>:</span> <span class=nc>Graph</span><span class=p>[</span><span class=nc>VertexProperty</span><span class=p>,</span> <span class=nc>String</span><span class=p>]</span> <span class=o>=</span> <span class=kc>null</span>
+</code></pre></div> <p>Un graphe de propriétés correspond à une paire de RDDs contenant des propriétés pour chaque sommet et arête. En conséquence, la classe <em>Graph</em> contient des membres permettant d'accéder aux sommets et arêtes:</p> <div class=highlight><pre><span></span><code>  <span class=k>class</span> <span class=nc>Graph</span><span class=p>[</span><span class=nc>VD</span><span class=p>,</span> <span class=nc>ED</span><span class=p>]</span> <span class=p>{</span>
+    <span class=kd>val</span> <span class=n>vertices</span><span class=p>:</span> <span class=nc>VertexRDD</span><span class=p>[</span><span class=nc>VD</span><span class=p>]</span>
+    <span class=kd>val</span> <span class=n>edges</span><span class=p>:</span> <span class=nc>EdgeRDD</span><span class=p>[</span><span class=nc>ED</span><span class=p>]</span>
+  <span class=p>}</span>
+</code></pre></div> <p>Les classes <code>VertexRDD[VD]</code> et <code>EdgeRDD[RD]</code> sont des versions optimisées des RDD qui fournissent des fonctionnalités supplémentaires pour le traitement et optimisation des graphes.</p> <p>Nous présentons dans ce qui suit un exemple de graphe de propriétés montrant plusieurs collaborateurs dans un projet de recherche: <center><img src=../img/p8/property_graph.png width=600pt></center></p> <p>En plus des sommets et arêtes du graphe de propriétés, GraphX présente également une vue en <em>triplet</em>. Cette vue permet de faire la jointure des propriétés des sommets et arêtes, équivalente à l'expression SQL suivante:</p> <div class=highlight><pre><span></span><code><span class=w>  </span><span class=k>SELECT</span><span class=w> </span><span class=n>src</span><span class=p>.</span><span class=n>id</span><span class=p>,</span><span class=w> </span><span class=n>dst</span><span class=p>.</span><span class=n>id</span><span class=p>,</span><span class=w> </span><span class=n>src</span><span class=p>.</span><span class=n>attr</span><span class=p>,</span><span class=w> </span><span class=n>e</span><span class=p>.</span><span class=n>attr</span><span class=p>,</span><span class=w> </span><span class=n>dst</span><span class=p>.</span><span class=n>attr</span><span class=w></span>
+<span class=w>  </span><span class=k>FROM</span><span class=w> </span><span class=n>edges</span><span class=w> </span><span class=k>AS</span><span class=w> </span><span class=n>e</span><span class=w> </span><span class=k>LEFT</span><span class=w> </span><span class=k>JOIN</span><span class=w> </span><span class=n>vertices</span><span class=w> </span><span class=k>AS</span><span class=w> </span><span class=n>src</span><span class=p>,</span><span class=w> </span><span class=n>vertices</span><span class=w> </span><span class=k>AS</span><span class=w> </span><span class=n>dst</span><span class=w></span>
+<span class=w>  </span><span class=k>ON</span><span class=w> </span><span class=n>e</span><span class=p>.</span><span class=n>srcId</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>src</span><span class=p>.</span><span class=n>Id</span><span class=w> </span><span class=k>AND</span><span class=w> </span><span class=n>e</span><span class=p>.</span><span class=n>dstId</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>dst</span><span class=p>.</span><span class=n>Id</span><span class=w></span>
+</code></pre></div> <p>Ceci correspond graphiquement à la figure suivante: <center><img src=../img/p8/triplet.png width=600pt></center></p> <p>La classe <code>EdgeTriplet</code> étend la classe <code>Edge</code> en ajoutant les attributs <code>srcAttr</code> et <code>dstAttr</code> qui contiennent les propriétés source et destination. Le code ressemblera à ce qui suit:</p> <div class=highlight><pre><span></span><code>  <span class=kd>val</span> <span class=n>graph</span><span class=p>:</span> <span class=nc>Graph</span><span class=p>[(</span><span class=nc>String</span><span class=p>,</span> <span class=nc>String</span><span class=p>),</span> <span class=nc>String</span><span class=p>]</span>
+  <span class=c1>// Utiliser les triplets pour créer un RDD de faits</span>
+  <span class=kd>val</span> <span class=n>facts</span><span class=p>:</span> <span class=nc>RDD</span><span class=p>[</span><span class=nc>String</span><span class=p>]</span> <span class=o>=</span>  <span class=n>graph</span><span class=p>.</span><span class=n>triplets</span><span class=p>.</span><span class=n>map</span><span class=p>(</span><span class=n>triplet</span> <span class=o>=&gt;</span>
+    <span class=n>triplet</span><span class=p>.</span><span class=n>srcAttr</span><span class=p>.</span><span class=n>_1</span> <span class=o>+</span> <span class=s>&quot; est le &quot;</span> <span class=o>+</span> <span class=n>triplet</span><span class=p>.</span><span class=n>attr</span> <span class=o>+</span> <span class=s>&quot; de &quot;</span> <span class=o>+</span> <span class=n>triplet</span><span class=p>.</span><span class=n>dstAttr</span><span class=p>.</span><span class=n>_1</span><span class=p>)</span>
+  <span class=n>facts</span><span class=p>.</span><span class=n>collect</span><span class=p>.</span><span class=n>foreach</span><span class=p>(</span><span class=n>println</span><span class=p>(</span><span class=n>_</span><span class=p>))</span>
+</code></pre></div> <h4 id=operateurs-graphx>Opérateurs GraphX<a class=headerlink href=#operateurs-graphx title="Permanent link">&para;</a></h4> <p>De même que pour les RDDs, les graphes de propriétés ont également un ensemble d'opérateurs qui prennent des fonctions définies par l'utilisateur et produisent de nouveaux graphes avec des propriétés et une structure modifiées.</p> <p>Les opérateurs utilisés sont divisés en plusieurs types:</p> <h5 id=operateurs-structurels>Opérateurs structurels<a class=headerlink href=#operateurs-structurels title="Permanent link">&para;</a></h5> <p>GraphX supporte quelques opérateurs qui modifient la structure du graphe:</p> <ul> <li><code>reverse</code>: retourne un nouveau graphe avec toutes les directions des arêtes inversées.</li> <li><code>subgraph</code>: retourne le sous-ensemble du graphe qui contient les sommets et arêtes respectant les contraintes définies en paramètre, ainsi que toutes les arêtes connectant les sommets respectant ces contraintes.</li> <li><code>mask</code>: retourne un sous-graphe qui contient les sommets et arêtes qui existent aussi dans le graphe donné en entrée.</li> </ul> <h5 id=operateurs-de-jointure>Opérateurs de jointure<a class=headerlink href=#operateurs-de-jointure title="Permanent link">&para;</a></h5> <p>Ces opérateurs permettent de joindre des données à partir de RDD externes avec des graphes. Deux opérateurs sont définis:</p> <ul> <li><code>joinVertices</code>: joint les sommets avec le RDD en entrée et retourne un nouveau graphe avec les propriétés du sommet obtenues en appliquant la fonction <code>map</code> définie par l'utilisateur au résultat des sommets joints.</li> <li><code>outerJoinVertices</code>: se comporte comme <code>joinVertices</code> mais la fonction <code>map</code> est appliquée à tous les sommets et peut changer le type de la propriété de l'arête.</li> </ul> <h5 id=operateurs-dagregation-et-de-voisinage>Opérateurs d'agrégation et de voisinage<a class=headerlink href=#operateurs-dagregation-et-de-voisinage title="Permanent link">&para;</a></h5> <p>Les opérateurs d'agrégation permettent de réunir des information sur le voisinage de chaque sommet.</p> <ul> <li><code>aggregateMessages</code> applique une fonction définie par l'utilisateur <code>sendMsg</code> à chaque triplet du graphe et utilise la fonction <code>mergeMsg</code>pour agréger ces messages dans leur sommet destination. Permet également de faire des opérations de type <em>map/reduce</em> en remplaçant l'opérateur <code>mapReduceTriplets</code> qui existait dans les anciennes versions de GraphX.</li> <li><code>collectNeighborIds</code> et <code>collectNeighbors</code>: permettent de collecter les sommets et les attributs voisins d'un sommet donné.</li> <li><code>degrees</code>, <code>inDegrees</code> et <code>outDegrees</code>: permettent de calculer le degré de chaque sommet, c'est à dire le nombre d'arêtes qui lui sont liées.</li> </ul> <h4 id=caracteristiques-de-spark-graphx>Caractéristiques de Spark GraphX<a class=headerlink href=#caracteristiques-de-spark-graphx title="Permanent link">&para;</a></h4> <ol> <li><strong>Flexibilité</strong>: GraphX utilise les graphes pour le traitement. Il unifie les opérations d'ETL (<em>Extract, Transform and Load</em>), l'analyse exploratoire et le traitement itératif dans un seul système.</li> <li><strong>Vitesse</strong>: Spark GraphX fournit une performance comparable aux systèmes de traitement de graphes spécialisés les plus performants.</li> <li><strong>Bibliothèque en expension</strong>: la bibliothèque de Graphx est en continuelle expension, et fournit des algorithmes prêts à l'emploi tel que <em>PageRank</em>, <em>SVD</em>, etc.</li> </ol> <h3 id=exemple-dapplication-graphx>Exemple d'Application GraphX<a class=headerlink href=#exemple-dapplication-graphx title="Permanent link">&para;</a></h3> <p>Nous allons implémenter dans cet exemple (inspiré du tutoriel dans [^edureka]), un petit réseau social entre plusieurs personnes, tel que représenté dans l'image suivante: <center><img src=../img/p8/social.png width=400pt></center></p> <p>Nous allons utiliser spark shell et le langage Scala pour cet exemple.</p> <ol> <li>Lancer votre cluster spark, entrer dans le contenaire master, et lancer spark-shell: <div class=highlight><pre><span></span><code>  docker start spark-master spark-slave1 spark-slave2
+  docker <span class=nb>exec</span> -it spark-master bash
+  spark-shell
+</code></pre></div></li> <li>Commencer par importer les classes nécessaires: <div class=highlight><pre><span></span><code>  <span class=k>import</span> <span class=nn>org</span><span class=p>.</span><span class=nn>apache</span><span class=p>.</span><span class=nn>spark</span><span class=p>.</span><span class=n>_</span>
+  <span class=k>import</span> <span class=nn>org</span><span class=p>.</span><span class=nn>apache</span><span class=p>.</span><span class=nn>spark</span><span class=p>.</span><span class=nn>rdd</span><span class=p>.</span><span class=nc>RDD</span>
+  <span class=k>import</span> <span class=nn>org</span><span class=p>.</span><span class=nn>apache</span><span class=p>.</span><span class=nn>spark</span><span class=p>.</span><span class=nn>util</span><span class=p>.</span><span class=nc>IntParam</span>
+  <span class=k>import</span> <span class=nn>org</span><span class=p>.</span><span class=nn>apache</span><span class=p>.</span><span class=nn>spark</span><span class=p>.</span><span class=nn>graphx</span><span class=p>.</span><span class=n>_</span>
+  <span class=k>import</span> <span class=nn>org</span><span class=p>.</span><span class=nn>apache</span><span class=p>.</span><span class=nn>spark</span><span class=p>.</span><span class=nn>graphx</span><span class=p>.</span><span class=nn>util</span><span class=p>.</span><span class=nc>GraphGenerators</span>
+</code></pre></div></li> <li>Créer les tableaux contenant les sommets et les arêtes: <div class=highlight><pre><span></span><code>  <span class=kd>val</span> <span class=n>sommets</span><span class=o>=</span> <span class=nc>Array</span>  <span class=p>((</span><span class=il>1L</span><span class=p>,(</span><span class=s>&quot;Alia&quot;</span><span class=p>,</span><span class=mi>28</span><span class=p>)),(</span><span class=il>2L</span><span class=p>,(</span><span class=s>&quot;Bechir&quot;</span><span class=p>,</span><span class=mi>27</span><span class=p>)),(</span><span class=il>3L</span><span class=p>,(</span><span class=s>&quot;Chiheb&quot;</span><span class=p>,</span><span class=mi>65</span><span class=p>)),</span>
+                      <span class=p>(</span><span class=il>4L</span><span class=p>,(</span><span class=s>&quot;Delia&quot;</span><span class=p>,</span><span class=mi>42</span><span class=p>)),(</span><span class=il>5L</span><span class=p>,(</span><span class=s>&quot;Emir&quot;</span><span class=p>,</span><span class=mi>35</span><span class=p>)),(</span><span class=il>6L</span><span class=p>,(</span><span class=s>&quot;Fawzi&quot;</span><span class=p>,</span><span class=mi>50</span><span class=p>)))</span>
+  <span class=kd>val</span> <span class=n>aretes</span> <span class=o>=</span> <span class=nc>Array</span> <span class=p>(</span><span class=nc>Edge</span><span class=p>(</span><span class=mi>2</span><span class=p>,</span><span class=mi>1</span><span class=p>,</span><span class=s>&quot;follows&quot;</span><span class=p>),</span><span class=nc>Edge</span><span class=p>(</span><span class=mi>4</span><span class=p>,</span><span class=mi>1</span><span class=p>,</span><span class=s>&quot;follows&quot;</span><span class=p>),</span><span class=nc>Edge</span><span class=p>(</span><span class=mi>2</span><span class=p>,</span><span class=mi>4</span><span class=p>,</span><span class=s>&quot;follows&quot;</span><span class=p>),</span><span class=nc>Edge</span><span class=p>(</span><span class=mi>3</span><span class=p>,</span><span class=mi>2</span><span class=p>,</span><span class=s>&quot;follows&quot;</span><span class=p>),</span>
+                      <span class=nc>Edge</span><span class=p>(</span><span class=mi>5</span><span class=p>,</span><span class=mi>2</span><span class=p>,</span><span class=s>&quot;follows&quot;</span><span class=p>),</span><span class=nc>Edge</span><span class=p>(</span><span class=mi>5</span><span class=p>,</span><span class=mi>3</span><span class=p>,</span><span class=s>&quot;follows&quot;</span><span class=p>),</span><span class=nc>Edge</span><span class=p>(</span><span class=mi>3</span><span class=p>,</span><span class=mi>6</span><span class=p>,</span><span class=s>&quot;follows&quot;</span><span class=p>),</span><span class=nc>Edge</span><span class=p>(</span><span class=mi>6</span><span class=p>,</span><span class=mi>5</span><span class=p>,</span><span class=s>&quot;follows&quot;</span><span class=p>))</span>
+</code></pre></div> 4.Créer les RDD associé en parallelisant les tableaux précedents: <div class=highlight><pre><span></span><code>  <span class=kd>val</span> <span class=n>sommetRDD</span><span class=p>:</span> <span class=nc>RDD</span><span class=p>[(</span><span class=nc>Long</span><span class=p>,</span> <span class=p>(</span><span class=nc>String</span><span class=p>,</span> <span class=nc>Int</span><span class=p>))]</span> <span class=o>=</span> <span class=n>sc</span><span class=p>.</span><span class=n>parallelize</span><span class=p>(</span><span class=n>sommets</span><span class=p>)</span>
+  <span class=kd>val</span> <span class=n>areteRDD</span><span class=p>:</span> <span class=nc>RDD</span><span class=p>[</span><span class=nc>Edge</span><span class=p>[</span><span class=nc>String</span><span class=p>]]</span> <span class=o>=</span> <span class=n>sc</span><span class=p>.</span><span class=n>parallelize</span><span class=p>(</span><span class=n>aretes</span><span class=p>)</span>
+</code></pre></div></li> <li>Constuire le graphe à partir des RDD: <div class=highlight><pre><span></span><code>  <span class=kd>val</span> <span class=n>graph</span><span class=p>:</span> <span class=nc>Graph</span><span class=p>[(</span><span class=nc>String</span><span class=p>,</span> <span class=nc>Int</span><span class=p>),</span> <span class=nc>String</span><span class=p>]</span> <span class=o>=</span> <span class=nc>Graph</span><span class=p>(</span><span class=n>sommetRDD</span><span class=p>,</span> <span class=n>areteRDD</span><span class=p>)</span>
+</code></pre></div></li> <li>Nous allons ensuite afficher la liste des personnes ainsi que leurs ages: <div class=highlight><pre><span></span><code>  <span class=n>graph</span><span class=p>.</span><span class=n>vertices</span><span class=p>.</span><span class=n>filter</span> <span class=p>{</span> <span class=k>case</span> <span class=p>(</span><span class=n>id</span><span class=p>,</span> <span class=p>(</span><span class=n>nom</span><span class=p>,</span> <span class=n>age</span><span class=p>))</span> <span class=o>=&gt;</span> <span class=n>age</span> <span class=o>&gt;</span> <span class=mi>30</span> <span class=p>}.</span><span class=n>collect</span><span class=p>.</span><span class=n>foreach</span> <span class=p>{</span> <span class=k>case</span> <span class=p>(</span><span class=n>id</span><span class=p>,</span> <span class=p>(</span><span class=n>nom</span><span class=p>,</span> <span class=n>age</span><span class=p>))</span> <span class=o>=&gt;</span> <span class=n>println</span><span class=p>(</span><span class=s>s&quot;</span><span class=si>$</span><span class=n>nom</span><span class=s> a </span><span class=si>$</span><span class=n>age</span><span class=s> ans&quot;</span><span class=p>)}</span>
+</code></pre></div> Le résultat obtenu ressemble à ce qui suit: <center><img src=../img/p8/filtrage.png width=400pt></center></li> <li>Nous allons maintenant afficher les relations de "follow": qui suit qui? Pour cela, écrire le code suivant: <div class=highlight><pre><span></span><code>  <span class=k>for</span> <span class=p>(</span><span class=n>triplet</span> <span class=o>&lt;-</span> <span class=n>graph</span><span class=p>.</span><span class=n>triplets</span><span class=p>.</span><span class=n>collect</span><span class=p>){</span>
+    <span class=n>println</span><span class=p>(</span><span class=s>s&quot;</span><span class=si>${</span><span class=n>triplet</span><span class=p>.</span><span class=n>srcAttr</span><span class=p>.</span><span class=n>_1</span><span class=si>}</span><span class=s> suit </span><span class=si>${</span><span class=n>triplet</span><span class=p>.</span><span class=n>dstAttr</span><span class=p>.</span><span class=n>_1</span><span class=si>}</span><span class=s>&quot;</span><span class=p>)</span>
+  <span class=p>}</span>
+</code></pre></div> Le résultat obtenu ressemble à ce qui suit: <center><img src=../img/p8/suit.png width=400pt></center></li> <li> <p>Trouvons le nombre d'abonnés pour chaque utilisateur: <div class=highlight><pre><span></span><code>  <span class=c1>// Définir une classe pour modéliser un utilisateur</span>
+  <span class=k>case</span> <span class=k>class</span> <span class=nc>Utilisateur</span><span class=p>(</span><span class=n>nom</span><span class=p>:</span> <span class=nc>String</span><span class=p>,</span> <span class=n>age</span><span class=p>:</span> <span class=nc>Int</span><span class=p>,</span> <span class=n>inDeg</span><span class=p>:</span> <span class=nc>Int</span><span class=p>,</span> <span class=n>outDeg</span><span class=p>:</span> <span class=nc>Int</span><span class=p>)</span>
+  <span class=c1>// Créer un graphe pour l&#39;utilisateur</span>
+  <span class=kd>val</span> <span class=n>initialUserGraph</span><span class=p>:</span> <span class=nc>Graph</span><span class=p>[</span><span class=nc>Utilisateur</span><span class=p>,</span> <span class=nc>String</span><span class=p>]</span> <span class=o>=</span> <span class=n>graph</span><span class=p>.</span><span class=n>mapVertices</span><span class=p>{</span> <span class=k>case</span> <span class=p>(</span><span class=n>id</span><span class=p>,</span> <span class=p>(</span><span class=n>nom</span><span class=p>,</span> <span class=n>age</span><span class=p>))</span> <span class=o>=&gt;</span> <span class=nc>Utilisateur</span><span class=p>(</span><span class=n>nom</span><span class=p>,</span> <span class=n>age</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=mi>0</span><span class=p>)</span> <span class=p>}</span>
 
-        <script src="../js/jquery-1.10.2.min.js" defer></script>
-        <script src="../js/bootstrap.min.js" defer></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
-        <script>hljs.initHighlightingOnLoad();</script> 
-    </head>
+  <span class=c1>// Remplir les informations</span>
+  <span class=kd>val</span> <span class=n>userGraph</span> <span class=o>=</span> <span class=n>initialUserGraph</span><span class=p>.</span><span class=n>outerJoinVertices</span><span class=p>(</span><span class=n>initialUserGraph</span><span class=p>.</span><span class=n>inDegrees</span><span class=p>)</span> <span class=p>{</span>
+        <span class=k>case</span> <span class=p>(</span><span class=n>id</span><span class=p>,</span> <span class=n>u</span><span class=p>,</span> <span class=n>inDegOpt</span><span class=p>)</span> <span class=o>=&gt;</span> <span class=nc>Utilisateur</span><span class=p>(</span><span class=n>u</span><span class=p>.</span><span class=n>nom</span><span class=p>,</span> <span class=n>u</span><span class=p>.</span><span class=n>age</span><span class=p>,</span> <span class=n>inDegOpt</span><span class=p>.</span><span class=n>getOrElse</span><span class=p>(</span><span class=mi>0</span><span class=p>),</span> <span class=n>u</span><span class=p>.</span><span class=n>outDeg</span><span class=p>)}.</span><span class=n>outerJoinVertices</span><span class=p>(</span><span class=n>initialUserGraph</span><span class=p>.</span><span class=n>outDegrees</span><span class=p>)</span> <span class=p>{</span>
+        <span class=k>case</span> <span class=p>(</span><span class=n>id</span><span class=p>,</span> <span class=n>u</span><span class=p>,</span> <span class=n>outDegOpt</span><span class=p>)</span> <span class=o>=&gt;</span> <span class=nc>Utilisateur</span><span class=p>(</span><span class=n>u</span><span class=p>.</span><span class=n>nom</span><span class=p>,</span> <span class=n>u</span><span class=p>.</span><span class=n>age</span><span class=p>,</span> <span class=n>u</span><span class=p>.</span><span class=n>inDeg</span><span class=p>,</span> <span class=n>outDegOpt</span><span class=p>.</span><span class=n>getOrElse</span><span class=p>(</span><span class=mi>0</span><span class=p>))</span>
+  <span class=p>}</span>
+  <span class=c1>// Afficher les résultats</span>
+  <span class=k>for</span> <span class=p>((</span><span class=n>id</span><span class=p>,</span> <span class=n>prop</span><span class=p>)</span> <span class=o>&lt;-</span> <span class=n>userGraph</span><span class=p>.</span><span class=n>vertices</span><span class=p>.</span><span class=n>collect</span><span class=p>)</span> <span class=p>{</span>
+    <span class=n>println</span><span class=p>(</span><span class=s>s&quot;Utilisateur </span><span class=si>$</span><span class=n>id</span><span class=s> s&#39;appelle </span><span class=si>${</span><span class=n>prop</span><span class=p>.</span><span class=n>nom</span><span class=si>}</span><span class=s> et est suivi par </span><span class=si>${</span><span class=n>prop</span><span class=p>.</span><span class=n>inDeg</span><span class=si>}</span><span class=s> personnes.&quot;</span><span class=p>)</span>
+  <span class=p>}</span>
+</code></pre></div> Le résultat obtenu ressemble à ce qui suit: <center><img src=../img/p8/nombre.png width=400pt></center></p> <ol> <li>Et si on veut afficher l'abonné le plus âgé? <div class=highlight><pre><span></span><code>  <span class=c1>// Chaque abonné envoie un message avec son age (c&#39;est le deuxième attribut detype Int du sommet en question) =&gt; équivalent de la fonction map</span>
+  <span class=k>def</span> <span class=nf>msgFun</span><span class=p>(</span><span class=n>triplet</span><span class=p>:</span><span class=nc>EdgeContext</span><span class=p>[(</span><span class=nc>String</span><span class=p>,</span><span class=nc>Int</span><span class=p>),</span><span class=nc>String</span><span class=p>,</span><span class=nc>Int</span><span class=p>]){</span>
+    <span class=n>triplet</span><span class=p>.</span><span class=n>sendToDst</span><span class=p>(</span><span class=n>triplet</span><span class=p>.</span><span class=n>srcAttr</span><span class=p>.</span><span class=n>_2</span><span class=p>)</span>
+  <span class=p>}</span>
 
-    <body>
-        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
-            <div class="container">
-                <a class="navbar-brand" href="..">Atelier Apache Spark</a>
-                <!-- Expander button -->
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+  <span class=c1>// Pour chaque couple d&#39;âges reçus, retenir la valeur la plus grande =&gt; équivalent de la fonction reduce</span>
+  <span class=k>def</span> <span class=nf>reduceFun</span><span class=p>(</span><span class=n>a</span><span class=p>:</span><span class=nc>Int</span><span class=p>,</span><span class=n>b</span><span class=p>:</span><span class=nc>Int</span><span class=p>):</span><span class=nc>Int</span> <span class=o>=</span> <span class=k>if</span> <span class=p>(</span><span class=n>a</span> <span class=o>&gt;</span> <span class=n>b</span><span class=p>)</span> <span class=n>a</span> <span class=k>else</span> <span class=n>b</span>
 
-                <!-- Expanded navigation -->
-                <div id="navbar-collapse" class="navbar-collapse collapse">
-                        <!-- Main navigation -->
-                        <ul class="nav navbar-nav">
-                            <li class="navitem">
-                                <a href=".." class="nav-link">Atelier Apache Spark</a>
-                            </li>
-                            <li class="navitem">
-                                <a href="../p1-big-data/" class="nav-link">P1 - Introduction au Big Data</a>
-                            </li>
-                            <li class="navitem">
-                                <a href="../p2-spark/" class="nav-link">P2 - Introduction à Apache Spark</a>
-                            </li>
-                            <li class="navitem">
-                                <a href="../p3-install/" class="nav-link">P3 - Installation de Spark</a>
-                            </li>
-                            <li class="navitem">
-                                <a href="../p4-batch/" class="nav-link">P4 - RDD et Batch Processing avec Spark</a>
-                            </li>
-                            <li class="navitem">
-                                <a href="../p5-sql/" class="nav-link">P5 - Spark SQL</a>
-                            </li>
-                            <li class="navitem">
-                                <a href="../p6-stream/" class="nav-link">P6 - Spark Streaming</a>
-                            </li>
-                            <li class="navitem">
-                                <a href="../p7-ml/" class="nav-link">P7 - Spark MLLib</a>
-                            </li>
-                            <li class="navitem active">
-                                <a href="./" class="nav-link">P8 - Spark GraphX</a>
-                            </li>
-                        </ul>
+  <span class=c1>// Exécuter les deux opérations pour chaque triplet du graphe</span>
+  <span class=kd>val</span> <span class=n>result</span> <span class=o>=</span> <span class=n>graph</span><span class=p>.</span><span class=n>aggregateMessages</span><span class=p>[</span><span class=nc>Int</span><span class=p>](</span><span class=n>msgFun</span><span class=p>,</span> <span class=n>reduceFun</span><span class=p>)</span>
 
-                    <ul class="nav navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
-                                <i class="fa fa-search"></i> Search
-                            </a>
-                        </li>
-                            <li class="nav-item">
-                                <a rel="prev" href="../p7-ml/" class="nav-link">
-                                    <i class="fa fa-arrow-left"></i> Previous
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a rel="next" class="nav-link disabled">
-                                    Next <i class="fa fa-arrow-right"></i>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="https://github.com/liliasfaxi/Atelier-Spark/edit/master/docs/p8-graphx.md" class="nav-link">Edit on liliasfaxi/Atelier-Spark</a>
-                            </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="container">
-            <div class="row">
-                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
-            <span class="fa fa-angle-down"></span>
-        </button>
-    </div>
-
-    
-    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
-        <ul class="nav flex-column">
-            
-            <li class="nav-item" data-level="1"><a href="#partie-8-spark-graphx" class="nav-link">Partie 8 - Spark GraphX</a>
-              <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#presentation-de-spark-graphx" class="nav-link">Présentation de Spark GraphX</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#exemple-dapplication-graphx" class="nav-link">Exemple d'Application GraphX</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#references" class="nav-link">Références</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-              </ul>
-            </li>
-        </ul>
-    </div>
-</div></div>
-                    <div class="col-md-9" role="main">
-
-<h1 id="partie-8-spark-graphx">Partie 8 - Spark GraphX</h1>
-<p><center><img src="../img/p8/graphx.png" width="600pt"></center></p>
-<h2 id="presentation-de-spark-graphx">Présentation de Spark GraphX</h2>
-<p>Spark GraphX[^spark-official] est un composant Spark permettant le traitement à base de graphes. A un niveau élevé, GraphX étend la structure Spark RDD en introduisant une abstraction sous forme d'un graphe dirigé formé de sommets (<em>vertex</em>) et d'arêtes (<em>edge</em>), auxquels sont attachées des propriétés.
-Pour gérer ces structures, GraphX propose un ensemble d'opérateurs ainsi qu'une version optimisée de l'API <a href="https://spark.apache.org/docs/latest/graphx-programming-guide.html#pregel">Pregel</a>. De plus, plusieurs algorithmes et constructeurs (<em>builders</em>) sont définis pour simplifier le traitement et analyse de ces graphes.</p>
-<h3 id="graphes-de-proprietes">Graphes de Propriétés</h3>
-<p>Un graphe de propriétés est un multigraphe dirigé contenant des objets définis par l'utilisateur attachés à chaque sommet et arête. Un multigraphe est un graphe dirigé qui peut contenir plusieurs arêtes reliant les mêmes sommets source et destination, permettant ainsi de modéliser des situations où les sommets peuvent avoir plusieurs types de relations. Chaque sommet est représenté par un identifiant unique de 64 bits (<em>VertexId</em>). Les arêtes doivent avoir chacune un sommet source et un sommet destination.</p>
-<p>Un graphe de propriété est paramétrisé par deux types: un sommet (<em>Vertex</em> appelé <em>VD</em>) et une arête (<em>Edge</em> appelé <em>ED</em>). Ces types optimisés remplacent les types classiques, même primitifs, de façon a réduire la taille en mémoire réservée.</p>
-<p>Pour définir des types personnalisés pour les sommets, il est préférable d'utiliser l'héritage. Par exemple, pour définir des sommets de type <em>Utilisateur</em> et d'autres de type <em>Produit</em>, on peut créer les classes suivantes:</p>
-<pre><code class="language-scala">  class VertexProperty()
-  case class UserProperty(val name: String) extends VertexProperty
-  case class ProductProperty(val name: String, val price: Double) extends VertexProperty
-  // Le graphe peut alors avoir le type suivant:
-  var graph: Graph[VertexProperty, String] = null
-</code></pre>
-<p>Un graphe de propriétés correspond à une paire de RDDs contenant des propriétés pour chaque sommet et arête. En conséquence, la classe <em>Graph</em> contient des membres permettant d'accéder aux sommets et arêtes:</p>
-<pre><code class="language-scala">  class Graph[VD, ED] {
-    val vertices: VertexRDD[VD]
-    val edges: EdgeRDD[ED]
-  }
-</code></pre>
-<p>Les classes <code>VertexRDD[VD]</code> et <code>EdgeRDD[RD]</code> sont des versions optimisées des RDD qui fournissent des fonctionnalités supplémentaires pour le traitement et optimisation des graphes.</p>
-<p>Nous présentons dans ce qui suit un exemple de graphe de propriétés montrant plusieurs collaborateurs dans un projet de recherche:
-<center><img src="../img/p8/property_graph.png" width="600pt"></center></p>
-<p>En plus des sommets et arêtes du graphe de propriétés, GraphX présente également une vue en <em>triplet</em>. Cette vue permet de faire la jointure des propriétés des sommets et arêtes, équivalente à l'expression SQL suivante:</p>
-<pre><code class="language-sql">  SELECT src.id, dst.id, src.attr, e.attr, dst.attr
-  FROM edges AS e LEFT JOIN vertices AS src, vertices AS dst
-  ON e.srcId = src.Id AND e.dstId = dst.Id
-</code></pre>
-<p>Ceci correspond graphiquement à la figure suivante:
-<center><img src="../img/p8/triplet.png" width="600pt"></center></p>
-<p>La classe <code>EdgeTriplet</code> étend la classe <code>Edge</code> en ajoutant les attributs <code>srcAttr</code> et <code>dstAttr</code> qui contiennent les propriétés source et destination. Le code ressemblera à ce qui suit:</p>
-<pre><code class="language-scala">  val graph: Graph[(String, String), String]
-  // Utiliser les triplets pour créer un RDD de faits
-  val facts: RDD[String] =  graph.triplets.map(triplet =&gt;
-    triplet.srcAttr._1 + &quot; est le &quot; + triplet.attr + &quot; de &quot; + triplet.dstAttr._1)
-  facts.collect.foreach(println(_))
-</code></pre>
-<h3 id="operateurs-graphx">Opérateurs GraphX</h3>
-<p>De même que pour les RDDs, les graphes de propriétés ont également un ensemble d'opérateurs qui prennent des fonctions définies par l'utilisateur et produisent de nouveaux graphes avec des propriétés et une structure modifiées.</p>
-<p>Les opérateurs utilisés sont divisés en plusieurs types:</p>
-<h4 id="operateurs-structurels">Opérateurs structurels</h4>
-<p>GraphX supporte quelques opérateurs qui modifient la structure du graphe:</p>
-<ul>
-<li><code>reverse</code>: retourne un nouveau graphe avec toutes les directions des arêtes inversées.</li>
-<li><code>subgraph</code>: retourne le sous-ensemble du graphe qui contient les sommets et arêtes respectant les contraintes définies en paramètre, ainsi que toutes les arêtes connectant les sommets respectant ces contraintes.</li>
-<li><code>mask</code>: retourne un sous-graphe qui contient les sommets et arêtes qui existent aussi dans le graphe donné en entrée.</li>
-</ul>
-<h4 id="operateurs-de-jointure">Opérateurs de jointure</h4>
-<p>Ces opérateurs permettent de joindre des données à partir de RDD externes avec des graphes. Deux opérateurs sont définis:</p>
-<ul>
-<li><code>joinVertices</code>: joint les sommets avec le RDD en entrée et retourne un nouveau graphe avec les propriétés du sommet obtenues en appliquant la fonction <code>map</code> définie par l'utilisateur au résultat des sommets joints.</li>
-<li><code>outerJoinVertices</code>: se comporte comme <code>joinVertices</code> mais la fonction <code>map</code> est appliquée à tous les sommets et peut changer le type de la propriété de l'arête.</li>
-</ul>
-<h4 id="operateurs-dagregation-et-de-voisinage">Opérateurs d'agrégation et de voisinage</h4>
-<p>Les opérateurs d'agrégation permettent de réunir des information sur le voisinage de chaque sommet.</p>
-<ul>
-<li><code>aggregateMessages</code> applique une fonction définie par l'utilisateur <code>sendMsg</code> à chaque triplet du graphe et utilise la fonction <code>mergeMsg</code>pour agréger ces messages dans leur sommet destination. Permet également de faire des opérations de type <em>map/reduce</em>  en remplaçant l'opérateur <code>mapReduceTriplets</code> qui existait dans les anciennes versions de GraphX.</li>
-<li><code>collectNeighborIds</code> et <code>collectNeighbors</code>: permettent de collecter les sommets et les attributs voisins d'un sommet donné.</li>
-<li><code>degrees</code>, <code>inDegrees</code> et <code>outDegrees</code>: permettent de calculer le degré de chaque sommet, c'est à dire le nombre d'arêtes qui lui sont liées.</li>
-</ul>
-<h3 id="caracteristiques-de-spark-graphx">Caractéristiques de Spark GraphX</h3>
-<ol>
-<li><strong>Flexibilité</strong>: GraphX utilise les graphes pour le traitement. Il unifie les opérations d'ETL (<em>Extract, Transform and Load</em>), l'analyse exploratoire et le traitement itératif dans un seul système.</li>
-<li><strong>Vitesse</strong>: Spark GraphX fournit une performance comparable aux systèmes de traitement de graphes spécialisés les plus performants.</li>
-<li><strong>Bibliothèque en expension</strong>: la bibliothèque de Graphx est en continuelle expension, et fournit des algorithmes prêts à l'emploi tel que <em>PageRank</em>, <em>SVD</em>, etc.</li>
-</ol>
-<h2 id="exemple-dapplication-graphx">Exemple d'Application GraphX</h2>
-<p>Nous allons implémenter dans cet exemple (inspiré du tutoriel dans [^edureka]), un petit réseau social entre plusieurs personnes, tel que représenté dans l'image suivante:
-<center><img src="../img/p8/social.png" width="400pt"></center></p>
-<p>Nous allons utiliser spark shell et le langage Scala pour cet exemple.</p>
-<ol>
-<li>Lancer votre cluster spark, entrer dans le contenaire master, et lancer spark-shell:
-  <code>bash
-    docker start spark-master spark-slave1 spark-slave2
-    docker exec -it spark-master bash
-    spark-shell</code></li>
-<li>Commencer par importer les classes nécessaires:
-  <code>scala
-    import org.apache.spark._
-    import org.apache.spark.rdd.RDD
-    import org.apache.spark.util.IntParam
-    import org.apache.spark.graphx._
-    import org.apache.spark.graphx.util.GraphGenerators</code></li>
-<li>Créer les tableaux contenant les sommets et les arêtes:
-  <code>scala
-    val sommets= Array  ((1L,("Alia",28)),(2L,("Bechir",27)),(3L,("Chiheb",65)),
-                        (4L,("Delia",42)),(5L,("Emir",35)),(6L,("Fawzi",50)))
-    val aretes = Array (Edge(2,1,"follows"),Edge(4,1,"follows"),Edge(2,4,"follows"),Edge(3,2,"follows"),
-                        Edge(5,2,"follows"),Edge(5,3,"follows"),Edge(3,6,"follows"),Edge(6,5,"follows"))</code>
-  4.Créer les RDD associé en parallelisant les tableaux précedents:
-  <code>scala
-    val sommetRDD: RDD[(Long, (String, Int))] = sc.parallelize(sommets)
-    val areteRDD: RDD[Edge[String]] = sc.parallelize(aretes)</code></li>
-<li>Constuire le graphe à partir des RDD:
-  <code>scala
-    val graph: Graph[(String, Int), String] = Graph(sommetRDD, areteRDD)</code></li>
-<li>Nous allons ensuite afficher la liste des personnes ainsi que leurs ages:
-  <code>scala
-    graph.vertices.filter { case (id, (nom, age)) =&gt; age &gt; 30 }.collect.foreach { case (id, (nom, age)) =&gt; println(s"$nom a $age ans")}</code>
-  Le résultat obtenu ressemble à ce qui suit:
-<center><img src="../img/p8/filtrage.png" width="400pt"></center></li>
-<li>Nous allons maintenant afficher les relations de "follow": qui suit qui? Pour cela, écrire le code suivant:
-  <code>scala
-    for (triplet &lt;- graph.triplets.collect){
-      println(s"${triplet.srcAttr._1} suit ${triplet.dstAttr._1}")
-    }</code>
-    Le résultat obtenu ressemble à ce qui suit:
-  <center><img src="../img/p8/suit.png" width="400pt"></center></li>
-<li>
-<p>Trouvons le nombre d'abonnés pour chaque utilisateur:
-  ```scala
-    // Définir une classe pour modéliser un utilisateur
-    case class Utilisateur(nom: String, age: Int, inDeg: Int, outDeg: Int)
-    // Créer un graphe pour l'utilisateur
-    val initialUserGraph: Graph[Utilisateur, String] = graph.mapVertices{ case (id, (nom, age)) =&gt; Utilisateur(nom, age, 0, 0) }</p>
-<p>// Remplir les informations
-val userGraph = initialUserGraph.outerJoinVertices(initialUserGraph.inDegrees) {
-      case (id, u, inDegOpt) =&gt; Utilisateur(u.nom, u.age, inDegOpt.getOrElse(0), u.outDeg)}.outerJoinVertices(initialUserGraph.outDegrees) {
-      case (id, u, outDegOpt) =&gt; Utilisateur(u.nom, u.age, u.inDeg, outDegOpt.getOrElse(0))
-}
-// Afficher les résultats
-for ((id, prop) &lt;- userGraph.vertices.collect) {
-  println(s"Utilisateur $id s'appelle ${prop.nom} et est suivi par ${prop.inDeg} personnes.")
-}
-  ```
-  Le résultat obtenu ressemble à ce qui suit:
-  <center><img src="../img/p8/nombre.png" width="400pt"></center></p>
-<ol>
-<li>Et si on veut afficher l'abonné le plus âgé?
-```scala
-  // Chaque abonné envoie un message avec son age (c'est le deuxième attribut detype Int du sommet en question) =&gt; équivalent de la fonction map
-  def msgFun(triplet:EdgeContext[(String,Int),String,Int]){
-    triplet.sendToDst(triplet.srcAttr._2)
-  }</li>
-</ol>
-<p>// Pour chaque couple d'âges reçus, retenir la valeur la plus grande =&gt; équivalent de la fonction reduce
-  def reduceFun(a:Int,b:Int):Int = if (a &gt; b) a else b</p>
-<p>// Exécuter les deux opérations pour chaque triplet du graphe
-  val result = graph.aggregateMessages<a href="msgFun, reduceFun">Int</a></p>
-<p>// Afficher le résultat obtenu
-  result.collect.foreach { case (id, age) =&gt; println(s"L'abonne le plus age de l'utilisateur $id a $age ans")}
-```
-Le résultat obtenu ressemble à ce qui suit:
-<center><img src="../img/p8/age.png" width="400pt"></center></p>
-</li>
-</ol>
-<h2 id="references">Références</h2>
-<p>[^spark-official]:
-  Spark Documentation, <em>Spark GraphX Guide</em>, <a href="https://spark.apache.org/docs/latest/graphx-programming-guide.html">https://spark.apache.org/docs/latest/graphx-programming-guide.html</a>, consulté le 05/2020</p>
-<p>[^edureka]:
-  Edureka, <em>Spark GraphX Tutorial – Graph Analytics In Apache Spark</em>, <a href="https://www.edureka.co/blog/spark-graphx/">https://www.edureka.co/blog/spark-graphx/</a>, consulté le 05/2020</p></div>
-            </div>
-        </div>
-
-        <footer class="col-md-12">
-            <hr>
-                <p>Copyright &copy; 2019 - 2020 Lilia Sfaxi</p>
-            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
-        </footer>
-        <script>
-            var base_url = "..",
-                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
-        </script>
-        <script src="../js/base.js" defer></script>
-        <script src="../search/main.js" defer></script>
-
-        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="searchModalLabel">Search</h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            </div>
-            <div class="modal-body">
-                <p>From here you can search these documents. Enter your search terms below.</p>
-                <form>
-                    <div class="form-group">
-                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
-                    </div>
-                </form>
-                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
-    </div>
-</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            </div>
-            <div class="modal-body">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th style="width: 20%;">Keys</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="help shortcut"><kbd>?</kbd></td>
-                    <td>Open this help</td>
-                  </tr>
-                  <tr>
-                    <td class="next shortcut"><kbd>n</kbd></td>
-                    <td>Next page</td>
-                  </tr>
-                  <tr>
-                    <td class="prev shortcut"><kbd>p</kbd></td>
-                    <td>Previous page</td>
-                  </tr>
-                  <tr>
-                    <td class="search shortcut"><kbd>s</kbd></td>
-                    <td>Search</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
-    </div>
-</div>
-
-    </body>
-</html>
+  <span class=c1>// Afficher le résultat obtenu</span>
+  <span class=n>result</span><span class=p>.</span><span class=n>collect</span><span class=p>.</span><span class=n>foreach</span> <span class=p>{</span> <span class=k>case</span> <span class=p>(</span><span class=n>id</span><span class=p>,</span> <span class=n>age</span><span class=p>)</span> <span class=o>=&gt;</span> <span class=n>println</span><span class=p>(</span><span class=s>s&quot;L&#39;abonne le plus age de l&#39;utilisateur </span><span class=si>$</span><span class=n>id</span><span class=s> a </span><span class=si>$</span><span class=n>age</span><span class=s> ans&quot;</span><span class=p>)}</span>
+</code></pre></div> Le résultat obtenu ressemble à ce qui suit: <center><img src=../img/p8/age.png width=400pt></center></li> </ol> </li> </ol> <h3 id=references>Références<a class=headerlink href=#references title="Permanent link">&para;</a></h3> <p>[^spark-official]: Spark Documentation, <em>Spark GraphX Guide</em>, <a href=https://spark.apache.org/docs/latest/graphx-programming-guide.html>https://spark.apache.org/docs/latest/graphx-programming-guide.html</a>, consulté le 05/2020</p> <p>[^edureka]: Edureka, <em>Spark GraphX Tutorial – Graph Analytics In Apache Spark</em>, <a href=https://www.edureka.co/blog/spark-graphx/ >https://www.edureka.co/blog/spark-graphx/</a>, consulté le 05/2020</p> <hr> <div class=md-source-file> <small> Last update: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class=timeago datetime=2020-05-04T16:24:31+01:00 locale=en></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2020-05-04</span> </small> </div> </article> </div> </div> </main> <footer class=md-footer> <nav class="md-footer__inner md-grid" aria-label=Footer> <a href=../p7-ml/ class="md-footer__link md-footer__link--prev" aria-label="Previous: P7 - Spark MLLib" rel=prev> <div class="md-footer__button md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg> </div> <div class=md-footer__title> <div class=md-ellipsis> <span class=md-footer__direction> Previous </span> P7 - Spark MLLib </div> </div> </a> </nav> <div class="md-footer-meta md-typeset"> <div class="md-footer-meta__inner md-grid"> <div class=md-copyright> <div class=md-copyright__highlight> Copyright &copy; 2019 - 2020 Lilia Sfaxi </div> Made with <a href=https://squidfunk.github.io/mkdocs-material/ target=_blank rel=noopener> Material for MkDocs </a> </div> </div> </div> </footer> </div> <div class=md-dialog data-md-component=dialog> <div class="md-dialog__inner md-typeset"></div> </div> <script id=__config type=application/json>{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.092fa1f6.min.js"}</script> <script src=../assets/javascripts/bundle.e3b2bf44.min.js></script> <script src=../js/timeago.min.js></script> <script src=../js/timeago_mkdocs_material.js></script> </body> </html>

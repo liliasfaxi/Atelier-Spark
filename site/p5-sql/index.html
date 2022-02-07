@@ -1,444 +1,92 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
-        <meta name="author" content="Lilia Sfaxi">
-        <link rel="canonical" href="http://liliasfaxi.github.io/Atelier-Spark/p5-sql/">
-        <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>P5 - Spark SQL - Atelier Apache Spark</title>
-        <link href="../css/bootstrap.min.css" rel="stylesheet">
-        <link href="../css/font-awesome.min.css" rel="stylesheet">
-        <link href="../css/base.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+<!doctype html><html lang=en class=no-js> <head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Cours et Travaux Pratiques pour se familiariser avec Apache Spark"><meta name=author content="Lilia Sfaxi"><link href=http://liliasfaxi.github.io/Atelier-Spark/p5-sql/ rel=canonical><link rel=icon href=../assets/images/favicon.png><meta name=generator content="mkdocs-1.2.3, mkdocs-material-8.1.10"><title>P5 - Spark SQL - Atelier Apache Spark</title><link rel=stylesheet href=../assets/stylesheets/main.d6be258b.min.css><link rel=stylesheet href=../assets/stylesheets/palette.e6a45f82.min.css><meta name=theme-color content=#546d78><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback"><style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style><link rel=stylesheet href=../css/timeago.css><link rel=stylesheet href=../stylesheets/extra.css><link rel=stylesheet href=../stylesheets/links.css><script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script></head> <body dir=ltr data-md-color-scheme data-md-color-primary=blue-grey data-md-color-accent=amber> <input class=md-toggle data-md-toggle=drawer type=checkbox id=__drawer autocomplete=off> <input class=md-toggle data-md-toggle=search type=checkbox id=__search autocomplete=off> <label class=md-overlay for=__drawer></label> <div data-md-component=skip> <a href=#partie-5-spark-sql class=md-skip> Skip to content </a> </div> <div data-md-component=announce> </div> <header class=md-header data-md-component=header> <nav class="md-header__inner md-grid" aria-label=Header> <a href=.. title="Atelier Apache Spark" class="md-header__button md-logo" aria-label="Atelier Apache Spark" data-md-component=logo> <img src=../img/logo.png alt=logo> </a> <label class="md-header__button md-icon" for=__drawer> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg> </label> <div class=md-header__title data-md-component=header-title> <div class=md-header__ellipsis> <div class=md-header__topic> <span class=md-ellipsis> Atelier Apache Spark </span> </div> <div class=md-header__topic data-md-component=header-topic> <span class=md-ellipsis> P5 - Spark SQL </span> </div> </div> </div> <label class="md-header__button md-icon" for=__search> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg> </label> <div class=md-search data-md-component=search role=dialog> <label class=md-search__overlay for=__search></label> <div class=md-search__inner role=search> <form class=md-search__form name=search> <input type=text class=md-search__input name=query aria-label=Search placeholder=Search autocapitalize=off autocorrect=off autocomplete=off spellcheck=false data-md-component=search-query required> <label class="md-search__icon md-icon" for=__search> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg> </label> <nav class=md-search__options aria-label=Search> <button type=reset class="md-search__icon md-icon" aria-label=Clear tabindex=-1> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg> </button> </nav> </form> <div class=md-search__output> <div class=md-search__scrollwrap data-md-scrollfix> <div class=md-search-result data-md-component=search-result> <div class=md-search-result__meta> Initializing search </div> <ol class=md-search-result__list></ol> </div> </div> </div> </div> </div> <div class=md-header__source> <a href=https://github.com/liliasfaxi/Atelier-Spark/ title="Go to repository" class=md-source data-md-component=source> <div class="md-source__icon md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg> </div> <div class=md-source__repository> liliasfaxi/Atelier-Spark </div> </a> </div> </nav> </header> <div class=md-container data-md-component=container> <main class=md-main data-md-component=main> <div class="md-main__inner md-grid"> <div class="md-sidebar md-sidebar--primary" data-md-component=sidebar data-md-type=navigation> <div class=md-sidebar__scrollwrap> <div class=md-sidebar__inner> <nav class="md-nav md-nav--primary" aria-label=Navigation data-md-level=0> <label class=md-nav__title for=__drawer> <a href=.. title="Atelier Apache Spark" class="md-nav__button md-logo" aria-label="Atelier Apache Spark" data-md-component=logo> <img src=../img/logo.png alt=logo> </a> Atelier Apache Spark </label> <div class=md-nav__source> <a href=https://github.com/liliasfaxi/Atelier-Spark/ title="Go to repository" class=md-source data-md-component=source> <div class="md-source__icon md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg> </div> <div class=md-source__repository> liliasfaxi/Atelier-Spark </div> </a> </div> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=.. class=md-nav__link> Atelier Apache Spark </a> </li> <li class=md-nav__item> <a href=../p1-big-data/ class=md-nav__link> P1 - Introduction au Big Data </a> </li> <li class=md-nav__item> <a href=../p2-spark/ class=md-nav__link> P2 - Introduction à Apache Spark </a> </li> <li class=md-nav__item> <a href=../p3-install/ class=md-nav__link> P3 - Installation de Spark </a> </li> <li class=md-nav__item> <a href=../p4-batch/ class=md-nav__link> P4 - RDD et Batch Processing avec Spark </a> </li> <li class="md-nav__item md-nav__item--active"> <input class="md-nav__toggle md-toggle" data-md-toggle=toc type=checkbox id=__toc> <label class="md-nav__link md-nav__link--active" for=__toc> P5 - Spark SQL <span class="md-nav__icon md-icon"></span> </label> <a href=./ class="md-nav__link md-nav__link--active"> P5 - Spark SQL </a> <nav class="md-nav md-nav--secondary" aria-label="Table of contents"> <label class=md-nav__title for=__toc> <span class="md-nav__icon md-icon"></span> Table of contents </label> <ul class=md-nav__list data-md-component=toc data-md-scrollfix> <li class=md-nav__item> <a href=#partie-5-spark-sql class=md-nav__link> Partie 5 - Spark SQL </a> <nav class=md-nav aria-label="Partie 5 - Spark SQL"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#presentation-de-spark-sql class=md-nav__link> Présentation de Spark SQL </a> <nav class=md-nav aria-label="Présentation de Spark SQL"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#sql class=md-nav__link> SQL </a> </li> <li class=md-nav__item> <a href=#datasets-et-dataframes class=md-nav__link> Datasets et DataFrames </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#caracteristiques-de-spark-sql class=md-nav__link> Caractéristiques de Spark SQL </a> </li> <li class=md-nav__item> <a href=#optimisation-de-spark-sql-avec-catalyst class=md-nav__link> Optimisation de Spark SQL avec Catalyst </a> </li> <li class=md-nav__item> <a href=#manipulation-de-spark-sql-avec-le-shell class=md-nav__link> Manipulation de Spark SQL avec le Shell </a> <nav class=md-nav aria-label="Manipulation de Spark SQL avec le Shell"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#rdd-vs-dataframe-vs-dataset class=md-nav__link> RDD vs DataFrame vs Dataset </a> <nav class=md-nav aria-label="RDD vs DataFrame vs Dataset"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#utilisation-des-rdd class=md-nav__link> Utilisation des RDD </a> </li> <li class=md-nav__item> <a href=#utilisation-des-dataframes class=md-nav__link> Utilisation des DataFrames </a> </li> <li class=md-nav__item> <a href=#utilisation-des-datasets class=md-nav__link> Utilisation des Datasets </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#exemple-spark-sql-avec-scala class=md-nav__link> Exemple Spark SQL avec Scala </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#references class=md-nav__link> Références </a> </li> </ul> </nav> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=../p6-stream/ class=md-nav__link> P6 - Spark Streaming </a> </li> <li class=md-nav__item> <a href=../p7-ml/ class=md-nav__link> P7 - Spark MLLib </a> </li> <li class=md-nav__item> <a href=../p8-graphx/ class=md-nav__link> P8 - Spark GraphX </a> </li> </ul> </nav> </div> </div> </div> <div class="md-sidebar md-sidebar--secondary" data-md-component=sidebar data-md-type=toc> <div class=md-sidebar__scrollwrap> <div class=md-sidebar__inner> <nav class="md-nav md-nav--secondary" aria-label="Table of contents"> <label class=md-nav__title for=__toc> <span class="md-nav__icon md-icon"></span> Table of contents </label> <ul class=md-nav__list data-md-component=toc data-md-scrollfix> <li class=md-nav__item> <a href=#partie-5-spark-sql class=md-nav__link> Partie 5 - Spark SQL </a> <nav class=md-nav aria-label="Partie 5 - Spark SQL"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#presentation-de-spark-sql class=md-nav__link> Présentation de Spark SQL </a> <nav class=md-nav aria-label="Présentation de Spark SQL"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#sql class=md-nav__link> SQL </a> </li> <li class=md-nav__item> <a href=#datasets-et-dataframes class=md-nav__link> Datasets et DataFrames </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#caracteristiques-de-spark-sql class=md-nav__link> Caractéristiques de Spark SQL </a> </li> <li class=md-nav__item> <a href=#optimisation-de-spark-sql-avec-catalyst class=md-nav__link> Optimisation de Spark SQL avec Catalyst </a> </li> <li class=md-nav__item> <a href=#manipulation-de-spark-sql-avec-le-shell class=md-nav__link> Manipulation de Spark SQL avec le Shell </a> <nav class=md-nav aria-label="Manipulation de Spark SQL avec le Shell"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#rdd-vs-dataframe-vs-dataset class=md-nav__link> RDD vs DataFrame vs Dataset </a> <nav class=md-nav aria-label="RDD vs DataFrame vs Dataset"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#utilisation-des-rdd class=md-nav__link> Utilisation des RDD </a> </li> <li class=md-nav__item> <a href=#utilisation-des-dataframes class=md-nav__link> Utilisation des DataFrames </a> </li> <li class=md-nav__item> <a href=#utilisation-des-datasets class=md-nav__link> Utilisation des Datasets </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#exemple-spark-sql-avec-scala class=md-nav__link> Exemple Spark SQL avec Scala </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#references class=md-nav__link> Références </a> </li> </ul> </nav> </li> </ul> </nav> </div> </div> </div> <div class=md-content data-md-component=content> <article class="md-content__inner md-typeset"> <a href=https://github.com/liliasfaxi/Atelier-Spark/edit/master/docs/p5-sql.md title="Edit this page" class="md-content__button md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg> </a> <h1>P5 - Spark SQL</h1> <h2 id=partie-5-spark-sql>Partie 5 - Spark SQL<a class=headerlink href=#partie-5-spark-sql title="Permanent link">&para;</a></h2> <p><center><img src=../img/p5/Spark-SQL.jpg width=500pt></center></p> <h3 id=presentation-de-spark-sql>Présentation de Spark SQL<a class=headerlink href=#presentation-de-spark-sql title="Permanent link">&para;</a></h3> <p>Spark SQL[^spark-official] est un module de Spark pour le traitement des données structurées. Contrairement aux RDD, les interfaces fournies par Spark SQL informent Spark de la structure des données et traitements réalisés. En interne, Spark SQL utilise ces informations pour réaliser des optimisations.</p> <p>Il est possible d'interagir avec Spark SQL de deux façons: en utilisant SQL et l'API Dataset. Pour ces deux interfaces, le même moteur d'exécution est utilisé par Spark SQL, ce qui permet aux développeurs de passer facilement d'une API à une autre.</p> <h4 id=sql>SQL<a class=headerlink href=#sql title="Permanent link">&para;</a></h4> <p>SQL est utilisé comme langage de requêtage dans Spark SQL. Ce dernier peut également lire des données à partir d'une installation Hive existante. En exécutant des requêtes SQL à partir d'autres langages de programmation, le résultat est retourné sous forme de Dataset ou DataFrame.</p> <h4 id=datasets-et-dataframes>Datasets et DataFrames<a class=headerlink href=#datasets-et-dataframes title="Permanent link">&para;</a></h4> <p>Un DataFrame est une structure organisée en colonnes nommées et non typées. Il est conceptuellement équivalent à une table dans une base de données relationnelle ou un data frame en Python ou R, avec en plus des optimisations plus riches. Ils ont été conçus comme couche au dessus des RDDs, pour ajouter des métadonnées supplémentaires grâce à leur format tabulaire. Les DataFrames peuvent être construites à partir de fichiers structurés, tables dans Hive, bases de données externes ou de RDDs existants.</p> <p>Un Dataset est une collection distribuée de données typées. C'est une nouvelle structure ajoutée dans Spark 1.6 qui fournit les avantages des RDDs en plus de ceux du moteur d'exécution optimisé de Spark SQL. C'est principalement une amélioration des DataFrames, qui y rajoute le typage des données. Un dataset peut être constuit à partir d'objets de la JVM, puis manipulé en utilisant les transformations telles que <code>map, flatMap, filter,</code> etc.</p> <p>A partir de la version 2 de Spark, les APIs des Datasets et DataFrame sont unifiées. Désormais, un DataFrame est référencé comme étant un <code>Dataset[Row]</code>. <center><img src=../img/p5/dataset-dataframe.png width=500pt></center></p> <p>Le tableau suivant permet de comparer les trois structures (RDD, Dataset et DataFrame) selon plusieurs critères [^zenika]:</p> <p><center><img src=../img/p5/comp-rdd-df-ds.png width=500pt></center></p> <h3 id=caracteristiques-de-spark-sql>Caractéristiques de Spark SQL<a class=headerlink href=#caracteristiques-de-spark-sql title="Permanent link">&para;</a></h3> <p><center><img src=../img/p5/features.jpg width=500pt>[^data-flair]</center></p> <ul> <li><strong>Intégré</strong>: Permet de mixer les programmes Spark avec les requêtes SQL, ce qui autorise un requêtage de données structurées grâce à SQL ou à l'API Dataframe en Java, Scala, Python et R.</li> <li><strong>Accès unifié aux données</strong>: Les Dataframes et SQL dans Spark communiquent de façon unifiée avec plusieurs sources de données telles que Hive, Avro, Parquet, JSON et JDBC.</li> <li><strong>Compatible avec Hive</strong>: Exécute des requêtes Hive sans modification sur les données courantes. Spark SQL réécrit le frontend de Hive, permettant une compatibilité complète avec les données, requêtes et UDFs de Hive.</li> <li><strong>Connectivité standard</strong>: La connexion peut se faire via JDBC ou ODBC.</li> <li><strong>Performance et scalabilité</strong>: Spark SQL incorpore un optimiseur, un générateur de code et un stockage orienté colonnes. De plus, il profite de la puissance du moteur Spark, qui fournit une excellente tolérance au fautes.</li> </ul> <h3 id=optimisation-de-spark-sql-avec-catalyst>Optimisation de Spark SQL avec Catalyst<a class=headerlink href=#optimisation-de-spark-sql-avec-catalyst title="Permanent link">&para;</a></h3> <p>Le framework d'optimisation de Spark SQL permet aux développeurs d'exprimer des requêtes de transformation en très peu de lignes de code.</p> <p><center><img src=../img/p5/optimization.jpg width=700pt>[^data-flair]</center></p> <p>Spark SQL incorpore un optimiseur appelé Catalyst, basé sur des constructions fonctionnelles en Scala. Il supporte une optimisation à base de règles (<em>rule-based</em>) et à base de coût (<em>cost_based</em>). L'optimisation à base de règles utilise un ensemble de règles pour déterminer comment exécuter une requête donnée, alors que l'optimisation à base de coût trouve le meilleur moyen pour exécuter une requête SQL. Cette dernière catégorie génère plusieurs règles, calcule les coûts induits par chacune, et choisit la plus optimisée.</p> <p>En interne, Catalyst contient une bibliothèque pour représenter des arbres et appliquer des règles pour les manipuler. Par dessus, d'autres bibliothèques ont été construites pour assurer le traitement de requêtes relationnelles, ainsi que plusieurs règles qui gèrent différentes phases de l'exécution des requêtes: analyse, optimisation logique, planification physique et génération de code, pour compiler des parties de la requête en Bytecode Java. Pour cette dernière opération, une autre caractéristique de Scala, les <em>quasiquotes</em>, est utilisée, pour faciliter la génération de code à l'exécution à partir d'expressions composables.[^databricks]</p> <h3 id=manipulation-de-spark-sql-avec-le-shell>Manipulation de Spark SQL avec le Shell<a class=headerlink href=#manipulation-de-spark-sql-avec-le-shell title="Permanent link">&para;</a></h3> <h4 id=rdd-vs-dataframe-vs-dataset>RDD vs DataFrame vs Dataset<a class=headerlink href=#rdd-vs-dataframe-vs-dataset title="Permanent link">&para;</a></h4> <p>Nous allons dans cette partie vous montrer les différences entre ces trois structures de données, en utilisant du code, inspiré d'un tutoriel de Zenika [^zenika].</p> <p>Supposons qu'on ait le fichier <em>purchases.txt</em>, qui contient la totalité des achats réalisés dans une grande distribution, dont la structure est la suivante: <code>date, heure, ville, categorie_pdt, prix, moyen_paiement</code> Nous voulons réaliser une opération de Map Reduce simple, où nous allons calculer pour chaque ville, la somme totale des ventes réalisées.</p> <p>En premier lieu, nous allons commencer par charger le fichier <em>purchases.txt</em> dans le répertoire input de notre cluster spark.</p> <ol> <li>Commencer par démarrer votre cluster (si ce n'est pas déjà fait): <div class=highlight><pre><span></span><code>  docker start spark-master spark-slave1 spark-slave2
+</code></pre></div></li> <li>Entrer dans le master <div class=highlight><pre><span></span><code>  docker <span class=nb>exec</span> -it spark-master bash
+</code></pre></div></li> <li>Naviguer vers le répertoire input précédemment créé: <div class=highlight><pre><span></span><code>  <span class=nb>cd</span> ~/input
+</code></pre></div></li> <li>Télécharger et décompressez le fichier purchases sur votre ordinateur à partir de ce <a href=https://github.com/CodeMangler/udacity-hadoop-course/raw/master/Datasets/purchases.txt.gz>LIEN</a> (ceci peut prendre quelques minutes).</li> <li>Charger le fichier téléchargé dans votre master grâce à la commande <code>docker cp</code> (il faudra ouvrir un autre terminal ) <div class=highlight><pre><span></span><code>  docker cp &lt;chemin_de_purchases.txt&gt;/purchases.txt spark-master://root/input
+</code></pre></div></li> <li>Si tout se passe bien, vous devriez retrouver le fichier purchases dans le répertoire input. Revenir dans votre contenaire spark, et taper: <div class=highlight><pre><span></span><code>  ls /root/input
+</code></pre></div> Le fichier devrait apparaître: <center><img src=../img/p5/fichier-purchases.png width=500pt></center></li> </ol> <h5 id=utilisation-des-rdd>Utilisation des RDD<a class=headerlink href=#utilisation-des-rdd title="Permanent link">&para;</a></h5> <p>Nous allons exécuter l'opération de calcul sur les données grâce aux structures RDD. Pour cela, suivre les étapes suivantes:</p> <ol> <li>Dans votre contenaire spark-master, ouvrir spark-shell: <div class=highlight><pre><span></span><code>  spark-shell
+</code></pre></div></li> <li>Charger le fichier purchases dans un RDD <div class=highlight><pre><span></span><code>  <span class=kd>val</span> <span class=n>allData</span> <span class=o>=</span> <span class=n>sc</span><span class=p>.</span><span class=n>textFile</span><span class=p>(</span><span class=s>&quot;/root/input/purchases.txt&quot;</span><span class=p>)</span>
+</code></pre></div></li> <li>Transformation 1: séparer les champs <div class=highlight><pre><span></span><code>  <span class=kd>val</span> <span class=n>splitted</span> <span class=o>=</span> <span class=n>allData</span><span class=p>.</span><span class=n>map</span><span class=p>(</span><span class=n>line</span> <span class=o>=&gt;</span> <span class=n>line</span><span class=p>.</span><span class=n>split</span><span class=p>(</span><span class=s>&quot;\t&quot;</span><span class=p>))</span>
+</code></pre></div></li> <li>Transformation 2: extraire les couples clef-valeur <div class=highlight><pre><span></span><code>  <span class=kd>val</span> <span class=n>pairs</span> <span class=o>=</span> <span class=n>splitted</span><span class=p>.</span><span class=n>map</span><span class=p>(</span><span class=n>splitted</span> <span class=o>=&gt;</span> <span class=p>(</span><span class=n>splitted</span><span class=p>(</span><span class=mi>2</span><span class=p>),</span> <span class=n>splitted</span><span class=p>(</span><span class=mi>4</span><span class=p>).</span><span class=n>toFloat</span><span class=p>))</span>
+</code></pre></div></li> <li>Transformation 3: réaliser la somme des prix de vente pour chaque clef <div class=highlight><pre><span></span><code>  <span class=kd>val</span> <span class=n>finalResult</span> <span class=o>=</span> <span class=n>pairs</span><span class=p>.</span><span class=n>reduceByKey</span><span class=p>(</span><span class=n>_+_</span><span class=p>)</span>
+</code></pre></div></li> <li>Action : sauvegarder le résultat dans un fichier texte <div class=highlight><pre><span></span><code>  <span class=n>finalResult</span><span class=p>.</span><span class=n>saveAsTextFile</span><span class=p>(</span><span class=s>&quot;/root/output/purchase-rdd.count&quot;</span><span class=p>)</span>
+</code></pre></div></li> <li>Ouvrir le fichier texte et visualiser le résultat (sortir de spark-shell pour cela avec <code>Ctrl-C</code>) <div class=highlight><pre><span></span><code>  head /root/output/purchase-rdd.count/part-00000
+</code></pre></div></li> </ol> <p>Le résultat obtenu devrait ressembler à ce qui suit: <center><img src=../img/p5/purchases-rdd.png width=500pt></center></p> <p>Toutes les transformations représentées ci-dessus produisent des RDD distribués sur les workers. La transformation 3 (<em>reduceByKey</em>) réalise ce qu'on appelle une <strong>transformation large</strong> (ou <em>wide transformation</em>) où une partition du RDD est produite à partir de plusieurs partitions du RDD parent, contrairement aux <strong>transformations étroites</strong> (ou <em>narrow transformations</em>) où chaque partition du RDD fils est créée à partir d'une seule partition du RDD parent (tel que indiqué dans la figure suivante).</p> <p><center><img src=../img/p5/wide-vs-narrow.png width=700pt></center></p> <h5 id=utilisation-des-dataframes>Utilisation des DataFrames<a class=headerlink href=#utilisation-des-dataframes title="Permanent link">&para;</a></h5> <p>Contrairement aux RDD, les DataFrames sont non typées. En effet, même si ce n'est pas visible dans le code précédent, car on utilise le langage Scala qui infère les types des variables, les RDD créés sont de type RDD[String]. En ce qui concerne les DataFrames, par contre, les types ne sont pas définis, par contre, la structure des données l'est. C'est à dire que nous pouvons faire référence à chacun des champs par son nom, défini préalablement dans un schéma, tel une base de données.</p> <ol> <li>Commencer par importer les classes nécessaires dans Spark-shell <div class=highlight><pre><span></span><code>  <span class=k>import</span> <span class=nn>org</span><span class=p>.</span><span class=nn>apache</span><span class=p>.</span><span class=nn>spark</span><span class=p>.</span><span class=nn>sql</span><span class=p>.</span><span class=nn>types</span><span class=p>.{</span><span class=nc>StructType</span><span class=p>,</span> <span class=nc>StructField</span><span class=p>,</span> <span class=nc>StringType</span><span class=p>,</span> <span class=nc>FloatType</span><span class=p>}</span><span class=err>;</span>
+</code></pre></div></li> <li>Définir le schéma des données qui se trouvent dans le fichier <em>purchases.txt</em> que nous allons charger <div class=highlight><pre><span></span><code>  <span class=kd>val</span> <span class=n>customSchema</span> <span class=o>=</span> <span class=nc>StructType</span><span class=p>(</span><span class=nc>Seq</span><span class=p>(</span><span class=nc>StructField</span><span class=p>(</span><span class=s>&quot;date&quot;</span><span class=p>,</span> <span class=nc>StringType</span><span class=p>,</span> <span class=kc>true</span><span class=p>),</span> <span class=nc>StructField</span><span class=p>(</span><span class=s>&quot;time&quot;</span><span class=p>,</span> <span class=nc>StringType</span><span class=p>,</span> <span class=kc>true</span><span class=p>),</span> <span class=nc>StructField</span><span class=p>(</span><span class=s>&quot;town&quot;</span><span class=p>,</span> <span class=nc>StringType</span><span class=p>,</span> <span class=kc>true</span><span class=p>),</span> <span class=nc>StructField</span><span class=p>(</span><span class=s>&quot;product&quot;</span><span class=p>,</span> <span class=nc>StringType</span><span class=p>,</span> <span class=kc>true</span><span class=p>),</span> <span class=nc>StructField</span><span class=p>(</span><span class=s>&quot;price&quot;</span><span class=p>,</span> <span class=nc>FloatType</span><span class=p>,</span> <span class=kc>true</span><span class=p>),</span> <span class=nc>StructField</span><span class=p>(</span><span class=s>&quot;payment&quot;</span><span class=p>,</span> <span class=nc>StringType</span><span class=p>,</span> <span class=kc>true</span><span class=p>)))</span>
+</code></pre></div></li> <li>Lire le fichier comme étaht un document CSV (<em>Comma-separated Values</em>), et mapper le résultat avec le schéma défini <div class=highlight><pre><span></span><code>  <span class=kd>val</span> <span class=n>resultAsACsvFormat</span> <span class=o>=</span> <span class=n>spark</span><span class=p>.</span><span class=n>read</span><span class=p>.</span><span class=n>schema</span><span class=p>(</span><span class=n>customSchema</span><span class=p>).</span><span class=n>option</span><span class=p>(</span><span class=s>&quot;delimiter&quot;</span><span class=p>,</span> <span class=s>&quot;\t&quot;</span><span class=p>).</span><span class=n>csv</span><span class=p>(</span><span class=s>&quot;/root/input/purchases.txt&quot;</span><span class=p>)</span>
+</code></pre></div></li> <li>Grouper les données par ville et faire la somme des prix <div class=highlight><pre><span></span><code>  <span class=kd>val</span> <span class=n>finalResult</span> <span class=o>=</span> <span class=n>resultAsACsvFormat</span><span class=p>.</span><span class=n>groupBy</span><span class=p>(</span><span class=s>&quot;town&quot;</span><span class=p>).</span><span class=n>sum</span><span class=p>(</span><span class=s>&quot;price&quot;</span><span class=p>)</span>
+</code></pre></div></li> <li>Sauvegarder les résultats dans un fichier <div class=highlight><pre><span></span><code>  <span class=n>finalResult</span><span class=p>.</span><span class=n>rdd</span><span class=p>.</span><span class=n>saveAsTextFile</span><span class=p>(</span><span class=s>&quot;/root/output/purchase-df.count&quot;</span><span class=p>)</span>
+</code></pre></div></li> </ol> <p>On remarque qu'il n'est pas possible de sauvegarder les DataFrame dans un fichier directement. Il faudra les transformer en RDD d'abord. De plus, les résultats seront sauvegardés sur un grand nombre de fichiers, certains vides.</p> <p>Pour visualliser le résultat complet, il est possible d'utiliser l'action <em>finalResult.collect()</em>, qui permet de retourner le RDD complet au programme Driver. Cela suppose bien sûr que le RDD peut être chargé en entier dans la mémoire de la machine master.</p> <p>Le résultat qu'on obtient alors sera comme suit: <center><img src=../img/p5/dataframe-collect.png width=500pt></center></p> <div class="admonition warning"> <p class=admonition-title>Attention</p> <p>Il est possible que la fonction <em>collect</em> ne fonctionne pas si la version de Java n'est pas compatible avec Spark. Un message du type "<code>Unsupported class file major version 55</code>" s'affichera alors. Pour éviter cela, installer la version 1.8 de JDK avec <code>apt install openjdk-8-jdk</code>, puis ajouter les lignes suivantes à <code>~/.bashrc</code>: <div class=highlight><pre><span></span><code>  <span class=nb>export</span> <span class=nv>JAVA_HOME</span><span class=o>=</span>/usr/lib/jvm/java-8-openjdk-amd64/
+  <span class=nb>export</span> <span class=nv>PATH</span><span class=o>=</span><span class=nv>$JAVA_HOME</span>/bin:<span class=nv>$PATH</span>
+</code></pre></div> Charger le fichier .bashrc en utilisant <code>source ~/.bashrc</code>, puis vérifier que la version de Java a bien changé en utilisant: <code>java -version</code>. L'affichage suivant devra apparaître: <center><img src=../img/p5/version-java.png width=500pt></center></p> </div> <h5 id=utilisation-des-datasets>Utilisation des Datasets<a class=headerlink href=#utilisation-des-datasets title="Permanent link">&para;</a></h5> <p>Les Datasets sont une amélioration des DataFrames, qui y rajoutent le typage. Les données ont donc une structure bien définie, mais en plus, telles que les bases de données relationnelles, un type pour chaque élément.</p> <p>Pour utiliser les Datasets comme structure de données dans notre exemple, suivre les étapes suivantes:</p> <ol> <li>Importer les classes nécessaires dans Spark-shell, et définir le schéma des données <div class=highlight><pre><span></span><code>  <span class=k>import</span> <span class=nn>org</span><span class=p>.</span><span class=nn>apache</span><span class=p>.</span><span class=nn>spark</span><span class=p>.</span><span class=nn>sql</span><span class=p>.</span><span class=nn>types</span><span class=p>.{</span><span class=nc>StructType</span><span class=p>,</span> <span class=nc>StructField</span><span class=p>,</span> <span class=nc>StringType</span><span class=p>,</span> <span class=nc>FloatType</span><span class=p>}</span><span class=err>;</span>
 
-        <script src="../js/jquery-1.10.2.min.js" defer></script>
-        <script src="../js/bootstrap.min.js" defer></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
-        <script>hljs.initHighlightingOnLoad();</script> 
-    </head>
-
-    <body>
-        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
-            <div class="container">
-                <a class="navbar-brand" href="..">Atelier Apache Spark</a>
-                <!-- Expander button -->
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <!-- Expanded navigation -->
-                <div id="navbar-collapse" class="navbar-collapse collapse">
-                        <!-- Main navigation -->
-                        <ul class="nav navbar-nav">
-                            <li class="navitem">
-                                <a href=".." class="nav-link">Atelier Apache Spark</a>
-                            </li>
-                            <li class="navitem">
-                                <a href="../p1-big-data/" class="nav-link">P1 - Introduction au Big Data</a>
-                            </li>
-                            <li class="navitem">
-                                <a href="../p2-spark/" class="nav-link">P2 - Introduction à Apache Spark</a>
-                            </li>
-                            <li class="navitem">
-                                <a href="../p3-install/" class="nav-link">P3 - Installation de Spark</a>
-                            </li>
-                            <li class="navitem">
-                                <a href="../p4-batch/" class="nav-link">P4 - RDD et Batch Processing avec Spark</a>
-                            </li>
-                            <li class="navitem active">
-                                <a href="./" class="nav-link">P5 - Spark SQL</a>
-                            </li>
-                            <li class="navitem">
-                                <a href="../p6-stream/" class="nav-link">P6 - Spark Streaming</a>
-                            </li>
-                            <li class="navitem">
-                                <a href="../p7-ml/" class="nav-link">P7 - Spark MLLib</a>
-                            </li>
-                            <li class="navitem">
-                                <a href="../p8-graphx/" class="nav-link">P8 - Spark GraphX</a>
-                            </li>
-                        </ul>
-
-                    <ul class="nav navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
-                                <i class="fa fa-search"></i> Search
-                            </a>
-                        </li>
-                            <li class="nav-item">
-                                <a rel="prev" href="../p4-batch/" class="nav-link">
-                                    <i class="fa fa-arrow-left"></i> Previous
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a rel="next" href="../p6-stream/" class="nav-link">
-                                    Next <i class="fa fa-arrow-right"></i>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="https://github.com/liliasfaxi/Atelier-Spark/edit/master/docs/p5-sql.md" class="nav-link">Edit on liliasfaxi/Atelier-Spark</a>
-                            </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="container">
-            <div class="row">
-                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
-            <span class="fa fa-angle-down"></span>
-        </button>
-    </div>
-
-    
-    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
-        <ul class="nav flex-column">
-            
-            <li class="nav-item" data-level="1"><a href="#partie-5-spark-sql" class="nav-link">Partie 5 - Spark SQL</a>
-              <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#presentation-de-spark-sql" class="nav-link">Présentation de Spark SQL</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#caracteristiques-de-spark-sql" class="nav-link">Caractéristiques de Spark SQL</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#optimisation-de-spark-sql-avec-catalyst" class="nav-link">Optimisation de Spark SQL avec Catalyst</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#manipulation-de-spark-sql-avec-le-shell" class="nav-link">Manipulation de Spark SQL avec le Shell</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#references" class="nav-link">Références</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-              </ul>
-            </li>
-        </ul>
-    </div>
-</div></div>
-                    <div class="col-md-9" role="main">
-
-<h1 id="partie-5-spark-sql">Partie 5 - Spark SQL</h1>
-<p><center><img src="../img/p5/Spark-SQL.jpg" width="500pt"></center></p>
-<h2 id="presentation-de-spark-sql">Présentation de Spark SQL</h2>
-<p>Spark SQL[^spark-official] est un module de Spark pour le traitement des données structurées. Contrairement aux RDD, les interfaces fournies par Spark SQL informent Spark de la structure des données et traitements réalisés. En interne, Spark SQL utilise ces informations pour réaliser des optimisations.</p>
-<p>Il est possible d'interagir avec Spark SQL de deux façons: en utilisant SQL et l'API Dataset. Pour ces deux interfaces, le même moteur d'exécution est utilisé par Spark SQL, ce qui permet aux développeurs de passer facilement d'une API à une autre.</p>
-<h3 id="sql">SQL</h3>
-<p>SQL est utilisé comme langage de requêtage dans Spark SQL. Ce dernier peut également lire des données à partir d'une installation Hive existante. En exécutant des requêtes SQL à partir d'autres langages de programmation, le résultat est retourné sous forme de Dataset ou DataFrame.</p>
-<h3 id="datasets-et-dataframes">Datasets et DataFrames</h3>
-<p>Un DataFrame est une structure organisée en colonnes nommées et non typées. Il est conceptuellement équivalent à une table dans une base de données relationnelle ou un data frame en Python ou R, avec en plus des optimisations plus riches. Ils ont été conçus comme couche au dessus des RDDs, pour ajouter des métadonnées supplémentaires grâce à leur format tabulaire.
-Les DataFrames peuvent être construites à partir de fichiers structurés, tables dans Hive, bases de données externes ou de RDDs existants.</p>
-<p>Un Dataset est une collection distribuée de données typées. C'est une nouvelle structure ajoutée dans Spark 1.6 qui fournit les avantages des RDDs en plus de ceux du moteur d'exécution optimisé de Spark SQL. C'est principalement une amélioration des DataFrames, qui y rajoute le typage des données. Un dataset peut être constuit à partir d'objets de la JVM, puis manipulé en utilisant les transformations telles que <code>map, flatMap, filter,</code> etc.</p>
-<p>A partir de la version 2 de Spark, les APIs des Datasets et DataFrame sont unifiées. Désormais, un DataFrame est référencé comme étant un <code>Dataset[Row]</code>.
-<center><img src="../img/p5/dataset-dataframe.png" width="500pt"></center></p>
-<p>Le tableau suivant permet de comparer les trois structures (RDD, Dataset et DataFrame) selon plusieurs critères [^zenika]:</p>
-<p><center><img src="../img/p5/comp-rdd-df-ds.png" width="500pt"></center></p>
-<h2 id="caracteristiques-de-spark-sql">Caractéristiques de Spark SQL</h2>
-<p><center><img src="../img/p5/features.jpg" width="500pt">[^data-flair]</center></p>
-<ul>
-<li><strong>Intégré</strong>: Permet de mixer les programmes Spark avec les requêtes SQL, ce qui autorise un requêtage de données structurées grâce à SQL ou à l'API Dataframe en Java, Scala, Python et R.</li>
-<li><strong>Accès unifié aux données</strong>: Les Dataframes et SQL dans Spark communiquent de façon unifiée avec plusieurs sources de données telles que Hive, Avro, Parquet, JSON et JDBC.</li>
-<li><strong>Compatible avec Hive</strong>: Exécute des requêtes Hive sans modification sur les données courantes. Spark SQL réécrit le frontend de Hive, permettant une compatibilité complète avec les données, requêtes et UDFs de Hive.</li>
-<li><strong>Connectivité standard</strong>: La connexion peut se faire via JDBC ou ODBC.</li>
-<li><strong>Performance et scalabilité</strong>: Spark SQL incorpore un optimiseur, un générateur de code et un stockage orienté colonnes. De plus, il profite de la puissance du moteur Spark, qui fournit une excellente tolérance au fautes.</li>
-</ul>
-<h2 id="optimisation-de-spark-sql-avec-catalyst">Optimisation de Spark SQL avec Catalyst</h2>
-<p>Le framework d'optimisation de Spark SQL permet aux développeurs d'exprimer des requêtes de transformation en très peu de lignes de code.</p>
-<p><center><img src="../img/p5/optimization.jpg" width="700pt">[^data-flair]</center></p>
-<p>Spark SQL incorpore un optimiseur appelé Catalyst, basé sur des constructions fonctionnelles en Scala. Il supporte une optimisation à base de règles (<em>rule-based</em>) et à base de coût (<em>cost_based</em>). L'optimisation à base de règles utilise un ensemble de règles pour déterminer comment exécuter une requête donnée, alors que l'optimisation à base de coût trouve le meilleur moyen pour exécuter une requête SQL. Cette dernière catégorie génère plusieurs règles, calcule les coûts induits par chacune, et choisit la plus optimisée.</p>
-<p>En interne, Catalyst contient une bibliothèque pour représenter des arbres et appliquer des règles pour les manipuler. Par dessus, d'autres bibliothèques ont été construites pour assurer le traitement de requêtes relationnelles, ainsi que plusieurs règles qui gèrent différentes phases de l'exécution des requêtes: analyse, optimisation logique, planification physique et génération de code, pour compiler des parties de la requête en Bytecode Java.  Pour cette dernière opération, une autre caractéristique de Scala, les <em>quasiquotes</em>, est utilisée, pour faciliter la génération de code à l'exécution à partir d'expressions composables.[^databricks]</p>
-<h2 id="manipulation-de-spark-sql-avec-le-shell">Manipulation de Spark SQL avec le Shell</h2>
-<h3 id="rdd-vs-dataframe-vs-dataset">RDD vs DataFrame vs Dataset</h3>
-<p>Nous allons dans cette partie vous montrer les différences entre ces trois structures de données, en utilisant du code, inspiré d'un tutoriel de Zenika [^zenika].</p>
-<p>Supposons qu'on ait le fichier <em>purchases.txt</em>, qui contient la totalité des achats réalisés dans une grande distribution, dont la structure est la suivante:
-  <code>date,  heure,  ville,  categorie_pdt,  prix,  moyen_paiement</code>
-Nous voulons réaliser une opération de Map Reduce simple, où nous allons calculer pour chaque ville, la somme totale des ventes réalisées.</p>
-<p>En premier lieu, nous allons commencer par charger le fichier <em>purchases.txt</em> dans le répertoire input de notre cluster spark.</p>
-<ol>
-<li>Commencer par démarrer votre cluster (si ce n'est pas déjà fait):
-  <code>Bash
-    docker start spark-master spark-slave1 spark-slave2</code></li>
-<li>Entrer dans le master
-  <code>Bash
-    docker exec -it spark-master bash</code></li>
-<li>Naviguer vers le répertoire input précédemment créé:
-  <code>Bash
-    cd ~/input</code></li>
-<li>Télécharger le fichier purchases sur votre ordinateur à partir de ce <a href="https://mohetn-my.sharepoint.com/:t:/g/personal/lilia_sfaxi_insat_u-carthage_tn/EWdosZTuyDtEiqcjpqbY_loBJfMEGxsYHDYHl6hBpzVAhg?e=AVUJal">LIEN</a> (ceci peut prendre quelques minutes).</li>
-<li>Charger le fichier téléchargé dans votre master grâce à la commande <code>docker cp</code> (il faudra ouvrir un autre terminal )
-  <code>Bash
-    docker cp &lt;chemin_de_purchases.txt&gt;/purchases.txt spark-master://root/input</code></li>
-<li>Si tout se passe bien, vous devriez retrouver le fichier purchases dans le répertoire input. Revenir dans votre contenaire spark, et taper:
-  <code>Bash
-    ls /root/input</code>
-Le fichier devrait apparaître:
-<center><img src="../img/p5/fichier-purchases.png" width="500pt"></center></li>
-</ol>
-<h4 id="utilisation-des-rdd">Utilisation des RDD</h4>
-<p>Nous allons exécuter l'opération de calcul sur les données grâce aux structures RDD. Pour cela, suivre les étapes suivantes:</p>
-<ol>
-<li>Dans votre contenaire spark-master, ouvrir spark-shell:
-  <code>bash
-    spark-shell</code></li>
-<li>Charger le fichier purchases dans un RDD
-  <code>scala
-    val allData = sc.textFile("/root/input/purchases.txt")</code></li>
-<li>Transformation 1: séparer les champs
-  <code>scala
-    val splitted = allData.map(line =&gt; line.split("\t"))</code></li>
-<li>Transformation 2: extraire les couples clef-valeur
-  <code>scala
-    val pairs = splitted.map(splitted =&gt; (splitted(2), splitted(4).toFloat))</code></li>
-<li>Transformation 3: réaliser la somme des prix de vente pour chaque clef
-  <code>scala
-    val finalResult = pairs.reduceByKey(_+_)</code></li>
-<li>Action : sauvegarder le résultat dans un fichier texte
-  <code>scala
-    finalResult.saveAsTextFile("/root/output/purchase-rdd.count")</code></li>
-<li>Ouvrir le fichier texte et visualiser le résultat (sortir de spark-shell pour cela avec <code>Ctrl-C</code>)
-  <code>bash
-    head /root/output/purchase-rdd.count/part-00000</code></li>
-</ol>
-<p>Le résultat obtenu devrait ressembler à ce qui suit:
-<center><img src="../img/p5/purchases-rdd.png" width="500pt"></center></p>
-<p>Toutes les transformations représentées ci-dessus produisent des RDD distribués sur les workers. La transformation 3 (<em>reduceByKey</em>) réalise ce qu'on appelle une <strong>transformation large</strong> (ou <em>wide transformation</em>) où une partition du RDD est produite à partir de plusieurs partitions du RDD parent, contrairement aux <strong>transformations étroites</strong> (ou <em>narrow transformations</em>) où chaque partition du RDD fils est créée à partir d'une seule partition du RDD parent (tel que indiqué dans la figure suivante).</p>
-<p><center><img src="../img/p5/wide-vs-narrow.png" width="700pt"></center></p>
-<h4 id="utilisation-des-dataframes">Utilisation des DataFrames</h4>
-<p>Contrairement aux RDD, les DataFrames sont non typées. En effet, même si ce n'est pas visible dans le code précédent, car on utilise le langage Scala qui infère les types des variables, les RDD créés sont de type RDD[String]. En ce qui concerne les DataFrames, par contre, les types ne sont pas définis, par contre, la structure des données l'est. C'est à dire que nous pouvons faire référence à chacun des champs par son nom, défini préalablement dans un schéma, tel une base de données.</p>
-<ol>
-<li>Commencer par importer les classes nécessaires dans Spark-shell
-  <code>scala
-    import org.apache.spark.sql.types.{StructType, StructField, StringType, FloatType};</code></li>
-<li>Définir le schéma des données qui se trouvent dans le fichier <em>purchases.txt</em> que nous allons charger
-  <code>scala
-    val customSchema = StructType(Seq(StructField("date", StringType, true), StructField("time", StringType, true), StructField("town", StringType, true), StructField("product", StringType, true), StructField("price", FloatType, true), StructField("payment", StringType, true)))</code></li>
-<li>Lire le fichier comme étaht un document CSV (<em>Comma-separated Values</em>), et mapper le résultat avec le schéma défini
-  <code>scala
-    val resultAsACsvFormat = spark.read.schema(customSchema).option("delimiter", "\t").csv("/root/input/purchases.txt")</code></li>
-<li>Grouper les données par ville et faire la somme des prix
-  <code>scala
-    val finalResult = resultAsACsvFormat.groupBy("town").sum("price")</code></li>
-<li>Sauvegarder les résultats dans un fichier
-  <code>scala
-    finalResult.rdd.saveAsTextFile("/root/output/purchase-df.count")</code></li>
-</ol>
-<p>On remarque qu'il n'est pas possible de sauvegarder les DataFrame dans un fichier directement. Il faudra les transformer en RDD d'abord. De plus, les résultats seront sauvegardés sur un grand nombre de fichiers, certains vides.</p>
-<p>Pour visualliser le résultat complet, il est possible d'utiliser l'action <em>finalResult.collect()</em>, qui permet de retourner le RDD complet au programme Driver. Cela suppose bien sûr que le RDD peut être chargé en entier dans la mémoire de la machine master.</p>
-<p>Le résultat qu'on obtient alors sera comme suit:
-<center><img src="../img/p5/dataframe-collect.png" width="500pt"></center></p>
-<p>!!! warning "Attention"
-    Il est possible que la fonction <em>collect</em> ne fonctionne pas si la version de Java n'est pas compatible avec Spark. Un message du type "<code>Unsupported class file major version 55</code>" s'affichera alors.
-    Pour éviter cela, installer la version 1.8 de JDK avec <code>apt install openjdk-8-jdk</code>, puis ajouter les lignes suivantes à <code>~/.bashrc</code>:
-    <code>bash
-      export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
-      export PATH=$JAVA_HOME/bin:$PATH</code>
-    Charger le fichier .bashrc en utilisant <code>source ~/.bashrc</code>, puis vérifier que la version de Java a bien changé en utilisant: <code>java -version</code>. L'affichage suivant devra apparaître:
-    <center><img src="../img/p5/version-java.png" width="500pt"></center></p>
-<h4 id="utilisation-des-datasets">Utilisation des Datasets</h4>
-<p>Les Datasets sont une amélioration des DataFrames, qui y rajoutent le typage. Les données ont donc une structure bien définie, mais en plus, telles que les bases de données relationnelles, un type pour chaque élément.</p>
-<p>Pour utiliser les Datasets comme structure de données dans notre exemple, suivre les étapes suivantes:</p>
-<ol>
-<li>
-<p>Importer les classes nécessaires dans Spark-shell, et définir le schéma des données
-  ```scala
-    import org.apache.spark.sql.types.{StructType, StructField, StringType, FloatType};</p>
-<p>val customSchema =  StructType(Seq(StructField("date", StringType, true),
-                    StructField("time", StringType, true), StructField("town", StringType, true),
-                    StructField("product", StringType, true), StructField("price", FloatType, true),
-                    StructField("payment", StringType, true)))
-  <code>2. Créer une classe associée à ce schéma</code>scala
-case class Product(date: String, time: String, town:String, product:String, price:Float, payment:String)
-  <code>3. Lire le fichier comme étaht un document CSV (_Comma-separated Values_), en y associant la classe créée</code>scala
-val result = spark.read.schema(customSchema).option("delimiter", "\t").csv("/root/input/purchases.txt").as[Product]
-  <code>4. Grouper, faire la somme et afficher le résultat</code>scala
-val finalResult = result.groupBy("town").sum("price")
-finalResult.collect()
-  ```</p>
-</li>
-</ol>
-<p>Le résultat ressemblera à ce qui suit:
-  <center><img src="../img/p5/dataset-collect.png" width="500pt"></center></p>
-<h3 id="exemple-spark-sql-avec-scala">Exemple Spark SQL avec Scala</h3>
-<p>Nous allons montrer dans ce qui suit un exemple SparkSQL simple[^tutorialspoint], qui lit à partir de données se trouvant sur un fichier JSON, et interroge les donnees en utilisant les DataFrames et les opérations de transformations et actions optimisées de Spark.</p>
-<ol>
-<li>Commencer par créer un fichier JSON intitulé <code>employe.json</code> dans le répertoire /root/input de votre spark-master, avec le contenu suivant:
-  <code>json
-    {"id" : "1201", "name" : "ahmed", "age" : "25"}
-    {"id" : "1202", "name" : "salma", "age" : "58"}
-    {"id" : "1203", "name" : "amina", "age" : "39"}
-    {"id" : "1204", "name" : "ali", "age" : "23"}
-    {"id" : "1205", "name" : "mourad", "age" : "23"}</code>
-  Le fichier doit contenir une liste de documents JSON successifs.</li>
-<li>Démarrer ensuite le Spark-Shell
-  <code>bash
-    spark-shell</code></li>
-<li>Définir le SQL context
-  <code>scala
-    val sqlcontext = new org.apache.spark.sql.SQLContext(sc)
-    // Résultat: sqlcontext: org.apache.spark.sql.SQLContext = org.apache.spark.sql.SQLContext@75b41ff3</code></li>
-<li>Lire le contenu du fichier et le charger dans un DataFrame
-  <code>scala
-    val dfs = sqlcontext.read.json("/root/input/employe.json")
-    // Résultat: dfs: org.apache.spark.sql.DataFrame = [age: string, id: string ... 1 more field]</code></li>
-<li>Afficher le contenu du fichier.
-  <code>scala
-    dfs.show()
-    /* Résultat:
-     +---+----+------+
-     |age|  id|  name|
-     +---+----+------+
-     | 25|1201| ahmed|
-     | 58|1202| salma|
-     | 39|1203| amina|
-     | 23|1204|   ali|
-     | 23|1205|mourad|
-     +---+----+------+
-    */</code></li>
-<li>Afficher le schéma inféré des données
-  <code>scala
-    dfs.printSchema()
-    /* Résultat:
-      root
-        |-- age: string (nullable = true)
-        |-- id: string (nullable = true)
-        |-- name: string (nullable = true)
-    */</code></li>
-<li>Sélectionner les noms des employés
-  <code>scala
-    dfs.select("name").show()
-    /* Résultat:
-      +------+
-      |  name|
-      +------+
-      | ahmed|
-      | salma|
-      | amina|
-      |   ali|
-      |mourad|
-      +------+
-    */</code></li>
-<li>Filter les données par âge
-  <code>scala
-    dfs.filter(dfs("age") &gt; 23).show()
-    /* Résultat:
-      +---+----+-----+
-      |age|  id| name|
-      +---+----+-----+
-      | 25|1201|ahmed|
-      | 58|1202|salma|
-      | 39|1203|amina|
-      +---+----+-----+
-    */</code></li>
-<li>Grouper les données par âge et compter le nombre de personnes pour chaque âge
-  <code>scala
-    dfs.groupBy("age").count().show()
-    /* Résultat:
-      +---+-----+
-      |age|count|
-      +---+-----+
-      | 23|    2|
-      | 25|    1|
-      | 58|    1|
-      | 39|    1|
-      +---+-----+
-    */</code></li>
-</ol>
-<h2 id="references">Références</h2>
-<p>[^spark-official]:
-  Spark Documentation, <em>Spark SQL, DataFrames and Datasets Guide</em>, <a href="https://spark.apache.org/docs/latest/sql-programming-guide.html">https://spark.apache.org/docs/latest/sql-programming-guide.html</a>, consulté le 03/2020</p>
-<p>[^zenika]:
-  Nastasia Saby from Zenika, <em>A comparison between RDD, DataFrame and Dataset in Spark from a developer's point of view</em>, <a href="https://medium.zenika.com/a-comparison-between-rdd-dataframe-and-dataset-in-spark-from-a-developers-point-of-view-a539b5acf734">https://medium.zenika.com/a-comparison-between-rdd-dataframe-and-dataset-in-spark-from-a-developers-point-of-view-a539b5acf734</a>, consulté le 03/2020</p>
-<p>[^data-flair]:
-  Data Flair, <em>Spark Tutorial: Learn Spark Programming</em>, <a href="https://data-flair.training/blogs/spark-tutorial/">https://data-flair.training/blogs/spark-tutorial/</a>, consulté le 03/2020</p>
-<p>[^databricks]:
-  DataBricks, <em>Deep Dive into Spark SQL's Catalyst Optimizer</em>, <a href="https://databricks.com/blog/2015/04/13/deep-dive-into-spark-sqls-catalyst-optimizer.html">https://databricks.com/blog/2015/04/13/deep-dive-into-spark-sqls-catalyst-optimizer.html</a>, consulté le 03/2020</p>
-<p>[^tutorialspoint]:
-  TutorialsPoint, <em>SparkSQL Tutorial</em>, <a href="https://www.tutorialspoint.com/spark_sql/spark_sql_dataframes.htm">https://www.tutorialspoint.com/spark_sql/spark_sql_dataframes.htm</a>, consulté le 03/2020</p></div>
-            </div>
-        </div>
-
-        <footer class="col-md-12">
-            <hr>
-                <p>Copyright &copy; 2019 - 2020 Lilia Sfaxi</p>
-            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
-        </footer>
-        <script>
-            var base_url = "..",
-                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
-        </script>
-        <script src="../js/base.js" defer></script>
-        <script src="../search/main.js" defer></script>
-
-        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="searchModalLabel">Search</h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            </div>
-            <div class="modal-body">
-                <p>From here you can search these documents. Enter your search terms below.</p>
-                <form>
-                    <div class="form-group">
-                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
-                    </div>
-                </form>
-                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
-    </div>
-</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            </div>
-            <div class="modal-body">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th style="width: 20%;">Keys</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="help shortcut"><kbd>?</kbd></td>
-                    <td>Open this help</td>
-                  </tr>
-                  <tr>
-                    <td class="next shortcut"><kbd>n</kbd></td>
-                    <td>Next page</td>
-                  </tr>
-                  <tr>
-                    <td class="prev shortcut"><kbd>p</kbd></td>
-                    <td>Previous page</td>
-                  </tr>
-                  <tr>
-                    <td class="search shortcut"><kbd>s</kbd></td>
-                    <td>Search</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
-    </div>
-</div>
-
-    </body>
-</html>
+  <span class=kd>val</span> <span class=n>customSchema</span> <span class=o>=</span>  <span class=nc>StructType</span><span class=p>(</span><span class=nc>Seq</span><span class=p>(</span><span class=nc>StructField</span><span class=p>(</span><span class=s>&quot;date&quot;</span><span class=p>,</span> <span class=nc>StringType</span><span class=p>,</span> <span class=kc>true</span><span class=p>),</span>
+                      <span class=nc>StructField</span><span class=p>(</span><span class=s>&quot;time&quot;</span><span class=p>,</span> <span class=nc>StringType</span><span class=p>,</span> <span class=kc>true</span><span class=p>),</span> <span class=nc>StructField</span><span class=p>(</span><span class=s>&quot;town&quot;</span><span class=p>,</span> <span class=nc>StringType</span><span class=p>,</span> <span class=kc>true</span><span class=p>),</span>
+                      <span class=nc>StructField</span><span class=p>(</span><span class=s>&quot;product&quot;</span><span class=p>,</span> <span class=nc>StringType</span><span class=p>,</span> <span class=kc>true</span><span class=p>),</span> <span class=nc>StructField</span><span class=p>(</span><span class=s>&quot;price&quot;</span><span class=p>,</span> <span class=nc>FloatType</span><span class=p>,</span> <span class=kc>true</span><span class=p>),</span>
+                      <span class=nc>StructField</span><span class=p>(</span><span class=s>&quot;payment&quot;</span><span class=p>,</span> <span class=nc>StringType</span><span class=p>,</span> <span class=kc>true</span><span class=p>)))</span>
+</code></pre></div></li> <li>Créer une classe associée à ce schéma <div class=highlight><pre><span></span><code>  <span class=k>case</span> <span class=k>class</span> <span class=nc>Product</span><span class=p>(</span><span class=n>date</span><span class=p>:</span> <span class=nc>String</span><span class=p>,</span> <span class=n>time</span><span class=p>:</span> <span class=nc>String</span><span class=p>,</span> <span class=n>town</span><span class=p>:</span><span class=nc>String</span><span class=p>,</span> <span class=n>product</span><span class=p>:</span><span class=nc>String</span><span class=p>,</span> <span class=n>price</span><span class=p>:</span><span class=nc>Float</span><span class=p>,</span> <span class=n>payment</span><span class=p>:</span><span class=nc>String</span><span class=p>)</span>
+</code></pre></div></li> <li>Lire le fichier comme étaht un document CSV (<em>Comma-separated Values</em>), en y associant la classe créée <div class=highlight><pre><span></span><code>  <span class=kd>val</span> <span class=n>result</span> <span class=o>=</span> <span class=n>spark</span><span class=p>.</span><span class=n>read</span><span class=p>.</span><span class=n>schema</span><span class=p>(</span><span class=n>customSchema</span><span class=p>).</span><span class=n>option</span><span class=p>(</span><span class=s>&quot;delimiter&quot;</span><span class=p>,</span> <span class=s>&quot;\t&quot;</span><span class=p>).</span><span class=n>csv</span><span class=p>(</span><span class=s>&quot;/root/input/purchases.txt&quot;</span><span class=p>).</span><span class=n>as</span><span class=p>[</span><span class=nc>Product</span><span class=p>]</span>
+</code></pre></div></li> <li>Grouper, faire la somme et afficher le résultat <div class=highlight><pre><span></span><code>  <span class=kd>val</span> <span class=n>finalResult</span> <span class=o>=</span> <span class=n>result</span><span class=p>.</span><span class=n>groupBy</span><span class=p>(</span><span class=s>&quot;town&quot;</span><span class=p>).</span><span class=n>sum</span><span class=p>(</span><span class=s>&quot;price&quot;</span><span class=p>)</span>
+  <span class=n>finalResult</span><span class=p>.</span><span class=n>collect</span><span class=p>()</span>
+</code></pre></div></li> </ol> <p>Le résultat ressemblera à ce qui suit: <center><img src=../img/p5/dataset-collect.png width=500pt></center></p> <h4 id=exemple-spark-sql-avec-scala>Exemple Spark SQL avec Scala<a class=headerlink href=#exemple-spark-sql-avec-scala title="Permanent link">&para;</a></h4> <p>Nous allons montrer dans ce qui suit un exemple SparkSQL simple[^tutorialspoint], qui lit à partir de données se trouvant sur un fichier JSON, et interroge les donnees en utilisant les DataFrames et les opérations de transformations et actions optimisées de Spark.</p> <ol> <li>Commencer par créer un fichier JSON intitulé <code>employe.json</code> dans le répertoire /root/input de votre spark-master, avec le contenu suivant: <div class=highlight><pre><span></span><code><span class=w>  </span><span class=p>{</span><span class=nt>&quot;id&quot;</span><span class=w> </span><span class=p>:</span><span class=w> </span><span class=s2>&quot;1201&quot;</span><span class=p>,</span><span class=w> </span><span class=nt>&quot;name&quot;</span><span class=w> </span><span class=p>:</span><span class=w> </span><span class=s2>&quot;ahmed&quot;</span><span class=p>,</span><span class=w> </span><span class=nt>&quot;age&quot;</span><span class=w> </span><span class=p>:</span><span class=w> </span><span class=s2>&quot;25&quot;</span><span class=p>}</span><span class=w></span>
+<span class=w>  </span><span class=p>{</span><span class=nt>&quot;id&quot;</span><span class=w> </span><span class=p>:</span><span class=w> </span><span class=s2>&quot;1202&quot;</span><span class=p>,</span><span class=w> </span><span class=nt>&quot;name&quot;</span><span class=w> </span><span class=p>:</span><span class=w> </span><span class=s2>&quot;salma&quot;</span><span class=p>,</span><span class=w> </span><span class=nt>&quot;age&quot;</span><span class=w> </span><span class=p>:</span><span class=w> </span><span class=s2>&quot;58&quot;</span><span class=p>}</span><span class=w></span>
+<span class=w>  </span><span class=p>{</span><span class=nt>&quot;id&quot;</span><span class=w> </span><span class=p>:</span><span class=w> </span><span class=s2>&quot;1203&quot;</span><span class=p>,</span><span class=w> </span><span class=nt>&quot;name&quot;</span><span class=w> </span><span class=p>:</span><span class=w> </span><span class=s2>&quot;amina&quot;</span><span class=p>,</span><span class=w> </span><span class=nt>&quot;age&quot;</span><span class=w> </span><span class=p>:</span><span class=w> </span><span class=s2>&quot;39&quot;</span><span class=p>}</span><span class=w></span>
+<span class=w>  </span><span class=p>{</span><span class=nt>&quot;id&quot;</span><span class=w> </span><span class=p>:</span><span class=w> </span><span class=s2>&quot;1204&quot;</span><span class=p>,</span><span class=w> </span><span class=nt>&quot;name&quot;</span><span class=w> </span><span class=p>:</span><span class=w> </span><span class=s2>&quot;ali&quot;</span><span class=p>,</span><span class=w> </span><span class=nt>&quot;age&quot;</span><span class=w> </span><span class=p>:</span><span class=w> </span><span class=s2>&quot;23&quot;</span><span class=p>}</span><span class=w></span>
+<span class=w>  </span><span class=p>{</span><span class=nt>&quot;id&quot;</span><span class=w> </span><span class=p>:</span><span class=w> </span><span class=s2>&quot;1205&quot;</span><span class=p>,</span><span class=w> </span><span class=nt>&quot;name&quot;</span><span class=w> </span><span class=p>:</span><span class=w> </span><span class=s2>&quot;mourad&quot;</span><span class=p>,</span><span class=w> </span><span class=nt>&quot;age&quot;</span><span class=w> </span><span class=p>:</span><span class=w> </span><span class=s2>&quot;23&quot;</span><span class=p>}</span><span class=w></span>
+</code></pre></div> Le fichier doit contenir une liste de documents JSON successifs.</li> <li>Démarrer ensuite le Spark-Shell <div class=highlight><pre><span></span><code>  spark-shell
+</code></pre></div></li> <li>Définir le SQL context <div class=highlight><pre><span></span><code>  <span class=kd>val</span> <span class=n>sqlcontext</span> <span class=o>=</span> <span class=k>new</span> <span class=n>org</span><span class=p>.</span><span class=n>apache</span><span class=p>.</span><span class=n>spark</span><span class=p>.</span><span class=n>sql</span><span class=p>.</span><span class=nc>SQLContext</span><span class=p>(</span><span class=n>sc</span><span class=p>)</span>
+  <span class=c1>// Résultat: sqlcontext: org.apache.spark.sql.SQLContext = org.apache.spark.sql.SQLContext@75b41ff3</span>
+</code></pre></div></li> <li>Lire le contenu du fichier et le charger dans un DataFrame <div class=highlight><pre><span></span><code>  <span class=kd>val</span> <span class=n>dfs</span> <span class=o>=</span> <span class=n>sqlcontext</span><span class=p>.</span><span class=n>read</span><span class=p>.</span><span class=n>json</span><span class=p>(</span><span class=s>&quot;/root/input/employe.json&quot;</span><span class=p>)</span>
+  <span class=c1>// Résultat: dfs: org.apache.spark.sql.DataFrame = [age: string, id: string ... 1 more field]</span>
+</code></pre></div></li> <li>Afficher le contenu du fichier. <div class=highlight><pre><span></span><code>  <span class=n>dfs</span><span class=p>.</span><span class=n>show</span><span class=p>()</span>
+  <span class=cm>/* Résultat:</span>
+<span class=cm>   +---+----+------+</span>
+<span class=cm>   |age|  id|  name|</span>
+<span class=cm>   +---+----+------+</span>
+<span class=cm>   | 25|1201| ahmed|</span>
+<span class=cm>   | 58|1202| salma|</span>
+<span class=cm>   | 39|1203| amina|</span>
+<span class=cm>   | 23|1204|   ali|</span>
+<span class=cm>   | 23|1205|mourad|</span>
+<span class=cm>   +---+----+------+</span>
+<span class=cm>  */</span>
+</code></pre></div></li> <li>Afficher le schéma inféré des données <div class=highlight><pre><span></span><code>  <span class=n>dfs</span><span class=p>.</span><span class=n>printSchema</span><span class=p>()</span>
+  <span class=cm>/* Résultat:</span>
+<span class=cm>    root</span>
+<span class=cm>      |-- age: string (nullable = true)</span>
+<span class=cm>      |-- id: string (nullable = true)</span>
+<span class=cm>      |-- name: string (nullable = true)</span>
+<span class=cm>  */</span>
+</code></pre></div></li> <li>Sélectionner les noms des employés <div class=highlight><pre><span></span><code>  <span class=n>dfs</span><span class=p>.</span><span class=n>select</span><span class=p>(</span><span class=s>&quot;name&quot;</span><span class=p>).</span><span class=n>show</span><span class=p>()</span>
+  <span class=cm>/* Résultat:</span>
+<span class=cm>    +------+</span>
+<span class=cm>    |  name|</span>
+<span class=cm>    +------+</span>
+<span class=cm>    | ahmed|</span>
+<span class=cm>    | salma|</span>
+<span class=cm>    | amina|</span>
+<span class=cm>    |   ali|</span>
+<span class=cm>    |mourad|</span>
+<span class=cm>    +------+</span>
+<span class=cm>  */</span>
+</code></pre></div></li> <li>Filter les données par âge <div class=highlight><pre><span></span><code>  <span class=n>dfs</span><span class=p>.</span><span class=n>filter</span><span class=p>(</span><span class=n>dfs</span><span class=p>(</span><span class=s>&quot;age&quot;</span><span class=p>)</span> <span class=o>&gt;</span> <span class=mi>23</span><span class=p>).</span><span class=n>show</span><span class=p>()</span>
+  <span class=cm>/* Résultat:</span>
+<span class=cm>    +---+----+-----+</span>
+<span class=cm>    |age|  id| name|</span>
+<span class=cm>    +---+----+-----+</span>
+<span class=cm>    | 25|1201|ahmed|</span>
+<span class=cm>    | 58|1202|salma|</span>
+<span class=cm>    | 39|1203|amina|</span>
+<span class=cm>    +---+----+-----+</span>
+<span class=cm>  */</span>
+</code></pre></div></li> <li>Grouper les données par âge et compter le nombre de personnes pour chaque âge <div class=highlight><pre><span></span><code>  <span class=n>dfs</span><span class=p>.</span><span class=n>groupBy</span><span class=p>(</span><span class=s>&quot;age&quot;</span><span class=p>).</span><span class=n>count</span><span class=p>().</span><span class=n>show</span><span class=p>()</span>
+  <span class=cm>/* Résultat:</span>
+<span class=cm>    +---+-----+</span>
+<span class=cm>    |age|count|</span>
+<span class=cm>    +---+-----+</span>
+<span class=cm>    | 23|    2|</span>
+<span class=cm>    | 25|    1|</span>
+<span class=cm>    | 58|    1|</span>
+<span class=cm>    | 39|    1|</span>
+<span class=cm>    +---+-----+</span>
+<span class=cm>  */</span>
+</code></pre></div></li> </ol> <h3 id=references>Références<a class=headerlink href=#references title="Permanent link">&para;</a></h3> <p>[^spark-official]: Spark Documentation, <em>Spark SQL, DataFrames and Datasets Guide</em>, <a href=https://spark.apache.org/docs/latest/sql-programming-guide.html>https://spark.apache.org/docs/latest/sql-programming-guide.html</a>, consulté le 03/2020</p> <p>[^zenika]: Nastasia Saby from Zenika, <em>A comparison between RDD, DataFrame and Dataset in Spark from a developer's point of view</em>, <a href=https://medium.zenika.com/a-comparison-between-rdd-dataframe-and-dataset-in-spark-from-a-developers-point-of-view-a539b5acf734>https://medium.zenika.com/a-comparison-between-rdd-dataframe-and-dataset-in-spark-from-a-developers-point-of-view-a539b5acf734</a>, consulté le 03/2020</p> <p>[^data-flair]: Data Flair, <em>Spark Tutorial: Learn Spark Programming</em>, <a href=https://data-flair.training/blogs/spark-tutorial/ >https://data-flair.training/blogs/spark-tutorial/</a>, consulté le 03/2020</p> <p>[^databricks]: DataBricks, <em>Deep Dive into Spark SQL's Catalyst Optimizer</em>, <a href=https://databricks.com/blog/2015/04/13/deep-dive-into-spark-sqls-catalyst-optimizer.html>https://databricks.com/blog/2015/04/13/deep-dive-into-spark-sqls-catalyst-optimizer.html</a>, consulté le 03/2020</p> <p>[^tutorialspoint]: TutorialsPoint, <em>SparkSQL Tutorial</em>, <a href=https://www.tutorialspoint.com/spark_sql/spark_sql_dataframes.htm>https://www.tutorialspoint.com/spark_sql/spark_sql_dataframes.htm</a>, consulté le 03/2020</p> <hr> <div class=md-source-file> <small> Last update: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class=timeago datetime=2022-02-07T15:56:41+01:00 locale=en></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2022-02-07</span> </small> </div> </article> </div> </div> </main> <footer class=md-footer> <nav class="md-footer__inner md-grid" aria-label=Footer> <a href=../p4-batch/ class="md-footer__link md-footer__link--prev" aria-label="Previous: P4 - RDD et Batch Processing avec Spark" rel=prev> <div class="md-footer__button md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg> </div> <div class=md-footer__title> <div class=md-ellipsis> <span class=md-footer__direction> Previous </span> P4 - RDD et Batch Processing avec Spark </div> </div> </a> <a href=../p6-stream/ class="md-footer__link md-footer__link--next" aria-label="Next: P6 - Spark Streaming" rel=next> <div class=md-footer__title> <div class=md-ellipsis> <span class=md-footer__direction> Next </span> P6 - Spark Streaming </div> </div> <div class="md-footer__button md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg> </div> </a> </nav> <div class="md-footer-meta md-typeset"> <div class="md-footer-meta__inner md-grid"> <div class=md-copyright> <div class=md-copyright__highlight> Copyright &copy; 2019 - 2020 Lilia Sfaxi </div> Made with <a href=https://squidfunk.github.io/mkdocs-material/ target=_blank rel=noopener> Material for MkDocs </a> </div> </div> </div> </footer> </div> <div class=md-dialog data-md-component=dialog> <div class="md-dialog__inner md-typeset"></div> </div> <script id=__config type=application/json>{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.092fa1f6.min.js"}</script> <script src=../assets/javascripts/bundle.e3b2bf44.min.js></script> <script src=../js/timeago.min.js></script> <script src=../js/timeago_mkdocs_material.js></script> </body> </html>

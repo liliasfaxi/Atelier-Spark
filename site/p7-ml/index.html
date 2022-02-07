@@ -1,351 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
-        <meta name="author" content="Lilia Sfaxi">
-        <link rel="canonical" href="http://liliasfaxi.github.io/Atelier-Spark/p7-ml/">
-        <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>P7 - Spark MLLib - Atelier Apache Spark</title>
-        <link href="../css/bootstrap.min.css" rel="stylesheet">
-        <link href="../css/font-awesome.min.css" rel="stylesheet">
-        <link href="../css/base.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+<!doctype html><html lang=en class=no-js> <head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Cours et Travaux Pratiques pour se familiariser avec Apache Spark"><meta name=author content="Lilia Sfaxi"><link href=http://liliasfaxi.github.io/Atelier-Spark/p7-ml/ rel=canonical><link rel=icon href=../assets/images/favicon.png><meta name=generator content="mkdocs-1.2.3, mkdocs-material-8.1.10"><title>P7 - Spark MLLib - Atelier Apache Spark</title><link rel=stylesheet href=../assets/stylesheets/main.d6be258b.min.css><link rel=stylesheet href=../assets/stylesheets/palette.e6a45f82.min.css><meta name=theme-color content=#546d78><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback"><style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style><link rel=stylesheet href=../css/timeago.css><link rel=stylesheet href=../stylesheets/extra.css><link rel=stylesheet href=../stylesheets/links.css><script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script></head> <body dir=ltr data-md-color-scheme data-md-color-primary=blue-grey data-md-color-accent=amber> <input class=md-toggle data-md-toggle=drawer type=checkbox id=__drawer autocomplete=off> <input class=md-toggle data-md-toggle=search type=checkbox id=__search autocomplete=off> <label class=md-overlay for=__drawer></label> <div data-md-component=skip> <a href=#partie-7-spark-mllib class=md-skip> Skip to content </a> </div> <div data-md-component=announce> </div> <header class=md-header data-md-component=header> <nav class="md-header__inner md-grid" aria-label=Header> <a href=.. title="Atelier Apache Spark" class="md-header__button md-logo" aria-label="Atelier Apache Spark" data-md-component=logo> <img src=../img/logo.png alt=logo> </a> <label class="md-header__button md-icon" for=__drawer> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg> </label> <div class=md-header__title data-md-component=header-title> <div class=md-header__ellipsis> <div class=md-header__topic> <span class=md-ellipsis> Atelier Apache Spark </span> </div> <div class=md-header__topic data-md-component=header-topic> <span class=md-ellipsis> P7 - Spark MLLib </span> </div> </div> </div> <label class="md-header__button md-icon" for=__search> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg> </label> <div class=md-search data-md-component=search role=dialog> <label class=md-search__overlay for=__search></label> <div class=md-search__inner role=search> <form class=md-search__form name=search> <input type=text class=md-search__input name=query aria-label=Search placeholder=Search autocapitalize=off autocorrect=off autocomplete=off spellcheck=false data-md-component=search-query required> <label class="md-search__icon md-icon" for=__search> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg> </label> <nav class=md-search__options aria-label=Search> <button type=reset class="md-search__icon md-icon" aria-label=Clear tabindex=-1> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg> </button> </nav> </form> <div class=md-search__output> <div class=md-search__scrollwrap data-md-scrollfix> <div class=md-search-result data-md-component=search-result> <div class=md-search-result__meta> Initializing search </div> <ol class=md-search-result__list></ol> </div> </div> </div> </div> </div> <div class=md-header__source> <a href=https://github.com/liliasfaxi/Atelier-Spark/ title="Go to repository" class=md-source data-md-component=source> <div class="md-source__icon md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg> </div> <div class=md-source__repository> liliasfaxi/Atelier-Spark </div> </a> </div> </nav> </header> <div class=md-container data-md-component=container> <main class=md-main data-md-component=main> <div class="md-main__inner md-grid"> <div class="md-sidebar md-sidebar--primary" data-md-component=sidebar data-md-type=navigation> <div class=md-sidebar__scrollwrap> <div class=md-sidebar__inner> <nav class="md-nav md-nav--primary" aria-label=Navigation data-md-level=0> <label class=md-nav__title for=__drawer> <a href=.. title="Atelier Apache Spark" class="md-nav__button md-logo" aria-label="Atelier Apache Spark" data-md-component=logo> <img src=../img/logo.png alt=logo> </a> Atelier Apache Spark </label> <div class=md-nav__source> <a href=https://github.com/liliasfaxi/Atelier-Spark/ title="Go to repository" class=md-source data-md-component=source> <div class="md-source__icon md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg> </div> <div class=md-source__repository> liliasfaxi/Atelier-Spark </div> </a> </div> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=.. class=md-nav__link> Atelier Apache Spark </a> </li> <li class=md-nav__item> <a href=../p1-big-data/ class=md-nav__link> P1 - Introduction au Big Data </a> </li> <li class=md-nav__item> <a href=../p2-spark/ class=md-nav__link> P2 - Introduction à Apache Spark </a> </li> <li class=md-nav__item> <a href=../p3-install/ class=md-nav__link> P3 - Installation de Spark </a> </li> <li class=md-nav__item> <a href=../p4-batch/ class=md-nav__link> P4 - RDD et Batch Processing avec Spark </a> </li> <li class=md-nav__item> <a href=../p5-sql/ class=md-nav__link> P5 - Spark SQL </a> </li> <li class=md-nav__item> <a href=../p6-stream/ class=md-nav__link> P6 - Spark Streaming </a> </li> <li class="md-nav__item md-nav__item--active"> <input class="md-nav__toggle md-toggle" data-md-toggle=toc type=checkbox id=__toc> <label class="md-nav__link md-nav__link--active" for=__toc> P7 - Spark MLLib <span class="md-nav__icon md-icon"></span> </label> <a href=./ class="md-nav__link md-nav__link--active"> P7 - Spark MLLib </a> <nav class="md-nav md-nav--secondary" aria-label="Table of contents"> <label class=md-nav__title for=__toc> <span class="md-nav__icon md-icon"></span> Table of contents </label> <ul class=md-nav__list data-md-component=toc data-md-scrollfix> <li class=md-nav__item> <a href=#partie-7-spark-mllib class=md-nav__link> Partie 7 - Spark MLLib </a> <nav class=md-nav aria-label="Partie 7 - Spark MLLib"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#presentation-de-spark-mllib class=md-nav__link> Présentation de Spark MLLib </a> </li> <li class=md-nav__item> <a href=#chargement-des-donnees class=md-nav__link> Chargement des données </a> </li> <li class=md-nav__item> <a href=#ml-pipelines class=md-nav__link> ML Pipelines </a> <nav class=md-nav aria-label="ML Pipelines"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#definition-des-pipelines class=md-nav__link> Définition des Pipelines </a> </li> <li class=md-nav__item> <a href=#fonctionnement-des-pipelines class=md-nav__link> Fonctionnement des Pipelines </a> </li> <li class=md-nav__item> <a href=#exemple-de-pipeline class=md-nav__link> Exemple de Pipeline </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#references class=md-nav__link> Références </a> </li> </ul> </nav> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=../p8-graphx/ class=md-nav__link> P8 - Spark GraphX </a> </li> </ul> </nav> </div> </div> </div> <div class="md-sidebar md-sidebar--secondary" data-md-component=sidebar data-md-type=toc> <div class=md-sidebar__scrollwrap> <div class=md-sidebar__inner> <nav class="md-nav md-nav--secondary" aria-label="Table of contents"> <label class=md-nav__title for=__toc> <span class="md-nav__icon md-icon"></span> Table of contents </label> <ul class=md-nav__list data-md-component=toc data-md-scrollfix> <li class=md-nav__item> <a href=#partie-7-spark-mllib class=md-nav__link> Partie 7 - Spark MLLib </a> <nav class=md-nav aria-label="Partie 7 - Spark MLLib"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#presentation-de-spark-mllib class=md-nav__link> Présentation de Spark MLLib </a> </li> <li class=md-nav__item> <a href=#chargement-des-donnees class=md-nav__link> Chargement des données </a> </li> <li class=md-nav__item> <a href=#ml-pipelines class=md-nav__link> ML Pipelines </a> <nav class=md-nav aria-label="ML Pipelines"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#definition-des-pipelines class=md-nav__link> Définition des Pipelines </a> </li> <li class=md-nav__item> <a href=#fonctionnement-des-pipelines class=md-nav__link> Fonctionnement des Pipelines </a> </li> <li class=md-nav__item> <a href=#exemple-de-pipeline class=md-nav__link> Exemple de Pipeline </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#references class=md-nav__link> Références </a> </li> </ul> </nav> </li> </ul> </nav> </div> </div> </div> <div class=md-content data-md-component=content> <article class="md-content__inner md-typeset"> <a href=https://github.com/liliasfaxi/Atelier-Spark/edit/master/docs/p7-ml.md title="Edit this page" class="md-content__button md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg> </a> <h1>P7 - Spark MLLib</h1> <h2 id=partie-7-spark-mllib>Partie 7 - Spark MLLib<a class=headerlink href=#partie-7-spark-mllib title="Permanent link">&para;</a></h2> <p><center><img src=../img/p7/ml.jpg width=600pt></center></p> <h3 id=presentation-de-spark-mllib>Présentation de Spark MLLib<a class=headerlink href=#presentation-de-spark-mllib title="Permanent link">&para;</a></h3> <p>Spark MLLib[^spark-official] est la librairie d'apprentissage automatique (Machine Learning) de Spark. Son but est de rendre son utilisation facile et scalable. À un haut niveau d'abstraction, elle fournit des outils tel que:</p> <ul> <li>Des algorithmes de machine learning classiques tel que la classification, régression, clustering et filtrage collaboratif.</li> <li>L'extraction de caractéristiques (<em>Features</em>), transformation, réduction de dimensions et sélection</li> <li>Les pipelines pour construire, évaluer et régler les pipelines ML.</li> <li>La persistence, pour sauvegarder et charger des algorithmes, modèles et pipelines.</li> <li>Des utilitaires tel que l'algèbre linéaire, statistiques, manipulation des données, etc.</li> </ul> <p>A partir de la version 2.0 de Spark, la structure principale utilisée pour l'API MLlib est DataFrame, en opposition aux RDD, car son utilisation est plus intuitive et uniforme, et qu'elle facilite les transformations.</p> <h3 id=chargement-des-donnees>Chargement des données<a class=headerlink href=#chargement-des-donnees title="Permanent link">&para;</a></h3> <p>Nous allons montrer dans cette partie comment utiliser des sources de données pour charger des données avec MLLib. En plus des sources de données classiques tel que Parquet, CSV, JSON et JDBC, des sources spécifiques pour l'apprentissage numérique sont fournies, tel que la source de données pour les images (<em>image data source</em>).</p> <p>Cette source de données est utilisée pour chager des images à partir d'un répertoire. Elle transforme les images compressées (jpeg, png, etc.) en représentation brute via la librairie Java <strong>ImageIO</strong>. Le DataFrame chargé admet une seule colonne de type <em>StructType</em>, appelé <strong>image</strong>, contenant les données de l'image stockées dans un schéma, comme suit:</p> <p><center></p> <table> <thead> <tr> <th>Nom</th> <th>Type</th> <th>Description</th> </tr> </thead> <tbody> <tr> <td><code>origin</code></td> <td>StringType</td> <td>représente le chemin du fichier image</td> </tr> <tr> <td><code>height</code></td> <td>IntegerType</td> <td>La hauteur de l'image</td> </tr> <tr> <td><code>width</code></td> <td>IntegerType</td> <td>La largeur de l'image</td> </tr> <tr> <td><code>nChannels</code></td> <td>IntegerType</td> <td>Le nombre de canaux de l'image</td> </tr> <tr> <td><code>mode</code></td> <td>IntegerType</td> <td>Le type compatible OpenCV</td> </tr> <tr> <td><code>data</code></td> <td>BinaryType</td> <td>Les octets de l'image dans un ordre compatible à OpenCV</td> </tr> </tbody> </table> <p></center></p> <p>Pour charger des fichiers images , une API en SparkSQL est fournie:</p> <p><div class=highlight><pre><span></span><code><span class=kd>val</span> <span class=n>df</span> <span class=o>=</span> <span class=n>spark</span><span class=p>.</span><span class=n>read</span><span class=p>.</span><span class=n>format</span><span class=p>(</span><span class=s>&quot;image&quot;</span><span class=p>).</span><span class=n>option</span><span class=p>(</span><span class=s>&quot;dropInvalid&quot;</span><span class=p>,</span> <span class=kc>true</span><span class=p>).</span><span class=n>load</span><span class=p>(</span><span class=s>&quot;&lt;chemin_du_répertoire_contenant_les_images&gt;&quot;</span><span class=p>)</span>
+</code></pre></div> Un DataFrame sera alors créé, dont la structure est présentée dans le tableau précédent, contenant les informations relatives aux images contenues dans le répertoire donné.</p> <h3 id=ml-pipelines>ML Pipelines<a class=headerlink href=#ml-pipelines title="Permanent link">&para;</a></h3> <p>Les pipelines ML fournissent un ensemble uniforme d'APIs au dessus des DataFrames, permettant de créer et accorder (<em>tune</em>) des pipelines pratiques de machine learning.</p> <h4 id=definition-des-pipelines>Définition des Pipelines<a class=headerlink href=#definition-des-pipelines title="Permanent link">&para;</a></h4> <p>En machine learning, il est commun d'exécuter une séquence d'algorithmes pour traiter et apprendre à partir de données. Par exemple, un flux de traitement d'un document texte peut inclure les étapes suivantes:</p> <ul> <li>Diviser chaque document en mots</li> <li>Convertir chaque mot en vecteur de caractéristiques numériques</li> <li>Créer un modèle prédictif en utiliser les vecteurs et les labels</li> </ul> <p>MLLib permet de créer de tels flux (ou pipelines), en définissant une séquence de <code>PipelineStage</code>s, composés de <code>Transformer</code>s et de <code>Estimator</code>s, qui doivent être exécutés dans un certain ordre.</p> <ul> <li><code>Transformer</code>: Algorithme qui peut transformer un DataFrame en un autre DataFrame. Par exemple, un modèle ML est un <code>Transformer</code> qui transforme un DataFrame avec des caractéristiques (ou <em>features</em>), en un DataFrame avec des prédictions.</li> <li><code>Estimator</code>: Algorithme qui peut être appliqué sur un DataFrame pour produire un <code>Transformer</code>. Par exemple, un algorithme d'apprentissage est un <code>Estimator</code> qui s'entraîne sur un DataFrame pour produire un modèle.</li> </ul> <h4 id=fonctionnement-des-pipelines>Fonctionnement des Pipelines<a class=headerlink href=#fonctionnement-des-pipelines title="Permanent link">&para;</a></h4> <p>Un pipeline est un ensemble d'étapes, où chaque étape est soit un <code>Transformer</code> soit un <code>Estimator</code>. Ces étapes sont exécutés dans l'ordre, et le DataFrame en entrée est transformé au fur et à mesure de son passage à travers ces étapes. Pour les étapes exécutant un <code>Transformer</code>, la méthode <em>transform()</em> est appelée sur le DataFrame, alors que pour les étapes exécutant un <code>Estimator</code>, c'est la fonction <em>fit()</em> qui est appelée, résultant en la création d'un <code>Transformer</code>, qui à son tour, devient une partie de la Pipeline.</p> <h4 id=exemple-de-pipeline>Exemple de Pipeline<a class=headerlink href=#exemple-de-pipeline title="Permanent link">&para;</a></h4> <p>Pour illustrer le fonctionnement des Pipelines, l'exemple suivant est présenté:</p> <p><img alt="Exemple de Pipeline" src=../img/p7/pipeline.png></p> <p>Cette pipeline montre l'application d'un modèle de régression linéaire pour la prédiction de la valeur d'un label à partir d'un texte. La méthode <code>Pipeline.fit()</code> est initialement appelée sur le DataFrame originel (<em>Raw Text</em>), qui contient des documents textes bruts et des labels. La méthode <code>Tokenizer.transform()</code> divise les documents texte en mots, en rajoutant une nouvelle colonne contenant ces mots à la DataFrame. La méthode <code>HashingTF.transform()</code> convertit les mots en vecteurs de features. Ensuite, puisque <code>LogisticRegression</code> est un <code>Estimator</code>, la pipeline appelle <code>LogisticRegression.fit()</code> pour créer le <code>Transformer</code>: <code>LogisticRegressionModel</code>, qui est à son tour utilisé pour produire un nouveau DataFrame contenant les prédictions.</p> <p>L'exemple présenté ci-dessus est réalisé grâce au code suivant (ce code est écrit dans le langage Python):</p> <p><div class=highlight><pre><span></span><code><span class=kn>from</span> <span class=nn>pyspark.ml</span> <span class=kn>import</span> <span class=n>Pipeline</span>
+<span class=kn>from</span> <span class=nn>pyspark.ml.classification</span> <span class=kn>import</span> <span class=n>LogisticRegression</span>
+<span class=kn>from</span> <span class=nn>pyspark.ml.feature</span> <span class=kn>import</span> <span class=n>HashingTF</span><span class=p>,</span> <span class=n>Tokenizer</span>
+<span class=kn>from</span> <span class=nn>pyspark.sql</span> <span class=kn>import</span> <span class=n>SQLContext</span>
+<span class=kn>from</span> <span class=nn>pyspark</span> <span class=kn>import</span> <span class=n>SparkContext</span>
 
-        <script src="../js/jquery-1.10.2.min.js" defer></script>
-        <script src="../js/bootstrap.min.js" defer></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
-        <script>hljs.initHighlightingOnLoad();</script> 
-    </head>
+<span class=n>sc</span> <span class=o>=</span> <span class=n>SparkContext</span><span class=p>(</span><span class=n>appName</span><span class=o>=</span><span class=s2>&quot;Linear Regression Pipeline&quot;</span><span class=p>)</span>
+<span class=n>spark</span> <span class=o>=</span> <span class=n>SQLContext</span><span class=p>(</span><span class=n>sc</span><span class=p>)</span>
 
-    <body>
-        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
-            <div class="container">
-                <a class="navbar-brand" href="..">Atelier Apache Spark</a>
-                <!-- Expander button -->
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+<span class=c1># Préparer des documents de training à partir d&#39;une liste de tuples (id, text, label). On remarque ici qu&#39;un label =1 si la texte en question contient le mot spark</span>
+<span class=n>training</span> <span class=o>=</span> <span class=n>spark</span><span class=o>.</span><span class=n>createDataFrame</span><span class=p>([</span>
+  <span class=p>(</span><span class=mi>0</span><span class=p>,</span> <span class=s2>&quot;a b c d e spark&quot;</span><span class=p>,</span> <span class=mf>1.0</span><span class=p>),</span>
+  <span class=p>(</span><span class=mi>1</span><span class=p>,</span> <span class=s2>&quot;b d&quot;</span><span class=p>,</span> <span class=mf>0.0</span><span class=p>),</span>
+  <span class=p>(</span><span class=mi>2</span><span class=p>,</span> <span class=s2>&quot;spark f g h&quot;</span><span class=p>,</span> <span class=mf>1.0</span><span class=p>),</span>
+  <span class=p>(</span><span class=mi>3</span><span class=p>,</span> <span class=s2>&quot;hadoop mapreduce&quot;</span><span class=p>,</span> <span class=mf>0.0</span><span class=p>)</span>
+<span class=p>],</span> <span class=p>[</span><span class=s2>&quot;id&quot;</span><span class=p>,</span> <span class=s2>&quot;text&quot;</span><span class=p>,</span> <span class=s2>&quot;label&quot;</span><span class=p>])</span>
 
-                <!-- Expanded navigation -->
-                <div id="navbar-collapse" class="navbar-collapse collapse">
-                        <!-- Main navigation -->
-                        <ul class="nav navbar-nav">
-                            <li class="navitem">
-                                <a href=".." class="nav-link">Atelier Apache Spark</a>
-                            </li>
-                            <li class="navitem">
-                                <a href="../p1-big-data/" class="nav-link">P1 - Introduction au Big Data</a>
-                            </li>
-                            <li class="navitem">
-                                <a href="../p2-spark/" class="nav-link">P2 - Introduction à Apache Spark</a>
-                            </li>
-                            <li class="navitem">
-                                <a href="../p3-install/" class="nav-link">P3 - Installation de Spark</a>
-                            </li>
-                            <li class="navitem">
-                                <a href="../p4-batch/" class="nav-link">P4 - RDD et Batch Processing avec Spark</a>
-                            </li>
-                            <li class="navitem">
-                                <a href="../p5-sql/" class="nav-link">P5 - Spark SQL</a>
-                            </li>
-                            <li class="navitem">
-                                <a href="../p6-stream/" class="nav-link">P6 - Spark Streaming</a>
-                            </li>
-                            <li class="navitem active">
-                                <a href="./" class="nav-link">P7 - Spark MLLib</a>
-                            </li>
-                            <li class="navitem">
-                                <a href="../p8-graphx/" class="nav-link">P8 - Spark GraphX</a>
-                            </li>
-                        </ul>
+<span class=c1># Configurer une pipeline, qui consiste en trois étapes: tokenizer, hashingTF, and lr.</span>
+<span class=n>tokenizer</span> <span class=o>=</span> <span class=n>Tokenizer</span><span class=p>(</span><span class=n>inputCol</span><span class=o>=</span><span class=s2>&quot;text&quot;</span><span class=p>,</span> <span class=n>outputCol</span><span class=o>=</span><span class=s2>&quot;words&quot;</span><span class=p>)</span>
+<span class=n>hashingTF</span> <span class=o>=</span> <span class=n>HashingTF</span><span class=p>(</span><span class=n>inputCol</span><span class=o>=</span><span class=n>tokenizer</span><span class=o>.</span><span class=n>getOutputCol</span><span class=p>(),</span> <span class=n>outputCol</span><span class=o>=</span><span class=s2>&quot;features&quot;</span><span class=p>)</span>
+<span class=n>lr</span> <span class=o>=</span> <span class=n>LogisticRegression</span><span class=p>(</span><span class=n>maxIter</span><span class=o>=</span><span class=mi>10</span><span class=p>,</span> <span class=n>regParam</span><span class=o>=</span><span class=mf>0.001</span><span class=p>)</span>
+<span class=n>pipeline</span> <span class=o>=</span> <span class=n>Pipeline</span><span class=p>(</span><span class=n>stages</span><span class=o>=</span><span class=p>[</span><span class=n>tokenizer</span><span class=p>,</span> <span class=n>hashingTF</span><span class=p>,</span> <span class=n>lr</span><span class=p>])</span>
 
-                    <ul class="nav navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
-                                <i class="fa fa-search"></i> Search
-                            </a>
-                        </li>
-                            <li class="nav-item">
-                                <a rel="prev" href="../p6-stream/" class="nav-link">
-                                    <i class="fa fa-arrow-left"></i> Previous
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a rel="next" href="../p8-graphx/" class="nav-link">
-                                    Next <i class="fa fa-arrow-right"></i>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="https://github.com/liliasfaxi/Atelier-Spark/edit/master/docs/p7-ml.md" class="nav-link">Edit on liliasfaxi/Atelier-Spark</a>
-                            </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+<span class=c1># Adapter la pipeline aux documents de training.</span>
+<span class=n>model</span> <span class=o>=</span> <span class=n>pipeline</span><span class=o>.</span><span class=n>fit</span><span class=p>(</span><span class=n>training</span><span class=p>)</span>
 
-        <div class="container">
-            <div class="row">
-                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
-            <span class="fa fa-angle-down"></span>
-        </button>
-    </div>
+<span class=c1># Preparer les documents de test,qui ne sont pas labellisés, donc composés de tuples (id, text).</span>
+<span class=n>test</span> <span class=o>=</span> <span class=n>spark</span><span class=o>.</span><span class=n>createDataFrame</span><span class=p>([</span>
+  <span class=p>(</span><span class=mi>4</span><span class=p>,</span> <span class=s2>&quot;spark i j k&quot;</span><span class=p>),</span>
+  <span class=p>(</span><span class=mi>5</span><span class=p>,</span> <span class=s2>&quot;l m n&quot;</span><span class=p>),</span>
+  <span class=p>(</span><span class=mi>6</span><span class=p>,</span> <span class=s2>&quot;spark hadoop spark&quot;</span><span class=p>),</span>
+  <span class=p>(</span><span class=mi>7</span><span class=p>,</span> <span class=s2>&quot;apache hadoop&quot;</span><span class=p>)</span>
+<span class=p>],</span> <span class=p>[</span><span class=s2>&quot;id&quot;</span><span class=p>,</span> <span class=s2>&quot;text&quot;</span><span class=p>])</span>
 
-    
-    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
-        <ul class="nav flex-column">
-            
-            <li class="nav-item" data-level="1"><a href="#partie-7-spark-mllib" class="nav-link">Partie 7 - Spark MLLib</a>
-              <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#presentation-de-spark-mllib" class="nav-link">Présentation de Spark MLLib</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#chargement-des-donnees" class="nav-link">Chargement des données</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#ml-pipelines" class="nav-link">ML Pipelines</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#references" class="nav-link">Références</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-              </ul>
-            </li>
-        </ul>
-    </div>
-</div></div>
-                    <div class="col-md-9" role="main">
-
-<h1 id="partie-7-spark-mllib">Partie 7 - Spark MLLib</h1>
-<p><center><img src="../img/p7/ml.jpg" width="600pt"></center></p>
-<h2 id="presentation-de-spark-mllib">Présentation de Spark MLLib</h2>
-<p>Spark MLLib[^spark-official] est la librairie d'apprentissage automatique (Machine Learning) de Spark. Son but est de rendre son utilisation facile et scalable. À un haut niveau d'abstraction, elle fournit des outils tel que:</p>
-<ul>
-<li>Des algorithmes de machine learning classiques tel que la classification, régression, clustering et filtrage collaboratif.</li>
-<li>L'extraction de caractéristiques (<em>Features</em>), transformation, réduction de dimensions et sélection</li>
-<li>Les pipelines pour construire, évaluer et régler les pipelines ML.</li>
-<li>La persistence, pour sauvegarder et charger des algorithmes, modèles et pipelines.</li>
-<li>Des utilitaires tel que l'algèbre linéaire, statistiques, manipulation des données, etc.</li>
-</ul>
-<p>A partir de la version 2.0 de Spark, la structure principale utilisée pour l'API MLlib est DataFrame, en opposition aux RDD, car son utilisation est plus intuitive et uniforme, et qu'elle facilite les transformations.</p>
-<h2 id="chargement-des-donnees">Chargement des données</h2>
-<p>Nous allons montrer dans cette partie comment utiliser des sources de données pour charger des données avec MLLib. En plus des sources de données classiques tel que Parquet, CSV, JSON et JDBC, des sources spécifiques pour l'apprentissage numérique sont fournies, tel que la source de données pour les images (<em>image data source</em>).</p>
-<p>Cette source de données est utilisée pour chager des images à partir d'un répertoire. Elle transforme les images compressées (jpeg, png, etc.) en représentation brute via la librairie Java <strong>ImageIO</strong>. Le DataFrame chargé admet une seule colonne de type <em>StructType</em>, appelé <strong>image</strong>, contenant les données de l'image stockées dans un schéma, comme suit:</p>
-<p><center></p>
-<table>
-<thead>
-<tr>
-<th>Nom</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>origin</code></td>
-<td>StringType</td>
-<td>représente le chemin du fichier image</td>
-</tr>
-<tr>
-<td><code>height</code></td>
-<td>IntegerType</td>
-<td>La hauteur de l'image</td>
-</tr>
-<tr>
-<td><code>width</code></td>
-<td>IntegerType</td>
-<td>La largeur de l'image</td>
-</tr>
-<tr>
-<td><code>nChannels</code></td>
-<td>IntegerType</td>
-<td>Le nombre de canaux de l'image</td>
-</tr>
-<tr>
-<td><code>mode</code></td>
-<td>IntegerType</td>
-<td>Le type compatible OpenCV</td>
-</tr>
-<tr>
-<td><code>data</code></td>
-<td>BinaryType</td>
-<td>Les octets de l'image dans un ordre compatible à OpenCV</td>
-</tr>
-</tbody>
-</table>
-<p></center></p>
-<p>Pour charger des fichiers images , une API en SparkSQL est fournie:</p>
-<p><code>scala
-  val df = spark.read.format("image").option("dropInvalid", true).load("&lt;chemin_du_répertoire_contenant_les_images&gt;")</code>
-Un DataFrame sera alors créé, dont la structure est présentée dans le tableau précédent, contenant les informations relatives aux images contenues dans le répertoire donné.</p>
-<h2 id="ml-pipelines">ML Pipelines</h2>
-<p>Les pipelines ML fournissent un ensemble uniforme d'APIs au dessus des DataFrames, permettant de créer et accorder (<em>tune</em>) des pipelines pratiques de machine learning.</p>
-<h3 id="definition-des-pipelines">Définition des Pipelines</h3>
-<p>En machine learning, il est commun d'exécuter une séquence d'algorithmes pour traiter et apprendre à partir de données. Par exemple, un flux de traitement d'un document texte peut inclure les étapes suivantes:</p>
-<ul>
-<li>Diviser chaque document en mots</li>
-<li>Convertir chaque mot en vecteur de caractéristiques numériques</li>
-<li>Créer un modèle prédictif en utiliser les vecteurs et les labels</li>
-</ul>
-<p>MLLib permet de créer de tels flux (ou pipelines), en définissant une séquence de <code>PipelineStage</code>s, composés de <code>Transformer</code>s et de <code>Estimator</code>s, qui doivent être exécutés dans un certain ordre.</p>
-<ul>
-<li><code>Transformer</code>: Algorithme qui peut transformer un DataFrame en un autre DataFrame. Par exemple, un modèle ML est un <code>Transformer</code> qui transforme un DataFrame avec des caractéristiques (ou <em>features</em>), en un DataFrame avec des prédictions.</li>
-<li><code>Estimator</code>: Algorithme qui peut être appliqué sur un DataFrame pour produire un <code>Transformer</code>. Par exemple, un algorithme d'apprentissage est un <code>Estimator</code> qui s'entraîne sur un DataFrame pour produire un modèle.</li>
-</ul>
-<h3 id="fonctionnement-des-pipelines">Fonctionnement des Pipelines</h3>
-<p>Un pipeline est un ensemble d'étapes, où chaque étape est soit un <code>Transformer</code> soit un <code>Estimator</code>. Ces étapes sont exécutés dans l'ordre, et le DataFrame en entrée est transformé au fur et à mesure de son passage à travers ces étapes. Pour les étapes exécutant un <code>Transformer</code>, la méthode <em>transform()</em> est appelée sur le DataFrame, alors que pour les étapes exécutant un <code>Estimator</code>, c'est la fonction <em>fit()</em> qui est appelée, résultant en la création d'un <code>Transformer</code>, qui à son tour, devient une partie de la Pipeline.</p>
-<h3 id="exemple-de-pipeline">Exemple de Pipeline</h3>
-<p>Pour illustrer le fonctionnement des Pipelines, l'exemple suivant est présenté:</p>
-<p><img alt="Exemple de Pipeline" src="../img/p7/pipeline.png" /></p>
-<p>Cette pipeline montre l'application d'un modèle de régression linéaire pour la prédiction de la valeur d'un label à partir d'un texte. La méthode <code>Pipeline.fit()</code> est initialement appelée sur le DataFrame originel (<em>Raw Text</em>),  qui contient des documents textes bruts et des labels. La méthode <code>Tokenizer.transform()</code> divise les documents texte en mots, en  rajoutant une nouvelle colonne contenant ces mots à la DataFrame. La méthode <code>HashingTF.transform()</code> convertit les mots en vecteurs de features. Ensuite, puisque <code>LogisticRegression</code> est un <code>Estimator</code>, la pipeline appelle <code>LogisticRegression.fit()</code> pour créer le <code>Transformer</code>: <code>LogisticRegressionModel</code>, qui est à son tour utilisé pour produire un nouveau DataFrame contenant les prédictions.</p>
-<p>L'exemple présenté ci-dessus est réalisé grâce au code suivant (ce code est écrit dans le langage Python):</p>
-<p>```python
-  from pyspark.ml import Pipeline
-  from pyspark.ml.classification import LogisticRegression
-  from pyspark.ml.feature import HashingTF, Tokenizer
-  from pyspark.sql import SQLContext
-  from pyspark import SparkContext</p>
-<p>sc = SparkContext(appName="Linear Regression Pipeline")
-  spark = SQLContext(sc)</p>
-<p># Préparer des documents de training à partir d'une liste de tuples (id, text, label). On remarque ici qu'un label =1 si la texte en question contient le mot spark
-  training = spark.createDataFrame([
-    (0, "a b c d e spark", 1.0),
-    (1, "b d", 0.0),
-    (2, "spark f g h", 1.0),
-    (3, "hadoop mapreduce", 0.0)
-  ], ["id", "text", "label"])</p>
-<p># Configurer une pipeline, qui consiste en trois étapes: tokenizer, hashingTF, and lr.
-  tokenizer = Tokenizer(inputCol="text", outputCol="words")
-  hashingTF = HashingTF(inputCol=tokenizer.getOutputCol(), outputCol="features")
-  lr = LogisticRegression(maxIter=10, regParam=0.001)
-  pipeline = Pipeline(stages=[tokenizer, hashingTF, lr])</p>
-<p># Adapter la pipeline aux documents de training.
-  model = pipeline.fit(training)</p>
-<p># Preparer les documents de test,qui ne sont pas labellisés, donc composés de tuples (id, text).
-  test = spark.createDataFrame([
-    (4, "spark i j k"),
-    (5, "l m n"),
-    (6, "spark hadoop spark"),
-    (7, "apache hadoop")
-  ], ["id", "text"])</p>
-<p># Réaliser des prédictions sur les documents de test et afficher les colonnes significatives.
-  prediction = model.transform(test)
-  selected = prediction.select("id", "text", "probability", "prediction")
-  for row in selected.collect():
-    rid, text, prob, prediction = row
-    print("(%d, %s) --&gt; prob=%s, prediction=%f" % (rid, text, str(prob), prediction))
-  ```
-Pour exécuter ce code sur notre cluster, nous allons suivre les étapes suivantes:</p>
-<ul>
-<li>Lancer le cluster spark:
-  <code>Bash
-    docker start spark-master spark-slave1 spark-slave2</code></li>
-<li>Vous connecter sur la machine master:
-  <code>Bash
-    docker exec -it spark-master bash</code></li>
-<li>Il faudra d'abord mettre en place l'environnement de votre cluster pour pouvoir exécuter le code en Python (dépassez ces étapes si vous avez déjà utilisé <code>pyspark</code>). PySpark est la bibliothèque Python de Spark. Il faut suivre les étapes suivantes pour l'utiliser:<ul>
-<li>Insérer la variable d'environnement suivante dans le fichier ~/.bashrc: <code>export PYSPARK_PYTHON=python3</code>. Pyspark utilisera ainsi la version 3 de python.</li>
-<li>Charger cette variable en tapant <code>source ~/.bashrc</code></li>
-<li>Installer le gestionnaire de packages <code>pip3</code>: <code>apt install python3-pip</code></li>
-</ul>
-</li>
-<li>Certains packages sont manquants pour faire marcher votre code. Il faut installer les packages suivants:
-      <code>bash
-        pip3 install numpy spark</code></li>
-<li>Créer un fichier <code>pipeline.py</code> dans lequel vous allez copier le code présenté ci-dessus</li>
-<li>Pour lancer votre application, exécuter:
-  <code>bash
-    spark-submit pipeline.py</code></li>
-</ul>
-<p>Le résultat de la prédiction s'affichera sur votre console, comme suit:</p>
-<p><img alt="Pipeline - Prédiction" src="../img/p7/prediction.png" /></p>
-<p>On remarque, d'après le résultat précédent, que notre pipeline a réussi sa prédiction, en affectant à chacune des phrases contenant le mot <em>spark</em> une valeur de label égale à 1, ce qui était l'objectif de notre modèle.</p>
-<h2 id="references">Références</h2>
-<p>[^spark-official]:
-  Spark Documentation, <em>Spark MLLib Guide</em>, <a href="https://spark.apache.org/docs/latest/ml-guide.html">https://spark.apache.org/docs/latest/ml-guide.html</a>, consulté le 04/2020</p></div>
-            </div>
-        </div>
-
-        <footer class="col-md-12">
-            <hr>
-                <p>Copyright &copy; 2019 - 2020 Lilia Sfaxi</p>
-            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
-        </footer>
-        <script>
-            var base_url = "..",
-                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
-        </script>
-        <script src="../js/base.js" defer></script>
-        <script src="../search/main.js" defer></script>
-
-        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="searchModalLabel">Search</h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            </div>
-            <div class="modal-body">
-                <p>From here you can search these documents. Enter your search terms below.</p>
-                <form>
-                    <div class="form-group">
-                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
-                    </div>
-                </form>
-                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
-    </div>
-</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            </div>
-            <div class="modal-body">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th style="width: 20%;">Keys</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="help shortcut"><kbd>?</kbd></td>
-                    <td>Open this help</td>
-                  </tr>
-                  <tr>
-                    <td class="next shortcut"><kbd>n</kbd></td>
-                    <td>Next page</td>
-                  </tr>
-                  <tr>
-                    <td class="prev shortcut"><kbd>p</kbd></td>
-                    <td>Previous page</td>
-                  </tr>
-                  <tr>
-                    <td class="search shortcut"><kbd>s</kbd></td>
-                    <td>Search</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
-    </div>
-</div>
-
-    </body>
-</html>
+<span class=c1># Réaliser des prédictions sur les documents de test et afficher les colonnes significatives.</span>
+<span class=n>prediction</span> <span class=o>=</span> <span class=n>model</span><span class=o>.</span><span class=n>transform</span><span class=p>(</span><span class=n>test</span><span class=p>)</span>
+<span class=n>selected</span> <span class=o>=</span> <span class=n>prediction</span><span class=o>.</span><span class=n>select</span><span class=p>(</span><span class=s2>&quot;id&quot;</span><span class=p>,</span> <span class=s2>&quot;text&quot;</span><span class=p>,</span> <span class=s2>&quot;probability&quot;</span><span class=p>,</span> <span class=s2>&quot;prediction&quot;</span><span class=p>)</span>
+<span class=k>for</span> <span class=n>row</span> <span class=ow>in</span> <span class=n>selected</span><span class=o>.</span><span class=n>collect</span><span class=p>():</span>
+  <span class=n>rid</span><span class=p>,</span> <span class=n>text</span><span class=p>,</span> <span class=n>prob</span><span class=p>,</span> <span class=n>prediction</span> <span class=o>=</span> <span class=n>row</span>
+  <span class=nb>print</span><span class=p>(</span><span class=s2>&quot;(</span><span class=si>%d</span><span class=s2>, </span><span class=si>%s</span><span class=s2>) --&gt; prob=</span><span class=si>%s</span><span class=s2>, prediction=</span><span class=si>%f</span><span class=s2>&quot;</span> <span class=o>%</span> <span class=p>(</span><span class=n>rid</span><span class=p>,</span> <span class=n>text</span><span class=p>,</span> <span class=nb>str</span><span class=p>(</span><span class=n>prob</span><span class=p>),</span> <span class=n>prediction</span><span class=p>))</span>
+</code></pre></div> Pour exécuter ce code sur notre cluster, nous allons suivre les étapes suivantes:</p> <ul> <li>Lancer le cluster spark: <div class=highlight><pre><span></span><code>  docker start spark-master spark-slave1 spark-slave2
+</code></pre></div></li> <li>Vous connecter sur la machine master: <div class=highlight><pre><span></span><code>  docker <span class=nb>exec</span> -it spark-master bash
+</code></pre></div></li> <li>Il faudra d'abord mettre en place l'environnement de votre cluster pour pouvoir exécuter le code en Python (dépassez ces étapes si vous avez déjà utilisé <code>pyspark</code>). PySpark est la bibliothèque Python de Spark. Il faut suivre les étapes suivantes pour l'utiliser:<ul> <li>Insérer la variable d'environnement suivante dans le fichier ~/.bashrc: <code>export PYSPARK_PYTHON=python3</code>. Pyspark utilisera ainsi la version 3 de python.</li> <li>Charger cette variable en tapant <code>source ~/.bashrc</code></li> <li>Installer le gestionnaire de packages <code>pip3</code>: <code>apt install python3-pip</code></li> </ul> </li> <li>Certains packages sont manquants pour faire marcher votre code. Il faut installer les packages suivants: <div class=highlight><pre><span></span><code>  pip3 install numpy spark
+</code></pre></div></li> <li>Créer un fichier <code>pipeline.py</code> dans lequel vous allez copier le code présenté ci-dessus</li> <li>Pour lancer votre application, exécuter: <div class=highlight><pre><span></span><code>  spark-submit pipeline.py
+</code></pre></div></li> </ul> <p>Le résultat de la prédiction s'affichera sur votre console, comme suit:</p> <p><img alt="Pipeline - Prédiction" src=../img/p7/prediction.png></p> <p>On remarque, d'après le résultat précédent, que notre pipeline a réussi sa prédiction, en affectant à chacune des phrases contenant le mot <em>spark</em> une valeur de label égale à 1, ce qui était l'objectif de notre modèle.</p> <h3 id=references>Références<a class=headerlink href=#references title="Permanent link">&para;</a></h3> <p>[^spark-official]: Spark Documentation, <em>Spark MLLib Guide</em>, <a href=https://spark.apache.org/docs/latest/ml-guide.html>https://spark.apache.org/docs/latest/ml-guide.html</a>, consulté le 04/2020</p> <hr> <div class=md-source-file> <small> Last update: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class=timeago datetime=2020-05-04T16:24:31+01:00 locale=en></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2020-05-04</span> </small> </div> </article> </div> </div> </main> <footer class=md-footer> <nav class="md-footer__inner md-grid" aria-label=Footer> <a href=../p6-stream/ class="md-footer__link md-footer__link--prev" aria-label="Previous: P6 - Spark Streaming" rel=prev> <div class="md-footer__button md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg> </div> <div class=md-footer__title> <div class=md-ellipsis> <span class=md-footer__direction> Previous </span> P6 - Spark Streaming </div> </div> </a> <a href=../p8-graphx/ class="md-footer__link md-footer__link--next" aria-label="Next: P8 - Spark GraphX" rel=next> <div class=md-footer__title> <div class=md-ellipsis> <span class=md-footer__direction> Next </span> P8 - Spark GraphX </div> </div> <div class="md-footer__button md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg> </div> </a> </nav> <div class="md-footer-meta md-typeset"> <div class="md-footer-meta__inner md-grid"> <div class=md-copyright> <div class=md-copyright__highlight> Copyright &copy; 2019 - 2020 Lilia Sfaxi </div> Made with <a href=https://squidfunk.github.io/mkdocs-material/ target=_blank rel=noopener> Material for MkDocs </a> </div> </div> </div> </footer> </div> <div class=md-dialog data-md-component=dialog> <div class="md-dialog__inner md-typeset"></div> </div> <script id=__config type=application/json>{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.092fa1f6.min.js"}</script> <script src=../assets/javascripts/bundle.e3b2bf44.min.js></script> <script src=../js/timeago.min.js></script> <script src=../js/timeago_mkdocs_material.js></script> </body> </html>
