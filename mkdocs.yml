@@ -54,6 +54,7 @@ markdown_extensions:
 
 theme:
   name: material
+  favicon: img/favicon.ico
   logo: "img/logo.png"
   palette:
     text: 'Ubuntu'
