@@ -1,48 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-     <loc>http://liliasfaxi.github.io/Atelier-Spark/</loc>
-     <lastmod>2020-05-04</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>http://liliasfaxi.github.io/Atelier-Spark/</loc>
+         <lastmod>2022-02-07</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>http://liliasfaxi.github.io/Atelier-Spark/p1-big-data/</loc>
-     <lastmod>2020-05-04</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>http://liliasfaxi.github.io/Atelier-Spark/p1-big-data/</loc>
+         <lastmod>2022-02-07</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>http://liliasfaxi.github.io/Atelier-Spark/p2-spark/</loc>
-     <lastmod>2020-05-04</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>http://liliasfaxi.github.io/Atelier-Spark/p2-spark/</loc>
+         <lastmod>2022-02-07</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>http://liliasfaxi.github.io/Atelier-Spark/p3-install/</loc>
-     <lastmod>2020-05-04</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>http://liliasfaxi.github.io/Atelier-Spark/p3-install/</loc>
+         <lastmod>2022-02-07</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>http://liliasfaxi.github.io/Atelier-Spark/p4-batch/</loc>
-     <lastmod>2020-05-04</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>http://liliasfaxi.github.io/Atelier-Spark/p4-batch/</loc>
+         <lastmod>2022-02-07</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>http://liliasfaxi.github.io/Atelier-Spark/p5-sql/</loc>
-     <lastmod>2020-05-04</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>http://liliasfaxi.github.io/Atelier-Spark/p5-sql/</loc>
+         <lastmod>2022-02-07</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>http://liliasfaxi.github.io/Atelier-Spark/p6-stream/</loc>
-     <lastmod>2020-05-04</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>http://liliasfaxi.github.io/Atelier-Spark/p6-stream/</loc>
+         <lastmod>2022-02-07</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>http://liliasfaxi.github.io/Atelier-Spark/p7-ml/</loc>
-     <lastmod>2020-05-04</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>http://liliasfaxi.github.io/Atelier-Spark/p7-ml/</loc>
+         <lastmod>2022-02-07</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>http://liliasfaxi.github.io/Atelier-Spark/p8-graphx/</loc>
-     <lastmod>2020-05-04</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>http://liliasfaxi.github.io/Atelier-Spark/p8-graphx/</loc>
+         <lastmod>2022-02-07</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>http://liliasfaxi.github.io/Atelier-Spark/tips/</loc>
+         <lastmod>2022-02-07</lastmod>
+         <changefreq>daily</changefreq>
     </url>
 </urlset>
