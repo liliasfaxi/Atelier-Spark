@@ -266,7 +266,13 @@ Pour créer le cluster à partir de l'image déjà générée, suivre les étape
   ![Cluster Créé](img/p3/cluster-created.png)
 
 ### Étape 5 - Démarrer les services Spark
-Pour démarrer les services spark sur tous les noeuds, utiliser la commande suivante:
+Pour démarrer les services spark sur tous les noeuds, commencez d'abord par vous connecter sur le contenaire principal.
+
+```bash
+  docker exec -it spark-master bash
+```
+
+Utilisez ensuite la commande suivante:
 
 ```bash
   start-all.sh

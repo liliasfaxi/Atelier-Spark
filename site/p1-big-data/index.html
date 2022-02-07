@@ -1,505 +1,138 @@
-
-
-
-
-<!doctype html>
-<html lang="fr" class="no-js">
-  <head>
-    
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width,initial-scale=1">
-      <meta http-equiv="x-ua-compatible" content="ie=edge">
-      
-        <meta name="description" content="Cours et Travaux Pratiques pour se familiariser avec Apache Spark">
-      
-      
-        <link rel="canonical" href="http://liliasfaxi.github.io/Atelier-Spark/p1-big-data/">
-      
-      
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
         <meta name="author" content="Lilia Sfaxi">
-      
-      
-        <meta name="lang:clipboard.copy" content="Copier dans le presse-papier">
-      
-        <meta name="lang:clipboard.copied" content="Copié dans le presse-papier">
-      
-        <meta name="lang:search.language" content="fr">
-      
-        <meta name="lang:search.pipeline.stopwords" content="True">
-      
-        <meta name="lang:search.pipeline.trimmer" content="True">
-      
-        <meta name="lang:search.result.none" content="Aucun document trouvé">
-      
-        <meta name="lang:search.result.one" content="1 document trouvé">
-      
-        <meta name="lang:search.result.other" content="# documents trouvés">
-      
-        <meta name="lang:search.tokenizer" content="[\s\-]+">
-      
-      <link rel="shortcut icon" href="../img/favicon.ico">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.0">
-    
-    
-      
+        <link rel="canonical" href="http://liliasfaxi.github.io/Atelier-Spark/p1-big-data/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
         <title>P1 - Introduction au Big Data - Atelier Apache Spark</title>
-      
-    
-    
-      <link rel="stylesheet" href="../assets/stylesheets/application.1b62728e.css">
-      
-        <link rel="stylesheet" href="../assets/stylesheets/application-palette.a8b3c06d.css">
-      
-      
-        
-        
-        <meta name="theme-color" content="#546e7a">
-      
-    
-    
-      <script src="../assets/javascripts/modernizr.268332fc.js"></script>
-    
-    
-      
-        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
-        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
-      
-    
-    <link rel="stylesheet" href="../assets/fonts/material-icons.css">
-    
-    
-      <link rel="stylesheet" href="../extra.css">
-    
-    
-      
-        
-<script>
-  window.ga = window.ga || function() {
-    (ga.q = ga.q || []).push(arguments)
-  }
-  ga.l = +new Date
-  /* Setup integration and send page view */
-  ga("create", "None", "auto")
-  ga("set", "anonymizeIp", true)
-  ga("send", "pageview")
-  /* Register handler to log search on blur */
-  document.addEventListener("DOMContentLoaded", () => {
-    if (document.forms.search) {
-      var query = document.forms.search.query
-      query.addEventListener("blur", function() {
-        if (this.value) {
-          var path = document.location.pathname;
-          ga("send", "pageview", path + "?q=" + this.value)
-        }
-      })
-    }
-  })
-</script>
-<script async src="https://www.google-analytics.com/analytics.js"></script>
-      
-    
-    
-  </head>
-  
-    
-    
-    <body dir="ltr" data-md-color-primary="blue-grey" data-md-color-accent="amber">
-  
-    <svg class="md-svg">
-      <defs>
-        
-        
-          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
-        
-      </defs>
-    </svg>
-    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
-    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
-    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
-    
-      <a href="#partie-1-introduction-au-big-data" tabindex="1" class="md-skip">
-        Skip to content
-      </a>
-    
-    
-      <header class="md-header" data-md-component="header">
-  <nav class="md-header-nav md-grid">
-    <div class="md-flex">
-      <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="http://liliasfaxi.github.io/Atelier-Spark/" title="Atelier Apache Spark" class="md-header-nav__button md-logo">
-          
-            <img src="../img/logo.png" width="24" height="24">
-          
-        </a>
-      </div>
-      <div class="md-flex__cell md-flex__cell--shrink">
-        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
-      </div>
-      <div class="md-flex__cell md-flex__cell--stretch">
-        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
-          
-            <span class="md-header-nav__topic">
-              Atelier Apache Spark
-            </span>
-            <span class="md-header-nav__topic">
-              
-                P1 - Introduction au Big Data
-              
-            </span>
-          
-        </div>
-      </div>
-      <div class="md-flex__cell md-flex__cell--shrink">
-        
-          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
-          
-<div class="md-search" data-md-component="search" role="dialog">
-  <label class="md-search__overlay" for="__search"></label>
-  <div class="md-search__inner" role="search">
-    <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" placeholder="Rechercher" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
-      <label class="md-icon md-search__icon" for="__search"></label>
-      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
-        &#xE5CD;
-      </button>
-    </form>
-    <div class="md-search__output">
-      <div class="md-search__scrollwrap" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="result">
-          <div class="md-search-result__meta">
-            Taper pour démarrer la recherche
-          </div>
-          <ol class="md-search-result__list"></ol>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-        
-      </div>
-      
-        <div class="md-flex__cell md-flex__cell--shrink">
-          <div class="md-header-nav__source">
-            
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
 
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
 
-  
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">Atelier Apache Spark</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-<a href="https://github.com/liliasfaxi/Atelier-Spark/" title="Aller au dépôt" class="md-source" data-md-source="github">
-  
-    <div class="md-source__icon">
-      <svg viewBox="0 0 24 24" width="24" height="24">
-        <use xlink:href="#__github" width="24" height="24"></use>
-      </svg>
-    </div>
-  
-  <div class="md-source__repository">
-    liliasfaxi/Atelier-Spark
-  </div>
-</a>
-          </div>
-        </div>
-      
-    </div>
-  </nav>
-</header>
-    
-    <div class="md-container">
-      
-        
-      
-      
-      <main class="md-main" role="main">
-        <div class="md-main__inner md-grid" data-md-component="container">
-          
-            
-              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    <nav class="md-nav md-nav--primary" data-md-level="0">
-  <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="http://liliasfaxi.github.io/Atelier-Spark/" title="Atelier Apache Spark" class="md-nav__button md-logo">
-      
-        <img src="../img/logo.png" width="48" height="48">
-      
-    </a>
-    Atelier Apache Spark
-  </label>
-  
-    <div class="md-nav__source">
-      
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Atelier Apache Spark</a>
+                            </li>
+                            <li class="navitem active">
+                                <a href="./" class="nav-link">P1 - Introduction au Big Data</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../p2-spark/" class="nav-link">P2 - Introduction à Apache Spark</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../p3-install/" class="nav-link">P3 - Installation de Spark</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../p4-batch/" class="nav-link">P4 - RDD et Batch Processing avec Spark</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../p5-sql/" class="nav-link">P5 - Spark SQL</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../p6-stream/" class="nav-link">P6 - Spark Streaming</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../p7-ml/" class="nav-link">P7 - Spark MLLib</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../p8-graphx/" class="nav-link">P8 - Spark GraphX</a>
+                            </li>
+                        </ul>
 
-
-  
-
-<a href="https://github.com/liliasfaxi/Atelier-Spark/" title="Aller au dépôt" class="md-source" data-md-source="github">
-  
-    <div class="md-source__icon">
-      <svg viewBox="0 0 24 24" width="24" height="24">
-        <use xlink:href="#__github" width="24" height="24"></use>
-      </svg>
-    </div>
-  
-  <div class="md-source__repository">
-    liliasfaxi/Atelier-Spark
-  </div>
-</a>
-    </div>
-  
-  <ul class="md-nav__list" data-md-scrollfix>
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href=".." title="Atelier Apache Spark" class="md-nav__link">
-      Atelier Apache Spark
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-  
-
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-      
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="__toc">
-        P1 - Introduction au Big Data
-      </label>
-    
-    <a href="./" title="P1 - Introduction au Big Data" class="md-nav__link md-nav__link--active">
-      P1 - Introduction au Big Data
-    </a>
-    
-      
-<nav class="md-nav md-nav--secondary">
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">Table des matières</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#les-big-data-pourquoi" class="md-nav__link">
-    Les "Big Data", Pourquoi?
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#caracteristiques-des-donnees-massives" class="md-nav__link">
-    Caractéristiques des Données Massives
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#infrastructure-big-data-besoins" class="md-nav__link">
-    Infrastructure Big Data : Besoins
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#theoreme-cap" class="md-nav__link">
-    Théorème CAP
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#principes-de-base-du-domaine-des-big-data" class="md-nav__link">
-    Principes de base du Domaine des Big Data
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#technologies-et-paradigmes" class="md-nav__link">
-    Technologies et Paradigmes
-  </a>
-  
-</li>
-      
-      
-      
-      
-      
-    </ul>
-  
-</nav>
-    
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../p2-spark/" title="P2 - Introduction à Apache Spark" class="md-nav__link">
-      P2 - Introduction à Apache Spark
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../p3-install/" title="P3 - Installation de Spark" class="md-nav__link">
-      P3 - Installation de Spark
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../p4-batch/" title="P4 - RDD et Batch Processing avec Spark" class="md-nav__link">
-      P4 - RDD et Batch Processing avec Spark
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../p5-sql/" title="P5 - Spark SQL" class="md-nav__link">
-      P5 - Spark SQL
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../p6-stream/" title="P6 - Spark Streaming" class="md-nav__link">
-      P6 - Spark Streaming
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../p7-ml/" title="P7 - Spark MLLib" class="md-nav__link">
-      P7 - Spark MLLib
-    </a>
-  </li>
-
-    
-  </ul>
-</nav>
-                  </div>
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href=".." class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../p2-spark/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/liliasfaxi/Atelier-Spark/edit/master/docs/p1-big-data.md" class="nav-link">Edit on liliasfaxi/Atelier-Spark</a>
+                            </li>
+                    </ul>
                 </div>
-              </div>
-            
-            
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-<nav class="md-nav md-nav--secondary">
-  
-  
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
     
-  
-  
-    <label class="md-nav__title" for="__toc">Table des matières</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#les-big-data-pourquoi" class="md-nav__link">
-    Les "Big Data", Pourquoi?
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#caracteristiques-des-donnees-massives" class="md-nav__link">
-    Caractéristiques des Données Massives
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#infrastructure-big-data-besoins" class="md-nav__link">
-    Infrastructure Big Data : Besoins
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#theoreme-cap" class="md-nav__link">
-    Théorème CAP
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#principes-de-base-du-domaine-des-big-data" class="md-nav__link">
-    Principes de base du Domaine des Big Data
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#technologies-et-paradigmes" class="md-nav__link">
-    Technologies et Paradigmes
-  </a>
-  
-</li>
-      
-      
-      
-      
-      
-    </ul>
-  
-</nav>
-                  </div>
-                </div>
-              </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
             
-          
-          <div class="md-content">
-            <article class="md-content__inner md-typeset">
-              
-                
-                  <a href="https://github.com/liliasfaxi/Atelier-Spark/edit/master/docs/p1-big-data.md" title="Editer cette page" class="md-icon md-content__icon">&#xE3C9;</a>
-                
-                
-                <h1 id="partie-1-introduction-au-big-data">Partie 1 - Introduction au Big Data</h1>
+            <li class="nav-item" data-level="1"><a href="#partie-1-introduction-au-big-data" class="nav-link">Partie 1 - Introduction au Big Data</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#les-big-data-pourquoi" class="nav-link">Les "Big Data", Pourquoi?</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#caracteristiques-des-donnees-massives" class="nav-link">Caractéristiques des Données Massives</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#infrastructure-big-data-besoins" class="nav-link">Infrastructure Big Data : Besoins</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#theoreme-cap" class="nav-link">Théorème CAP</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#principes-de-base-du-domaine-des-big-data" class="nav-link">Principes de base du Domaine des Big Data</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#technologies-et-paradigmes" class="nav-link">Technologies et Paradigmes</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="partie-1-introduction-au-big-data">Partie 1 - Introduction au Big Data</h1>
 <p><img alt="Big Data" src="../img/p1/big-data.jpeg" /></p>
 <h2 id="les-big-data-pourquoi">Les "Big Data", Pourquoi?</h2>
 <p>L'être humain, à travers l'humanité, a toujours cherché trois choses : Savoir (qu'est-ce qui s'est passé?), Comprendre (pourquoi cela s'est-il passé?) et Prédire (qu'est-ce que qui se passera?). Plusieurs cultures ont clamé l'omniscience en ayant recours à des subterfuges, tels que les oracles, l'astrologie, le tarot, ou les boules de cristal.</p>
@@ -512,15 +145,15 @@
 <p>En effet, les données massives sont caractérisées par les fameux <strong>*V</strong>. Il en existe plusieurs (10 jusqu'à ce jour si je ne m'abuse,  <a href="https://www.kdnuggets.com/2017/04/42-vs-big-data-data-science.html">certains</a> en citent même 42!!!), mais pourraient à mon avis être résumés en trois caractéristiques primordiales, autours de la combinaison desquelles tournent toutes les décisions prises dans ce domaine.</p>
 <ul>
 <li>
-<p><strong>Volume</strong><br />
-  C'est évidemment le V le plus manifeste, qui caractérise le fait que les données ont un volume énorme qui peut atteindre des valeurs de l'ordre de Exa-, Zetta- ou Yottaoctet (allant jusqu'à  <span><span class="MathJax_Preview">2^{80}</span><script type="math/tex">2^{80}</script></span> octets!). Mais ceci n'est pas tout. Un volume énorme, s'il reste constant, est gérable : il suffit de trouver une machine suffisamment puissante pour le sauvegarder. Le problème avec la propriété du volume, c'est qu'il augmente de façon continue, ce qui rend sa gestion beaucoup plus ardue. Une citation bien connue, et qui se re-confirme chaque année, atteste que <em>"Over the last two years alone 90 percent of the data in the world was generated."</em> Il est donc primordial de trouver un moyen de gérer ce volume toujours croissant des données.</p>
+<p><strong>Volume</strong>
+  C'est évidemment le V le plus manifeste, qui caractérise le fait que les données ont un volume énorme qui peut atteindre des valeurs de l'ordre de Exa-, Zetta- ou Yottaoctet (allant jusqu'à  $2^{80}$ octets!). Mais ceci n'est pas tout. Un volume énorme, s'il reste constant, est gérable : il suffit de trouver une machine suffisamment puissante pour le sauvegarder. Le problème avec la propriété du volume, c'est qu'il augmente de façon continue, ce qui rend sa gestion beaucoup plus ardue. Une citation bien connue, et qui se re-confirme chaque année, atteste que <em>"Over the last two years alone 90 percent of the data in the world was generated."</em> Il est donc primordial de trouver un moyen de gérer ce volume toujours croissant des données.</p>
 </li>
 <li>
-<p><strong>Vélocité</strong><br />
+<p><strong>Vélocité</strong>
   Cette propriété est, à mon avis, la plus problématique des trois, car, couplée avec le volume, elle rend les système actuels obsolètes. En effet, la vélocité est, littéralement, "La vitesse avec laquelle quelque chose se déplace dans une direction particulière". Dans notre cas, la vélocité des données est la responsable directe du volume croissant des données dans le système. Elle est provoquée par une arrivée des données dans le système sous la forme d'un flux constant qui demande à être stocké et traité immédiatement, ainsi que le besoin croissant des utilisateurs d'avoir une représentation récente et fidèle de l'état des données. D'ailleurs, cette propriété a engendré une autre préoccupation des analystes des données, qui est de fournir une introspection en temps réel sur les données, les qualifiant ainsi de "<em>Fast Data</em>".</p>
 </li>
 <li>
-<p><strong>Variété</strong><br />
+<p><strong>Variété</strong>
   Ce qui distingue vraiment les données massives des données gérées classiquement dans des bases de données opérationnelles, c'est le support des données semi- et non structurées. En effet, les données non structurées sont des données qu'on stocke dans un format qui n'est pas défini à la création, telles que les données textuelles, images ou sons. Les données semi-structurées sont des données qui contiennent une structure, mais une structure qui n'est pas rigide, et dont on ne définit pas les contraintes à l'insertion de la donnée, contrairement aux données structurées (se trouvant typiquement dans des bases de données relationnelles) qui, si elles ne respectent pas la structure définie, sont considérées fausses et ne sont pas autorisées à être enregistrées. On estime que seules 15% des données dans une entreprise sont des données structurées, contre 85% qui ne le sont pas! Dans une optique centrée sur les données, dont le but est de gagner le maximum de vision à partir des données, perdre autant de sources d'information est un vrai problème. Il est donc important que les systèmes Big Data sachent interpréter ces données et en extraire le maximum de valeur.</p>
 </li>
 </ul>
@@ -535,21 +168,21 @@
 </ul>
 <h2 id="infrastructure-big-data-besoins">Infrastructure Big Data : Besoins</h2>
 <p>Les caractéristiques des données Big Data citées ci-dessus, entraînent des besoins particuliers en termes d'infrastructure et d'architecture.</p>
-<p><strong>Volume</strong><br />
+<p><strong>Volume</strong>
 La caractéristique de volume, qui implique que la taille des données augmente de façon régulière, fait qu'on ne peut plus se contenter d'un système centralisé classique. Car dans un système centralisé (donc basé sur une seule machine), augmenter les ressources de stockage au besoin implique ce que nous appelons une <strong>scalabilité verticale</strong> ou un <em>scale up</em>, qui veut dire une augmentation des capacités du serveur de stockage en rajoutant des processeurs, de la RAM ou des disques.</p>
 <p>Cependant, cette solution, bien qu'elle soit intuitive, rapide et ne requiert pas de changement architecturaux conséquents, implique en général un temps d'arrêt pendant l'installation, ainsi qu'une dépense assez conséquente pour faire l'acquisition d'un serveur puissant. De plus, une machine unique atteindra rapidement une limite matérielle, car il vous est impossible d'augmenter ses ressources indéfiniment.</p>
 <p>En contrepartie, il est possible de penser que, face à un volume de données toujours en augmentation, il serait plus judicieux de rajouter des machines au besoin, créant ainsi un cluster de machines interconnectées, ou <em>système réparti</em>, dont la taille et la capacité sont virtuellement illimitées. Nous sommes donc face à un autre type de scalabilité : la  <strong>scalabilité horizontale</strong> ou le <em>scale out</em>.</p>
 <p><img alt="Scale UP vs. Scale OUT" src="../img/p1/scaling.png" /></p>
 <p>Donc Volume =&gt; <span class="highlight">Scalabilité Horizontale</span></p>
-<p><strong>Vélocité</strong><br />
+<p><strong>Vélocité</strong>
 La vélocité est une propriété qui, couplée au volume, rend la gestion de l'infrastructure un vrai cauchemar. En effet, gérer des données en continuelle arrivée implique qu'il y'a un risque énorme de perte de données, si elles ne sont pas manipulées à temps. C'est pour cette raison qu'un système Big Data se doit d'être continuellement disponible : toute requête de lecture ou d'écriture doit être traitée en un temps raisonnable, et le système doit être continuellement alerte pour saisir toutes les données, sans risquer de les perdre.</p>
 <p>Ainsi Vélocité =&gt; <span class="highlight">Disponibilité</span></p>
-<p><strong>Variété</strong><br />
+<p><strong>Variété</strong>
 La variété de données implique non seulement que nous sommes en présence de données structurées, semi-structurées et non structurées, mais également que ces données peuvent parvenir de sources différentes, avec des formats différents, et que même à partir d'une même source, ce format peut changer d'un moment à un autre. Dans les systèmes classiques, tout ce qui est variable doit passer par une couche d'homogénéisation qui transformera chaque entrée ou enregistrement dans la forme souhaitée, en remplissant par des valeurs NULL les données manquantes. Rajouter cette couche d'homogénéisation aura un double impact négatif sur notre système : (1) à cause de la vélocité, cette opération risquera de ralentir la collecte et saisie des données entrantes, et (2) on pourra subir une perte de données suite à ces transformations.</p>
 <p>C'est pour ces raisons qu'un système Big Data se doit de supporter des types de données changeants, sans pour autant requérir à des subterfuges qui alourdissent ou contournent le système de stockage.</p>
 <p>D'où Variété =&gt; <span class="highlight">Flexibilité</span></p>
 <h2 id="theoreme-cap">Théorème CAP</h2>
-<p>Les besoins de scalabilité, disponibilité et flexibilité, obligatoires pour avoir un système Big Data en bonne et due forme, se trouvent confrontés à une contrainte de taille... et qu'en est-il de la cohérence (communément appelée aussi consistence, par anglicisme)?<br />
+<p>Les besoins de scalabilité, disponibilité et flexibilité, obligatoires pour avoir un système Big Data en bonne et due forme, se trouvent confrontés à une contrainte de taille... et qu'en est-il de la cohérence (communément appelée aussi consistence, par anglicisme)?
 La cohérence représente en effet un <em>must</em> pour les systèmes relationnels classiques, et une base sur laquelle sont prises toutes les décisions conceptuelles et techniques. Elle représente le fait que les données stables doivent respecter toutes les contraintes d'intégrité définies à la création de la base de donnée. Par exemple, si un champ est décrété "Not Null", il doit le rester quelque soit la situation, et à aucun moment une requête ne doit surprendre ce champs avec une valeur nulle, même si c'est juste une valeur intermédiaire. La cohérence est un principe très rigide dans les bases de données relationnelles, et représente le critère de base pour la gestion des transactions : le <strong>C</strong> de <strong>ACID</strong>.</p>
 <p>Cela dit, dans les systèmes Big Data, nous nous trouvons confrontés à un problème de taille : nous devons être en présence d'une infrastructure répartie et hautement disponible. Or, il existe un théorème appelé <strong>CAP</strong> pour <em>Consistency / Availability / Partition tolerance</em>, qui stipule que ces trois propriétés (notamment la cohérence, la disponibilité et la tolérance au partitionnement), ne peuvent jamais avoir lieu en même temps. Seules deux d'entre elles peuvent être respectées à la fois.</p>
 <p><center><img src="../img/p1/CAP.png" width="300pt"></center></p>
@@ -566,26 +199,26 @@ La cohérence représente en effet un <em>must</em> pour les systèmes relationn
 <p>Maintenant que vous êtes plus familiarisés avec les caractéristiques d'un système Big Data, listons quelques principes, appelés ici <em>MOTTOS</em>, qui vont régir nos futures décisions dans ce domaine.</p>
 <h2 id="principes-de-base-du-domaine-des-big-data">Principes de base du Domaine des Big Data</h2>
 <p>Il est important, avant d'entamer n'importe quel travail sur les systèmes Big Data, de considérer certains principes, qui sont parfois en entière contradiction avec les principes classiques de développement d'application. Ce n'est pas si étonnant : le domaine des Big Data n'est pas censé prendre la place des domaines relationnel et décisionnel, mais plutôt les enrichir et les agrémenter.</p>
-<p><strong><em>MOTTO 1 :</em> Stocker d'abord, réfléchir ensuite</strong><br />
+<p><strong><em>MOTTO 1 :</em> Stocker d'abord, réfléchir ensuite</strong>
 À cause de la vélocité, il est important de considérer qu'il nous sera parfois difficile, voire impossible, de nettoyer les données ou de faire un traitement quelconque dessus, avant de les stocker. Cela risque dans bien des cas de nous faire perdre des données, le cauchemar de tout scientifique des données!</p>
 <p>Nous devons donc envisager la possibilité de définir des systèmes de stockage qui contiennent des données non nettoyées, en vrac (appelées <em>raw data</em>), pour ensuite lancer des traitements dessus.. l'horreur pour un gestionnaire de bases des données! 😱</p>
 <p>Bien entendu, ces "bases" ne sont pas conçues pour être directement exploitées par des applications externes, mais plutôt pour conserver le plus longtemps possibles les données brutes, sans perte, qui pourraient eventuellement être réutilisées pour d'autres fins.</p>
-<p><strong><em>MOTTO 2 :</em> Absolument TOUTES les données sont importantes!</strong><br />
+<p><strong><em>MOTTO 2 :</em> Absolument TOUTES les données sont importantes!</strong>
 D'où l'intérêt du <em>MOTTO 1</em>. Il nous est parfois difficile, au tout début de la conception des systèmes Big Data, de cerner toutes les possibilités offertes par ces systèmes et par les données que nous avons à notre disposition. Nous sommes donc en général tentés de supprimer les données dont nous n'avons pas besoin une fois extraite l'information immédiatement utile. Cela dit, grâce à l'accessibilité des systèmes de stockage magnétiques et leur prix de plus en plus bas, nous considérons qu'il est largement plus bénéfique de stocker des données qu'on n'utilisera peut-être jamais, plutôt que de gagner de la place et perdre un potentiel pouvoir concurrentiel.</p>
-<p><strong><em>MOTTO 3 :</em> Ce sont les données qui pilotent le traitement</strong><br />
+<p><strong><em>MOTTO 3 :</em> Ce sont les données qui pilotent le traitement</strong>
 Dans un système opérationnel classique, ainsi que dans la plupart des systèmes décisionnels, ce sont les besoins métier qui prévaloient : le responsable métier commence par définir les besoins (ou les KPIs : <em>Key Performance Indicators</em> dans le cas d'un système décisionnel), puis le responsable technique conçoit les structures de données pour répondre à ces besoins.</p>
 <p>Par essence, un système Big Data fonctionne différemment : les données sont collectées tout d'abord à partir de toutes les sources possibles; des traitements de fouille et d'exploration de ces données sont lancés ensuite, pour extraire de la valeur à partir de ces données. L'objectif est toujours le même : chercher l'effet WOW!</p>
 <p>D'où l'intérêt de ce MOTTO : définir le traitement à réaliser dépend des données que nous avons réussi à collecter, et pas le contraire. Cela implique donc l'utilisation d'autres types de systèmes de traitement et d'algorithmes d'analyse.</p>
-<p><strong><em>MOTTO 4 :</em> Co-localisation des données et du traitement</strong><br />
+<p><strong><em>MOTTO 4 :</em> Co-localisation des données et du traitement</strong>
 Un système classique à plusieurs couches, tel que le système trois tiers par exemple, se base sur le principe de séparation des données et du traitement. On trouve en général des données sur un serveur de bases de données séparé, et les traitement complexes sur un serveur d'application qui se charge de l'aggrégation et de l'affichage de ces données. Ceci est agrémenté d'un langage de requêtage déclaratif (typiquement SQL) pour réaliser des opérations de filtrage, parfois assez lourdes et complexes, au niveau de la base de données.</p>
 <p>Cela dit, dans un contexte Big Data, le volume des données peut s'avérer assez conséquent, trop même pour envisager de le déplacer à chaque fois vers un autre système pour en extraire une vraie valeur. De plus, compter sur un langage comme SQL pour diminuer le volume ou faire de simples agrégations au niveau de la base de données pourra la rendre indisponible pendant un moment (car n'oublions pas que nous parlons d'un système réparti), ce qui va à l'encontre du principe de vélocité, qui exige une disponibilité à toute épreuve du système de stockage.</p>
 <p>C'est pour cette raison que, pour réaliser les traitements voulus en un temps raisonnable et sans avoir à trimballer les données sur le réseau, il est question dans les systèmes Big Data de déplacer le traitement vers les données massives, au lieu de déplacer les données vers le traitement.</p>
-<p><strong><em>MOTTO 5 :</em> La redondance, c'est bien</strong><br />
+<p><strong><em>MOTTO 5 :</em> La redondance, c'est bien</strong>
 Dans les bases de données relationnelles, le plus grand ennemi à combattre dans la conception de la structure de données est la redondance, et ce pour deux raisons. La première, évidente, est le gain d'espace : notre espace de stockage est précieux, et nous devons éviter de le gaspiller sans raison précise. La deuxième est un besoin de cohérence : si nous dupliquons une même information à plusieurs endroits dans la base, nous devrons par la suite faire attention, parfois par des mécanismes compliqués et coûteux, à ce que cette information soit mise à jour instantanément sur la totalité de ses copies.</p>
 <p>Ce besoin d'éviter la redondance a créé la nécessité d'utiliser plusieurs techniques, telles que les jointures et clefs étrangères, et entraîne parfois la création d'un très grand nombre de tables. Ceci rajoute une complexité pour le requêtage, et une lourdeur d'exécution des tâches sur la base.</p>
 <p>Un système Big Data qui, non seulement est caractérisé par un gros volume de données, mais également une grande vélocité, et qui doit donc être immédiatement disponible, ne peut pas se permettre de gaspiller ses ressources en requêtes inutiles. On tolère donc à un certain point les risques dus à la redondance, pour gagner en disponibilité, primordiale dans ce type de systèmes.</p>
 <p>D'autre part, un système Big Data est un système réparti par excellence, et dans un système réparti, il est primordial d'assurer une bonne tolérance aux fautes en créant des répliques des données, disséminées partout sur le cluster. Ces répliques assurent qu'aucune machine n'est complètement indispensable, et diminue le risque d'indisponibilité des données. Un autre signe de redondance.</p>
-<p><strong><em>MOTTO 6 :</em> Vive le Polyglottisme!</strong><br />
+<p><strong><em>MOTTO 6 :</em> Vive le Polyglottisme!</strong>
 Être polyglotte, c'est être capable de parler plusieurs langues. Et les systèmes Big Data encouragent le polyglottisme. En effet, ce sont des systèmes complexes qui impliquent en général plusieurs traitements et plusieurs types de données différentes (données brutes, données nettoyées, données traitées), ce qui fait qu'il existe deux principes importants à encourager :</p>
 <ul>
 <li><em>Polyglot Programming</em> : Une application peut comporter plusieurs langages et paradigmes de programmation, chacun assurant un besoin particulier, de façon à profiter des avantages de chacun à sa juste valeur.</li>
@@ -598,7 +231,7 @@ Dans les bases de données relationnelles, le plus grand ennemi à combattre dan
 <li>
 <p><strong>Ingestion des données</strong> : représente les phases de collecte et d'importation des données pour être stockées ou traitées à la volée. Cela peut se faire en "temps réel", c'est à dire que les données sont importées au moment où elles sont émises par leur source, ou bien "par lots", ce qui veut dire que les données sont importées par portions à intervalles régulier.</p>
 <blockquote>
-<p>Exemples de technologies<br />
+<p>Exemples de technologies
 <a href="http://kafka.apache.org">Apache Kafka</a>, <a href="https://aws.amazon.com/kinesis/">Amazon Kinesis</a>, <a href="https://flume.apache.org/">Apache Flume</a>, <a href="https://sqoop.apache.org">Sqoop</a>, etc.</p>
 </blockquote>
 </li>
@@ -609,144 +242,111 @@ Dans les bases de données relationnelles, le plus grand ennemi à combattre dan
 <p><strong>Traitement des données</strong> : Plusieurs types de traitement de données sont possibles, nous citons :</p>
 <ul>
 <li>
-<p><ins><em>Traitement par lot</em></ins> <em>(Batch Processing)</em> : c'est le traitement des <em>données au repos (data at rest)</em> qui se fait sur l'ensemble des données stockées, sans avoir besoin d'une interaction avec l'utilisateur. Le traitement par lot est adapté principalement aux opérations ayant lieu à la fin d'un cycle, permettant d'avoir une vision globale sur la totalité des données, par exemple pour avoir un rapport global ou une analyse mensuelle. Les opérations de traitement par lots sont en général lancées à des périodes régulières, car elles sont connues pour avoir une grande latence (temps total de traitement).</p>
+<p>^^<em>Traitement par lot</em>^^ <em>(Batch Processing)</em> : c'est le traitement des <em>données au repos (data at rest)</em> qui se fait sur l'ensemble des données stockées, sans avoir besoin d'une interaction avec l'utilisateur. Le traitement par lot est adapté principalement aux opérations ayant lieu à la fin d'un cycle, permettant d'avoir une vision globale sur la totalité des données, par exemple pour avoir un rapport global ou une analyse mensuelle. Les opérations de traitement par lots sont en général lancées à des périodes régulières, car elles sont connues pour avoir une grande latence (temps total de traitement).</p>
 <blockquote>
-<p>Exemples de technologies<br />
+<p>Exemples de technologies
 <a href="https://hadoop.apache.org/docs/r1.2.1/mapred_tutorial.html">Hadoop Map Reduce</a> et <a href="https://spark.apache.org/docs/latest/rdd-programming-guide.html">Spark Batch</a>.</p>
 </blockquote>
 </li>
 <li>
-<p><ins><em>Traitement en Streaming</em></ins> <em>(Stream Processing)</em> : c'est le traitement des données <em>en transit (data in motion)</em>, ou en d'autres termes, le traitement des données pendant qu'elles sont produites ou reçues. Les données étant en général créées en tant que flux continu (évènements de capteurs, activité des utilisateurs sur un site web, flux vidéo, etc.), elles sont capturées comme une série d'évènements continus dans le temps. Avant la création des traitements en streaming, ces données étaient stockées dans une base de données, un système de fichier ou tout autre forme de stockage en masse. Les applications appelleront ensuite les données au besoin. Grâce à ce nouveau paradigme, les données peuvent maintenant être traitées à la volée, ce qui permet à la couche applicative d'être toujours sur écoute et à jour.</p>
+<p>^^<em>Traitement en Streaming</em>^^ <em>(Stream Processing)</em> : c'est le traitement des données <em>en transit (data in motion)</em>, ou en d'autres termes, le traitement des données pendant qu'elles sont produites ou reçues. Les données étant en général créées en tant que flux continu (évènements de capteurs, activité des utilisateurs sur un site web, flux vidéo, etc.), elles sont capturées comme une série d'évènements continus dans le temps. Avant la création des traitements en streaming, ces données étaient stockées dans une base de données, un système de fichier ou tout autre forme de stockage en masse. Les applications appelleront ensuite les données au besoin. Grâce à ce nouveau paradigme, les données peuvent maintenant être traitées à la volée, ce qui permet à la couche applicative d'être toujours sur écoute et à jour.</p>
 <blockquote>
-<p>Exemples de technologies<br />
+<p>Exemples de technologies
 <a href="https://flink.apache.org/">Apache Flink</a> et <a href="https://storm.apache.org/">Apache Storm</a>.</p>
 </blockquote>
 </li>
 <li>
-<p><ins><em>Traitement par Micro-Lot</em></ins> <em>(Micro-Batch Processing)</em> : c'est la pratique de collecter les données en petits groupes (appelés des <em>micro-lots</em> ou des <em>micro-batchs</em>) pour les traiter. Contrairement au traditionnel traitement par lot, cette variante fait en sorte que le traitement des données soit plus fréquent, et que les résultats soient produits avec une latence beaucoup plus petite. Les données sont collectées par intervalles selon un seuil prédéfini, limité par un temps (par exemple toutes les secondes), ou par un nombre (tous les 20 éléments). Ce traitement est en général une alternative au traitement en streaming, où les données sont traitées à la volée, mais risquent d'être perdues si le temps de traitement est supérieur à la fréquence de génération des données. Le micro-batching permet, par contraste, de sauvegarder les données dans un buffer, ralentissant ainsi le flux généré. D'autre part, les données étant traitées par micro-lots, il est possible d'avoir une visibilité sur ce petit lot de données, contrairement au traitement en streaming qui n'a de visibilité que sur la dernière donnée générée, à moins de procéder à des mécanismes parfois coûteux. En contrepartie, le traitement en micro-batch donne des résultats moins récents que le "vrai" streaming, et s'exécute sous forme de <em>bursts</em> réguliers, qui peuvent parfois être gênants pour le système sous-jacent.</p>
+<p>^^<em>Traitement par Micro-Lot</em>^^ <em>(Micro-Batch Processing)</em> : c'est la pratique de collecter les données en petits groupes (appelés des <em>micro-lots</em> ou des <em>micro-batchs</em>) pour les traiter. Contrairement au traditionnel traitement par lot, cette variante fait en sorte que le traitement des données soit plus fréquent, et que les résultats soient produits avec une latence beaucoup plus petite. Les données sont collectées par intervalles selon un seuil prédéfini, limité par un temps (par exemple toutes les secondes), ou par un nombre (tous les 20 éléments). Ce traitement est en général une alternative au traitement en streaming, où les données sont traitées à la volée, mais risquent d'être perdues si le temps de traitement est supérieur à la fréquence de génération des données. Le micro-batching permet, par contraste, de sauvegarder les données dans un buffer, ralentissant ainsi le flux généré. D'autre part, les données étant traitées par micro-lots, il est possible d'avoir une visibilité sur ce petit lot de données, contrairement au traitement en streaming qui n'a de visibilité que sur la dernière donnée générée, à moins de procéder à des mécanismes parfois coûteux. En contrepartie, le traitement en micro-batch donne des résultats moins récents que le "vrai" streaming, et s'exécute sous forme de <em>bursts</em> réguliers, qui peuvent parfois être gênants pour le système sous-jacent.</p>
 <blockquote>
-<p>Exemples de technologies<br />
+<p>Exemples de technologies
 <a href="https://spark.apache.org/docs/latest/streaming-programming-guide.html">Spark Streaming</a> et <a href="https://www.elastic.co/logstash">Logstash</a>.</p>
 </blockquote>
 </li>
 <li>
-<p><ins><em>Traitement Interactif</em></ins> <em>(Interactive Processing)</em> : Dans les systèmes Big Data, la notion de transaction n'est plus exactement la même que pour les systèmes classiques: finies les sacro-saintes propriétés ACID dont le premier objectif est d'avoir des données correctes et cohérentes, et bonjour les propriétés BASE, qui favorisent un accès moins rigide aux données. On parle donc rarement de <em>traitement transactionnel</em> en Big Data, mais de traitements plutôt <em>interactifs</em> : une requête est envoyée par le client, traitée immédiatement par le système qui renverra un résultat dans un temps raisonnable. On parle alors d'<em>interaction</em> entre l'utilisateur et le système. Les traitements en batch et en streaming ne sont pas censés communiquer avec un utilisateur de l'autre côté. En général, les résultats de ces traitements sont enregistrés dans un système de stockage, qui sera, lui, par la suite interrogé par l'utilisateur. Le traitement interactif est donc le résultat d'une requête de l'utilisateur, faite en général sur une base de données (relationnelle ou NOSQL).</p>
+<p>^^<em>Traitement Interactif</em>^^ <em>(Interactive Processing)</em> : Dans les systèmes Big Data, la notion de transaction n'est plus exactement la même que pour les systèmes classiques: finies les sacro-saintes propriétés ACID dont le premier objectif est d'avoir des données correctes et cohérentes, et bonjour les propriétés BASE, qui favorisent un accès moins rigide aux données. On parle donc rarement de <em>traitement transactionnel</em> en Big Data, mais de traitements plutôt <em>interactifs</em> : une requête est envoyée par le client, traitée immédiatement par le système qui renverra un résultat dans un temps raisonnable. On parle alors d'<em>interaction</em> entre l'utilisateur et le système. Les traitements en batch et en streaming ne sont pas censés communiquer avec un utilisateur de l'autre côté. En général, les résultats de ces traitements sont enregistrés dans un système de stockage, qui sera, lui, par la suite interrogé par l'utilisateur. Le traitement interactif est donc le résultat d'une requête de l'utilisateur, faite en général sur une base de données (relationnelle ou NOSQL).</p>
 <blockquote>
-<p>Exemples de technologies<br />
+<p>Exemples de technologies
 <a href="https://drill.apache.org/">Apache Drill</a>, <a href="https://docs.cloudera.com/documentation/enterprise/5-3-x/topics/impala_intro.html">Cloudera Impala</a> ou <a href="https://zeppelin.apache.org/">Apache Zeppelin</a>.</p>
 </blockquote>
 </li>
 </ul>
 </li>
-</ul>
-                
-                  
-                
-                
-              
-              
-                
-
-
-              
-            </article>
-          </div>
+</ul></div>
+            </div>
         </div>
-      </main>
-      
-        
-<footer class="md-footer">
-  
-    <div class="md-footer-nav">
-      <nav class="md-footer-nav__inner md-grid">
-        
-          <a href=".." title="Atelier Apache Spark" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
-            <div class="md-flex__cell md-flex__cell--shrink">
-              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
-            </div>
-            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
-              <span class="md-flex__ellipsis">
-                <span class="md-footer-nav__direction">
-                  Précédent
-                </span>
-                Atelier Apache Spark
-              </span>
-            </div>
-          </a>
-        
-        
-          <a href="../p2-spark/" title="P2 - Introduction à Apache Spark" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
-            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
-              <span class="md-flex__ellipsis">
-                <span class="md-footer-nav__direction">
-                  Suivant
-                </span>
-                P2 - Introduction à Apache Spark
-              </span>
-            </div>
-            <div class="md-flex__cell md-flex__cell--shrink">
-              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
-            </div>
-          </a>
-        
-      </nav>
-    </div>
-  
-  <div class="md-footer-meta md-typeset">
-    <div class="md-footer-meta__inner md-grid">
-      <div class="md-footer-copyright">
-        
-          <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2019 - 2020 Lilia Sfaxi
-          </div>
-        
-        powered by
-        <a href="https://www.mkdocs.org">MkDocs</a>
-        and
-        <a href="https://squidfunk.github.io/mkdocs-material/">
-          Material for MkDocs</a>
-      </div>
-      
-  <div class="md-footer-social">
-    <link rel="stylesheet" href="../assets/fonts/font-awesome.css">
-    
-      <a href="http://liliasfaxi.wix.com/liliasfaxi" class="md-footer-social__link fa fa-globe"></a>
-    
-      <a href="https://github.com/liliasfaxi" class="md-footer-social__link fa fa-github-alt"></a>
-    
-      <a href="https://twitter.com/lillitou" class="md-footer-social__link fa fa-twitter"></a>
-    
-      <a href="https://www.linkedin.com/in/liliasfaxi/" class="md-footer-social__link fa fa-linkedin"></a>
-    
-  </div>
 
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2019 - 2020 Lilia Sfaxi</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
     </div>
-  </div>
-</footer>
-      
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
     </div>
-    
-      <script src="../assets/javascripts/application.808e90bb.js"></script>
-      
-        
-        
-          
-          <script src="../assets/javascripts/lunr/lunr.stemmer.support.js"></script>
-          
-            
-              
-              
-                <script src="../assets/javascripts/lunr/lunr.fr.js"></script>
-              
-            
-          
-          
-        
-      
-      <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
-      
-        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
-      
-    
-  </body>
+</div>
+
+    </body>
 </html>

@@ -7,6 +7,13 @@ Pour pouvoir lancer ce TP en local, il va falloir suivre les instructions suivan
 ```Bash
   pip3 install mkdocs-material
 ```
+  * Installer les plugins nécessaires:
+
+```Bash
+  pip3 install autolink-references-mkdocs-plugin
+  pip3 install mkdocs-git-revision-date-localized-plugin
+  pip3 install mkdocs-minify-plugin   
+```
 
   * Lancer mkdocs:
 

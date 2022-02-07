@@ -1,498 +1,223 @@
-
-
-
-
-<!doctype html>
-<html lang="fr" class="no-js">
-  <head>
-    
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width,initial-scale=1">
-      <meta http-equiv="x-ua-compatible" content="ie=edge">
-      
-        <meta name="description" content="Cours et Travaux Pratiques pour se familiariser avec Apache Spark">
-      
-      
-        <link rel="canonical" href="http://liliasfaxi.github.io/Atelier-Spark/tips/">
-      
-      
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
         <meta name="author" content="Lilia Sfaxi">
-      
-      
-        <meta name="lang:clipboard.copy" content="Copier dans le presse-papier">
-      
-        <meta name="lang:clipboard.copied" content="Copié dans le presse-papier">
-      
-        <meta name="lang:search.language" content="fr">
-      
-        <meta name="lang:search.pipeline.stopwords" content="True">
-      
-        <meta name="lang:search.pipeline.trimmer" content="True">
-      
-        <meta name="lang:search.result.none" content="Aucun document trouvé">
-      
-        <meta name="lang:search.result.one" content="1 document trouvé">
-      
-        <meta name="lang:search.result.other" content="# documents trouvés">
-      
-        <meta name="lang:search.tokenizer" content="[\s\-]+">
-      
-      <link rel="shortcut icon" href="../img/favicon.ico">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.0">
-    
-    
-      
+        <link rel="canonical" href="http://liliasfaxi.github.io/Atelier-Spark/tips/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
         <title>Tips - Atelier Apache Spark</title>
-      
-    
-    
-      <link rel="stylesheet" href="../assets/stylesheets/application.1b62728e.css">
-      
-        <link rel="stylesheet" href="../assets/stylesheets/application-palette.a8b3c06d.css">
-      
-      
-        
-        
-        <meta name="theme-color" content="#546e7a">
-      
-    
-    
-      <script src="../assets/javascripts/modernizr.268332fc.js"></script>
-    
-    
-      
-        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
-        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
-      
-    
-    <link rel="stylesheet" href="../assets/fonts/material-icons.css">
-    
-    
-      <link rel="stylesheet" href="../extra.css">
-    
-    
-      
-        
-<script>
-  window.ga = window.ga || function() {
-    (ga.q = ga.q || []).push(arguments)
-  }
-  ga.l = +new Date
-  /* Setup integration and send page view */
-  ga("create", "None", "auto")
-  ga("set", "anonymizeIp", true)
-  ga("send", "pageview")
-  /* Register handler to log search on blur */
-  document.addEventListener("DOMContentLoaded", () => {
-    if (document.forms.search) {
-      var query = document.forms.search.query
-      query.addEventListener("blur", function() {
-        if (this.value) {
-          var path = document.location.pathname;
-          ga("send", "pageview", path + "?q=" + this.value)
-        }
-      })
-    }
-  })
-</script>
-<script async src="https://www.google-analytics.com/analytics.js"></script>
-      
-    
-    
-  </head>
-  
-    
-    
-    <body dir="ltr" data-md-color-primary="blue-grey" data-md-color-accent="amber">
-  
-    <svg class="md-svg">
-      <defs>
-        
-        
-          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
-        
-      </defs>
-    </svg>
-    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
-    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
-    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
-    
-    
-      <header class="md-header" data-md-component="header">
-  <nav class="md-header-nav md-grid">
-    <div class="md-flex">
-      <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="http://liliasfaxi.github.io/Atelier-Spark/" title="Atelier Apache Spark" class="md-header-nav__button md-logo">
-          
-            <img src="../img/logo.png" width="24" height="24">
-          
-        </a>
-      </div>
-      <div class="md-flex__cell md-flex__cell--shrink">
-        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
-      </div>
-      <div class="md-flex__cell md-flex__cell--stretch">
-        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
-          
-            <span class="md-header-nav__topic">
-              Atelier Apache Spark
-            </span>
-            <span class="md-header-nav__topic">
-              
-                Tips
-              
-            </span>
-          
-        </div>
-      </div>
-      <div class="md-flex__cell md-flex__cell--shrink">
-        
-          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
-          
-<div class="md-search" data-md-component="search" role="dialog">
-  <label class="md-search__overlay" for="__search"></label>
-  <div class="md-search__inner" role="search">
-    <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" placeholder="Rechercher" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
-      <label class="md-icon md-search__icon" for="__search"></label>
-      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
-        &#xE5CD;
-      </button>
-    </form>
-    <div class="md-search__output">
-      <div class="md-search__scrollwrap" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="result">
-          <div class="md-search-result__meta">
-            Taper pour démarrer la recherche
-          </div>
-          <ol class="md-search-result__list"></ol>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-        
-      </div>
-      
-        <div class="md-flex__cell md-flex__cell--shrink">
-          <div class="md-header-nav__source">
-            
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
 
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
 
-  
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">Atelier Apache Spark</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-<a href="https://github.com/liliasfaxi/Atelier-Spark/" title="Aller au dépôt" class="md-source" data-md-source="github">
-  
-    <div class="md-source__icon">
-      <svg viewBox="0 0 24 24" width="24" height="24">
-        <use xlink:href="#__github" width="24" height="24"></use>
-      </svg>
-    </div>
-  
-  <div class="md-source__repository">
-    liliasfaxi/Atelier-Spark
-  </div>
-</a>
-          </div>
-        </div>
-      
-    </div>
-  </nav>
-</header>
-    
-    <div class="md-container">
-      
-        
-      
-      
-      <main class="md-main" role="main">
-        <div class="md-main__inner md-grid" data-md-component="container">
-          
-            
-              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    <nav class="md-nav md-nav--primary" data-md-level="0">
-  <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="http://liliasfaxi.github.io/Atelier-Spark/" title="Atelier Apache Spark" class="md-nav__button md-logo">
-      
-        <img src="../img/logo.png" width="48" height="48">
-      
-    </a>
-    Atelier Apache Spark
-  </label>
-  
-    <div class="md-nav__source">
-      
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Atelier Apache Spark</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../p1-big-data/" class="nav-link">P1 - Introduction au Big Data</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../p2-spark/" class="nav-link">P2 - Introduction à Apache Spark</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../p3-install/" class="nav-link">P3 - Installation de Spark</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../p4-batch/" class="nav-link">P4 - RDD et Batch Processing avec Spark</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../p5-sql/" class="nav-link">P5 - Spark SQL</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../p6-stream/" class="nav-link">P6 - Spark Streaming</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../p7-ml/" class="nav-link">P7 - Spark MLLib</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../p8-graphx/" class="nav-link">P8 - Spark GraphX</a>
+                            </li>
+                        </ul>
 
-
-  
-
-<a href="https://github.com/liliasfaxi/Atelier-Spark/" title="Aller au dépôt" class="md-source" data-md-source="github">
-  
-    <div class="md-source__icon">
-      <svg viewBox="0 0 24 24" width="24" height="24">
-        <use xlink:href="#__github" width="24" height="24"></use>
-      </svg>
-    </div>
-  
-  <div class="md-source__repository">
-    liliasfaxi/Atelier-Spark
-  </div>
-</a>
-    </div>
-  
-  <ul class="md-nav__list" data-md-scrollfix>
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href=".." title="Atelier Apache Spark" class="md-nav__link">
-      Atelier Apache Spark
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../p1-big-data/" title="P1 - Introduction au Big Data" class="md-nav__link">
-      P1 - Introduction au Big Data
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../p2-spark/" title="P2 - Introduction à Apache Spark" class="md-nav__link">
-      P2 - Introduction à Apache Spark
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../p3-install/" title="P3 - Installation de Spark" class="md-nav__link">
-      P3 - Installation de Spark
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../p4-batch/" title="P4 - RDD et Batch Processing avec Spark" class="md-nav__link">
-      P4 - RDD et Batch Processing avec Spark
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../p5-sql/" title="P5 - Spark SQL" class="md-nav__link">
-      P5 - Spark SQL
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../p6-stream/" title="P6 - Spark Streaming" class="md-nav__link">
-      P6 - Spark Streaming
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../p7-ml/" title="P7 - Spark MLLib" class="md-nav__link">
-      P7 - Spark MLLib
-    </a>
-  </li>
-
-    
-  </ul>
-</nav>
-                  </div>
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/liliasfaxi/Atelier-Spark/edit/master/docs/tips.md" class="nav-link">Edit on liliasfaxi/Atelier-Spark</a>
+                            </li>
+                    </ul>
                 </div>
-              </div>
-            
-            
-          
-          <div class="md-content">
-            <article class="md-content__inner md-typeset">
-              
-                
-                  <a href="https://github.com/liliasfaxi/Atelier-Spark/edit/master/docs/tips.md" title="Editer cette page" class="md-icon md-content__icon">&#xE3C9;</a>
-                
-                
-                  <h1>Tips</h1>
-                
-                <p>See mkdocs <a href="https://yakworks.github.io/mkdocs-material-components/cheat-sheet/">Cheat Sheet</a></p>
-<p>italique<br />
-<em>input</em></p>
-<p>gras<br />
-<strong>50070</strong></p>
-<p>image<br />
-<img alt="Batch Processing" src="img/batch.png" /><br />
-ou<br />
-<center><img src="../img/tp1/purchases-tail.png"></center></p>
-<p>lien<br />
-<a href="http://hadoop.apache.org/">Apache Hadoop</a></p>
-<p>code<br />
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>  <span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="o">:</span><span class="c1">//github.com/liliasfaxi/hadoop-cluster-docker</span>
-</pre></div>
-</td></tr></table></p>
-<p>inline code<br />
-<code class="codehilite"><span class="n">hadoop</span> <span class="n">fs</span> <span class="o">-</span><span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">user</span><span class="o">/</span><span class="n">root</span></code></p>
-<div class="admonition warning">
-<p class="admonition-title">Attention</p>
-<p>blablabla</p>
-</div>
-<div class="admonition bug">
-<p class="admonition-title">Erreur</p>
-<p>blablabla</p>
-</div>
-<div class="admonition question">
-<p class="admonition-title">Activité</p>
-<p>Modifier</p>
-</div>
-<p>tables<br />
-|Instruction|Fonctionnalité|<br />
-|---------|-------------------------------------------------------------|<br />
-| <code class="codehilite"><span class="n">hadoop</span> <span class="n">fs</span> <span class="err">–</span><span class="n">ls</span></code> | Afficher le contenu du répertoire racine |<br />
-| <code class="codehilite"><span class="n">hadoop</span> <span class="n">fs</span> <span class="err">–</span><span class="n">put</span> <span class="n">file</span><span class="p">.</span><span class="n">txt</span></code> | Upload un fichier dans hadoop (à partir du répertoire courant linux) |<br />
-| <code class="codehilite"><span class="n">hadoop</span> <span class="n">fs</span> <span class="err">–</span><span class="n">get</span> <span class="n">file</span><span class="p">.</span><span class="n">txt</span></code> | Download un fichier à partir de hadoop sur votre disque local |<br />
-| <code class="codehilite"><span class="n">hadoop</span> <span class="n">fs</span> <span class="err">–</span><span class="n">tail</span> <span class="n">file</span><span class="p">.</span><span class="n">txt</span></code> | Lire les dernières lignes du fichier   |<br />
-| <code class="codehilite"><span class="n">hadoop</span> <span class="n">fs</span> <span class="err">–</span><span class="n">cat</span> <span class="n">file</span><span class="p">.</span><span class="n">txt</span></code> | Affiche tout le contenu du fichier  |<br />
-| <code class="codehilite"><span class="n">hadoop</span> <span class="n">fs</span> <span class="err">–</span><span class="n">mv</span> <span class="n">file</span><span class="p">.</span><span class="n">txt</span> <span class="n">newfile</span><span class="p">.</span><span class="n">txt</span></code> |  Renommer le fichier  |<br />
-| <code class="codehilite"><span class="n">hadoop</span> <span class="n">fs</span> <span class="err">–</span><span class="n">rm</span> <span class="n">newfile</span><span class="p">.</span><span class="n">txt</span></code> | Supprimer le fichier  |<br />
-| <code class="codehilite"><span class="n">hadoop</span> <span class="n">fs</span> <span class="err">–</span><span class="n">mkdir</span> <span class="n">myinput</span></code> | Créer un répertoire |<br />
-| <code class="codehilite"><span class="n">hadoop</span> <span class="n">fs</span> <span class="err">–</span><span class="n">cat</span> <span class="n">file</span><span class="p">.</span><span class="n">txt</span> <span class="err">\</span><span class="o">|</span> <span class="n">less</span></code> | Lire le fichier page par page|</p>
-<p>Footnotes</p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6
-7
-8</pre></div></td><td class="code"><div class="codehilite"><pre><span class="n">Footnotes</span><span class="p">[</span><span class="o">^</span><span class="mi">1</span><span class="p">]</span> <span class="n">are</span> <span class="n">added</span> <span class="n">in</span><span class="o">-</span><span class="n">text</span> <span class="n">like</span> <span class="n">so</span> <span class="p">...</span>
-
-<span class="cp">#end of the document</span>
-
-<span class="p">[</span><span class="o">^</span><span class="mi">1</span><span class="p">]</span><span class="o">:</span>
-<span class="n">Footnotes</span> <span class="n">are</span> <span class="n">the</span> <span class="n">mind</span> <span class="n">killer</span><span class="p">.</span>
-<span class="n">Footnotes</span> <span class="n">are</span> <span class="n">the</span> <span class="n">little</span><span class="o">-</span><span class="n">death</span> <span class="n">that</span> <span class="n">brings</span> <span class="n">total</span> <span class="n">obliteration</span><span class="p">.</span>
-<span class="n">I</span> <span class="n">will</span> <span class="n">face</span> <span class="n">my</span> <span class="n">footnotes</span><span class="p">.</span>
-</pre></div>
-</td></tr></table>
-
-<p>get the IP address of a docker container<br />
-  docker inspect <container_name> | grep IPAddress</p>
-                
-                  
-                
-                
-              
-              
-                
-
-
-              
-            </article>
-          </div>
+            </div>
         </div>
-      </main>
-      
-        
-<footer class="md-footer">
-  
-  <div class="md-footer-meta md-typeset">
-    <div class="md-footer-meta__inner md-grid">
-      <div class="md-footer-copyright">
-        
-          <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2019 - 2020 Lilia Sfaxi
-          </div>
-        
-        powered by
-        <a href="https://www.mkdocs.org">MkDocs</a>
-        and
-        <a href="https://squidfunk.github.io/mkdocs-material/">
-          Material for MkDocs</a>
-      </div>
-      
-  <div class="md-footer-social">
-    <link rel="stylesheet" href="../assets/fonts/font-awesome.css">
-    
-      <a href="http://liliasfaxi.wix.com/liliasfaxi" class="md-footer-social__link fa fa-globe"></a>
-    
-      <a href="https://github.com/liliasfaxi" class="md-footer-social__link fa fa-github-alt"></a>
-    
-      <a href="https://twitter.com/lillitou" class="md-footer-social__link fa fa-twitter"></a>
-    
-      <a href="https://www.linkedin.com/in/liliasfaxi/" class="md-footer-social__link fa fa-linkedin"></a>
-    
-  </div>
 
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
     </div>
-  </div>
-</footer>
-      
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+        </ul>
     </div>
-    
-      <script src="../assets/javascripts/application.808e90bb.js"></script>
-      
-        
-        
-          
-          <script src="../assets/javascripts/lunr/lunr.stemmer.support.js"></script>
-          
-            
-              
-              
-                <script src="../assets/javascripts/lunr/lunr.fr.js"></script>
-              
-            
-          
-          
-        
-      
-      <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
-      
-        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
-      
-    
-  </body>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p>See mkdocs <a href="https://yakworks.github.io/mkdocs-material-components/cheat-sheet/">Cheat Sheet</a></p>
+<p>italique
+<em>input</em></p>
+<p>gras
+<strong>50070</strong></p>
+<p>image
+<img alt="Batch Processing" src="img/batch.png" />
+ou
+<center><img src="../img/tp1/purchases-tail.png"></center></p>
+<p>lien
+<a href="http://hadoop.apache.org/">Apache Hadoop</a></p>
+<p>code</p>
+<pre><code class="language-Bash">  git clone https://github.com/liliasfaxi/hadoop-cluster-docker
+</code></pre>
+<p>inline code
+<code>hadoop fs -mkdir -p /user/root</code></p>
+<p>warning
+!!! warning "Attention"
+    blablabla</p>
+<p>error
+!!! bug "Erreur"
+    blablabla</p>
+<p>exercice - activité
+!!!question "Activité"</p>
+<pre><code>  Modifier
+</code></pre>
+<p>tables
+|Instruction|Fonctionnalité|
+|---------|-------------------------------------------------------------|
+| <code>hadoop fs –ls</code> | Afficher le contenu du répertoire racine |
+| <code>hadoop fs –put file.txt</code> | Upload un fichier dans hadoop (à partir du répertoire courant linux) |
+| <code>hadoop fs –get file.txt</code> | Download un fichier à partir de hadoop sur votre disque local |
+| <code>hadoop fs –tail file.txt</code> | Lire les dernières lignes du fichier   |
+| <code>hadoop fs –cat file.txt</code> | Affiche tout le contenu du fichier  |
+| <code>hadoop fs –mv file.txt newfile.txt</code> |  Renommer le fichier  |
+| <code>hadoop fs –rm newfile.txt</code> | Supprimer le fichier  |
+| <code>hadoop fs –mkdir myinput</code> | Créer un répertoire |
+| <code>hadoop fs –cat file.txt \| less</code> | Lire le fichier page par page|</p>
+<p>Footnotes</p>
+<pre><code>Footnotes[^1] are added in-text like so ...
+
+#end of the document
+
+[^1]:
+Footnotes are the mind killer.
+Footnotes are the little-death that brings total obliteration.
+I will face my footnotes.
+</code></pre>
+<p>get the IP address of a docker container
+  docker inspect <container_name> | grep IPAddress</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2019 - 2020 Lilia Sfaxi</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
 </html>

@@ -16,78 +16,54 @@ repo_url: https://github.com/liliasfaxi/Atelier-Spark
 copyright: 'Copyright &copy; 2019 - 2020 Lilia Sfaxi'
 
 # Theme directory
-theme_dir: material
+plugins:
+  - search
+  - autolink_references:
+        autolinks:
+            - reference_prefix: AF-
+              target_url: https://linear.com/AF-<num>
+            - reference_prefix: PROJ-
+              target_url: https://jiracloud.com/PROJ-<num> 
+  - git-revision-date-localized:
+      type: timeago
+  - minify:
+      minify_html: true
 
-theme:
-  name: 'material'
-  feature:
-    tabs: false
-  palette:
-    text: 'Ubuntu'
-    code: 'Ubuntu Mono'
-    primary: 'blue grey'
-    accent: Amber
-  logo: 'img/logo.png'
-  favicon: 'img/favicon.ico'
-  language: 'fr'
-
-
-
-
-# Options
-extra:
-  feature:
-    tabs: false
-  palette:
-    text: 'Ubuntu'
-    code: 'Ubuntu Mono'
-    primary: #546E7B
-    accent: 'yellow'
-  logo: 'img/logo.png'
-
-  social:
-    - type: globe
-      link: http://liliasfaxi.wix.com/liliasfaxi
-    - type: github-alt
-      link: https://github.com/liliasfaxi
-    - type: twitter
-      link: https://twitter.com/lillitou
-    - type: linkedin
-      link: https://www.linkedin.com/in/liliasfaxi/
-
-# Extensions
 markdown_extensions:
-  - markdown.extensions.admonition
-  - codehilite:
-      linenums: true
-  - markdown.extensions.def_list
-  - markdown.extensions.footnotes
-  - markdown.extensions.meta
-  - markdown.extensions.toc
+  - admonition
+  - meta
+  - toc:
+      permalink: true
+      baselevel: 2
   - pymdownx.arithmatex
-  - pymdownx.betterem
+  - pymdownx.betterem:
+      smart_enable: all
   - pymdownx.caret
   - pymdownx.critic
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:pymdownx.emoji.to_svg
   - pymdownx.inlinehilite
   - pymdownx.magiclink
   - pymdownx.mark
   - pymdownx.smartsymbols
   - pymdownx.superfences
-  - pymdownx.tasklist
+  - pymdownx.tasklist:
+      custom_checkbox: true
   - pymdownx.tilde
-  - abbr
-  - admonition
-  - attr_list
-  - def_list
-  - codehilite
-  - fenced_code
-  - fontawesome_markdown
-  - nl2br
-  - tables
-  - pymdownx.emoji:
-      emoji_generator: !!python/name:pymdownx.emoji.to_svg
-  - mdx_math:
-        enable_dollar_delimiter: True #for use of inline $..$
+
+theme:
+  name: material
+  logo: "img/logo.png"
+  palette:
+    text: 'Ubuntu'
+    code: 'Ubuntu Mono'
+    primary: 'blue grey'
+    accent: Amber
+extra_css:
+  - 'stylesheets/extra.css'
+  - 'stylesheets/links.css'
+
 
 # Page tree
 pages:
@@ -101,12 +77,5 @@ pages:
    - P7 - Spark MLLib: 'p7-ml.md'
    - P8 - Spark GraphX: 'p8-graphx.md'
 
-extra_javascript: ['https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML']
-extra_css:
-  - 'extra.css'
-use_directory_urls: true
 
-# Google Analytics
-google_analytics:
-  - !!python/object/apply:os.getenv ["GOOGLE_ANALYTICS_KEY"]
-  - auto
+

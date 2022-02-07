@@ -66,7 +66,7 @@ En premier lieu, nous allons commencer par charger le fichier _purchases.txt_ da
   ```Bash
     cd ~/input
   ```
-  4. Télécharger le fichier purchases sur votre ordinateur à partir de ce [LIEN](https://mohetn-my.sharepoint.com/:t:/g/personal/lilia_sfaxi_insat_u-carthage_tn/EWdosZTuyDtEiqcjpqbY_loBJfMEGxsYHDYHl6hBpzVAhg?e=AVUJal) (ceci peut prendre quelques minutes).
+  4. Télécharger et décompressez le fichier purchases sur votre ordinateur à partir de ce [LIEN](https://github.com/CodeMangler/udacity-hadoop-course/raw/master/Datasets/purchases.txt.gz) (ceci peut prendre quelques minutes).
   5. Charger le fichier téléchargé dans votre master grâce à la commande ```docker cp``` (il faudra ouvrir un autre terminal )
   ```Bash
     docker cp <chemin_de_purchases.txt>/purchases.txt spark-master://root/input
